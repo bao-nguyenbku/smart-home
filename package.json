@@ -1,0 +1,24 @@
+{
+  "name": "smart-home",
+  "version": "1.0.0",
+  "description": "This is web application for controlling devices at home",
+  "main": "index.js",
+  "dependencies": {
+    "sass": "^1.49.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass public/app.scss public/app.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bao-nguyenbku/smart-home.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bao-nguyenbku/smart-home/issues"
+  },
+  "homepage": "https://github.com/bao-nguyenbku/smart-home#readme"
+}
