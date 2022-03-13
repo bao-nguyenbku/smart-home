@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Home</title>
-    <link rel="stylesheet" href="public/app.css">
+    <link rel="stylesheet" href="assets/public/css/app.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 </head>
+
 <body>
     <div class="body-container">
         <div class="wrapper">
             <div class="sidebar-container">
-
             </div>
             <div class="main-container">
                 <div class="main-feed">
@@ -23,16 +24,60 @@
 
                         </div>
                         <div class="avatar-name">
-                            <p>Jenny</p>
-                            <p><span class="material-icons-outlined">location_on</span>3, Wald street, 9 District, Ho Chi Minh city, Vietnam</p>
+                            <p class="account-name">Jenny</p>
+                            <div class="account-address">
+                                <span class="material-icons-outlined">location_on</span>
+                                <p>3, Wald street, 9 District, Ho Chi Minh city, Vietnam</p>
+                            </div>
                         </div>
                     </div>
                     <div class="feed">
-
+                        <p>Good moring, baby😍</p>
+                        <p>Have a nice day</p>
+                    </div>
+                </div>
+                <div class="add-new-device-and-choose-room">
+                    <button class="btn add-device-btn"><span class="material-icons">
+                        add_circle
+                        </span>
+                        New device</button>
+                    <div class="dropdown">
+                        <div class="select">
+                            <span>Select room</span>
+                            <i class="fa fa-chevron-left"></i>
+                        </div>
+                        <input type="hidden" name="gender">
+                        <ul class="dropdown-menu">
+                            <li id="male">Living room</li>
+                            <li id="female">Kitchen</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="device-list-container">
+                    <p class="device-list-title">Devices</p>
+                    <div class="device-list">
+                        <div class="device-item">
+                          <div class="top-action">
+                            <div class="icon-background">
+                              <span class="material-icons-outlined">lightbulb</span>
+                            </div>
+                            <label class="toggle-control">
+                                <input type="checkbox" checked="checked">
+                                <span class="control"></span>
+                            </label>
+                          </div>
+                          <div class="bottom-info">
+                            <p>Đèn dài</p>
+                            <p>Off</p>
+                          </div>    
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="./assets/distributions/jquery.js"></script>
+    <script src="./assets/public/js/dropdown.js"></script>
 </body>
+
 </html>
