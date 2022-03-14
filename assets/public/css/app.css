@@ -390,6 +390,51 @@ template {
   background: white;
   transition: left 0.15s ease-in;
 }
+.toggle-control input:checked ~ .main-toggle {
+  background-color: #fe834d;
+}
+.toggle-control input:checked ~ .main-toggle:after {
+  left: 21px;
+}
+.toggle-control .main-toggle {
+  width: 40px;
+  height: 22px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 11px;
+  background-color: #E3EDF2;
+  transition: background-color 0.15s ease-in;
+}
+.toggle-control .main-toggle:after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 11px;
+  background: white;
+  transition: left 0.15s ease-in;
+}
+
+.main-toggle-control {
+  width: 40px;
+  height: 22px;
+}
+
+.icon-background {
+  background: rgba(114, 151, 171, 0.3);
+  border-radius: 50%;
+  width: 31px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-background > span {
+  color: #7297ab;
+}
 
 * {
   font-family: "Roboto", sans-serif;
@@ -686,12 +731,84 @@ p {
   height: 100%;
   background: white;
   border-radius: 17px;
+  padding: 20px;
 }
-.main-container .main-control-container .temp-container, .main-container .main-control-container .humidity-container {
+.main-container .main-control-container .main-control .toggle-switch-container {
+  height: 22px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-container .main-control-container .main-control .toggle-switch-container .device-title {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+.main-container .main-control-container .main-control .toggle-switch-container .device-title p {
+  font-size: 20px;
+  margin-left: 10px;
+}
+.main-container .main-control-container .temp-container,
+.main-container .main-control-container .humidity-container {
   width: 147px;
   height: 135px;
   background: white;
   border-radius: 17px;
+}
+.main-container .main-control-container .temp-container {
+  position: relative;
+  overflow: hidden;
+  padding-top: 10px;
+}
+.main-container .main-control-container .temp-container p {
+  text-align: center;
+  font-size: 14px;
+}
+.main-container .main-control-container .temp-container p:nth-child(2) {
+  font-size: 40px;
+  color: #1cba36;
+  position: relative;
+  font-weight: 600;
+  top: 35%;
+  transform: translateY(-50%);
+}
+.main-container .main-control-container .temp-container p:nth-child(2) span {
+  position: absolute;
+  font-size: 20px;
+}
+.main-container .main-control-container .temp-container i {
+  font-size: 90px;
+  color: #7297ab;
+  opacity: 0.4;
+  position: absolute;
+  top: 20px;
+  left: 100px;
+}
+.main-container .main-control-container .humidity-container {
+  position: relative;
+  overflow: hidden;
+  padding-top: 10px;
+}
+.main-container .main-control-container .humidity-container p {
+  text-align: center;
+  font-size: 14px;
+}
+.main-container .main-control-container .humidity-container p:nth-child(2) {
+  font-size: 40px;
+  color: #fe834d;
+  position: relative;
+  font-weight: 600;
+  top: 35%;
+  transform: translateY(-50%);
+}
+.main-container .main-control-container .humidity-container i {
+  font-size: 90px;
+  color: #7297ab;
+  opacity: 0.4;
+  position: absolute;
+  top: 20px;
+  left: 100px;
 }
 .main-container .device-list-container {
   width: 100%;
@@ -725,18 +842,6 @@ p {
   flex-direction: row;
   justify-content: space-between;
 }
-.main-container .device-list-container .device-list .device-item .icon-background {
-  background: rgba(114, 151, 171, 0.3);
-  border-radius: 50%;
-  width: 31px;
-  height: 31px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.main-container .device-list-container .device-list .device-item .icon-background > span {
-  color: #7297ab;
-}
 .main-container .device-list-container .device-list .device-item .bottom-info {
   display: flex;
   justify-content: space-between;
@@ -744,6 +849,34 @@ p {
 }
 .main-container .device-list-container .device-list .device-item .bottom-info p:first-child {
   font-weight: 600;
+}
+.main-container .device-list-container .device-list .device-item-active {
+  transition: all 0.8s ease;
+  background: #fe834d;
+}
+.main-container .device-list-container .device-list .device-item-active .top-action .icon-background {
+  background: #FEB38F;
+  border-radius: 50%;
+  width: 31px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-container .device-list-container .device-list .device-item-active .top-action .icon-background > span {
+  color: white;
+}
+.main-container .device-list-container .device-list .device-item-active .top-action .toggle-control .control:after {
+  background: #fe834d;
+}
+.main-container .device-list-container .device-list .device-item-active .top-action .toggle-control input:checked ~ .control {
+  background-color: white;
+}
+.main-container .device-list-container .device-list .device-item-active .top-action .toggle-control input:checked ~ .control:after {
+  left: 13px;
+}
+.main-container .device-list-container .device-list .device-item-active .bottom-info {
+  color: white;
 }
 
 /*# sourceMappingURL=app.css.map */

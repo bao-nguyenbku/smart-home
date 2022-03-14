@@ -23,7 +23,8 @@
           height: 100%;
           object-fit: cover;
           border-radius: 50%;
-          box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+            rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
         }
       }
       .avatar-name {
@@ -167,14 +168,85 @@
       height: 100%;
       background: white;
       border-radius: 17px;
+      padding: 20px;
+      .toggle-switch-container {
+        height: 22px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        .device-title {
+          display: flex;
+          align-items: center;
+          font-weight: 600;
+          p {
+            font-size: 20px;
+            margin-left: 10px;
+          }
+        }
+      }
     }
-    .temp-container, .humidity-container {
+    .temp-container,
+    .humidity-container {
       width: 147px;
       height: 135px;
       background: white;
       border-radius: 17px;
     }
-    
+    .temp-container {
+      position: relative;
+      overflow: hidden;
+      padding-top: 10px;
+      p {
+        text-align: center;
+        font-size: 14px;
+        &:nth-child(2) {
+          font-size: 40px;
+          color: #1cba36;
+          position: relative;
+          font-weight: 600;
+          top: 35%;
+          transform: translateY(-50%);
+          span {
+            position: absolute;
+            font-size: 20px;
+          }
+        }
+      }
+      i {
+        font-size: 90px;
+        color: $lightBlue;
+        opacity: 0.4;
+        position: absolute;
+        top: 20px;
+        left: 100px;
+      }
+    }
+    .humidity-container {
+      position: relative;
+      overflow: hidden;
+      padding-top: 10px;
+      p {
+        text-align: center;
+        font-size: 14px;
+        &:nth-child(2) {
+          font-size: 40px;
+          color: $orange;
+          position: relative;
+          font-weight: 600;
+          top: 35%;
+          transform: translateY(-50%);
+        }
+      }
+      i {
+        font-size: 90px;
+        color: $lightBlue;
+        opacity: 0.4;
+        position: absolute;
+        top: 20px;
+        left: 100px;
+      }
+    }
   }
   .device-list-container {
     width: 100%;
@@ -205,18 +277,6 @@
           flex-direction: row;
           justify-content: space-between;
         }
-        .icon-background {
-          background: rgba($color: #7297ab, $alpha: 0.3);
-          border-radius: 50%;
-          width: 31px;
-          height: 31px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          & > span {
-            color: $lightBlue;
-          }
-        }
         .bottom-info {
           display: flex;
           justify-content: space-between;
@@ -226,6 +286,43 @@
               font-weight: 600;
             }
           }
+        }
+      }
+      .device-item-active {
+        transition: all 0.8s ease;
+        background: $orange;
+        .top-action {
+          .icon-background {
+            background: #FEB38F;
+            border-radius: 50%;
+            width: 31px;
+            height: 31px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            & > span {
+              color: white;
+            }
+          }
+          .toggle-control {
+            .control {
+              &:after {
+                
+                background: $orange;
+                
+              }
+            }
+            input:checked ~ .control {
+              background-color: white;
+          
+              &:after {
+                left: $toggle-width - $toggle-control-size - $toggle-gutter;
+              }
+            }
+          }
+        }
+        .bottom-info {
+          color: white;
         }
       }
     }

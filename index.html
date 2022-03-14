@@ -128,13 +128,32 @@
         </div>
         <div class="main-control-container">
           <div class="main-control grid-col-span-2">
-
+            <div class="toggle-switch-container">
+              <div class="device-title">
+                <div class="icon-background">
+                  <span class="material-icons-outlined">lightbulb</span>
+                </div>
+                <p>Đèn dài</p>
+              </div>
+              <div class="toggle-switch">
+                <label class="toggle-control main-toggle-control">
+                  <input type="checkbox" checked="checked">
+                  <span class="control main-toggle"></span>
+                </label>
+              </div>
+            </div>
           </div>
           <div class="temp-container">
-
+            <p>Temperature</p>
+            <p>26<span>o</span> C</p>
+            <i class="fa-solid fa-temperature-high"></i>
+            
           </div>
           <div class="humidity-container">
-
+            <p>Humidity</p>
+            <p>40%</p>
+            <i class="fa-solid fa-droplet"></i>
+            
           </div>
         </div>
         <div class="device-list-container">
@@ -147,7 +166,7 @@
                     <span class="material-icons-outlined">lightbulb</span>
                   </div>
                   <label class="toggle-control">
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox">
                     <span class="control"></span>
                   </label>
                 </div>
@@ -162,7 +181,7 @@
                     <span class="fa-solid fa-fan"></span>
                   </div>
                   <label class="toggle-control">
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox">
                     <span class="control"></span>
                   </label>
                 </div>
@@ -177,57 +196,12 @@
                     <span class="material-icons-outlined">lightbulb</span>
                   </div>
                   <label class="toggle-control">
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox">
                     <span class="control"></span>
                   </label>
                 </div>
                 <div class="bottom-info">
-                  <p>Đèn dài</p>
-                  <p>Off</p>
-                </div>
-              </div>
-              <div class="device-item swiper-slide">
-                <div class="top-action">
-                  <div class="icon-background">
-                    <span class="material-icons-outlined">lightbulb</span>
-                  </div>
-                  <label class="toggle-control">
-                    <input type="checkbox" checked="checked">
-                    <span class="control"></span>
-                  </label>
-                </div>
-                <div class="bottom-info">
-                  <p>Đèn dài</p>
-                  <p>Off</p>
-                </div>
-              </div>
-              <div class="device-item swiper-slide">
-                <div class="top-action">
-                  <div class="icon-background">
-                    <span class="material-icons-outlined">lightbulb</span>
-                  </div>
-                  <label class="toggle-control">
-                    <input type="checkbox" checked="checked">
-                    <span class="control"></span>
-                  </label>
-                </div>
-                <div class="bottom-info">
-                  <p>Đèn dài</p>
-                  <p>Off</p>
-                </div>
-              </div>
-              <div class="device-item swiper-slide">
-                <div class="top-action">
-                  <div class="icon-background">
-                    <span class="material-icons-outlined">lightbulb</span>
-                  </div>
-                  <label class="toggle-control">
-                    <input type="checkbox" checked="checked">
-                    <span class="control"></span>
-                  </label>
-                </div>
-                <div class="bottom-info">
-                  <p>Đèn dài</p>
+                  <p>Đèn chùm giữa</p>
                   <p>Off</p>
                 </div>
               </div>
@@ -253,6 +227,7 @@
       spaceBetween: 20,
     });
   </script>
+  <script src="./assets/public/js/controllers.js"></script>
 </body>
 
 </html>
