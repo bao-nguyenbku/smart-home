@@ -2,82 +2,200 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Home</title>
-    <link rel="stylesheet" href="assets/public/css/app.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Home</title>
+  <link rel="stylesheet" href="assets/public/css/app.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <!-- Swiper js -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <!-- Font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
-    <div class="body-container">
-        <div class="wrapper">
-            <div class="sidebar-container">
-            </div>
-            <div class="main-container">
-                <div class="main-feed">
-                    <div class="avatar-container">
-                        <div class="avatar">
+  <div class="body-container">
+    <div class="wrapper">
+      <div class="sidebar-container">
+      </div>
+      <div class="main-container">
+        <div class="main-feed">
+          <div class="avatar-container">
+            <div class="avatar">
 
-                        </div>
-                        <div class="avatar-name">
-                            <p class="account-name">Jenny</p>
-                            <div class="account-address">
-                                <span class="material-icons-outlined">location_on</span>
-                                <p>3, Wald street, 9 District, Ho Chi Minh city, Vietnam</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feed">
-                        <p>Good moring, baby😍</p>
-                        <p>Have a nice day</p>
-                    </div>
-                </div>
-                <div class="add-new-device-and-choose-room">
-                    <button class="btn add-device-btn"><span class="material-icons">
-                        add_circle
-                        </span>
-                        New device</button>
-                    <div class="dropdown">
-                        <div class="select">
-                            <span>Select room</span>
-                            <i class="fa fa-chevron-left"></i>
-                        </div>
-                        <input type="hidden" name="gender">
-                        <ul class="dropdown-menu">
-                            <li id="male">Living room</li>
-                            <li id="female">Kitchen</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="device-list-container">
-                    <p class="device-list-title">Devices</p>
-                    <div class="device-list">
-                        <div class="device-item">
-                          <div class="top-action">
-                            <div class="icon-background">
-                              <span class="material-icons-outlined">lightbulb</span>
-                            </div>
-                            <label class="toggle-control">
-                                <input type="checkbox" checked="checked">
-                                <span class="control"></span>
-                            </label>
-                          </div>
-                          <div class="bottom-info">
-                            <p>Đèn dài</p>
-                            <p>Off</p>
-                          </div>    
-                        </div>
-                    </div>
-                </div>
             </div>
+            <div class="avatar-name">
+              <p class="account-name">Jenny</p>
+              <div class="account-address">
+                <span class="material-icons-outlined">location_on</span>
+                <p>3, Wald street, 9 District, Ho Chi Minh city, Vietnam</p>
+              </div>
+            </div>
+          </div>
+          <div class="feed">
+            <p>Good moring, baby😍</p>
+            <p>Have a nice day</p>
+          </div>
         </div>
+        <div class="add-new-device-and-choose-room">
+          <button class="btn add-device-btn"><span class="material-icons">
+              add_circle
+            </span>
+            New device</button>
+          <div class="dropdown">
+            <div class="select">
+              <span>Select room</span>
+              <i class="material-icons">expand_circle_down</i>
+            </div>
+            <input type="hidden" name="gender">
+            <ul class="dropdown-menu">
+              <li id="male">Living room</li>
+              <li id="female">Kitchen</li>
+            </ul>
+          </div>
+        </div>
+        <div class="main-control-container">
+          <div class="main-control grid-col-span-2">
+
+          </div>
+          <div class="temp-container">
+
+          </div>
+          <div class="humidity-container">
+
+          </div>
+        </div>
+        <div class="device-list-container">
+          <p class="device-list-title">Devices</p>
+          <div class="device-list swiper mySwiper">
+            <div class="swiper-wrapper">
+              <div class="device-item swiper-slide">
+                <div class="top-action">
+                  <div class="icon-background">
+                    <span class="material-icons-outlined">lightbulb</span>
+                  </div>
+                  <label class="toggle-control">
+                    <input type="checkbox" checked="checked">
+                    <span class="control"></span>
+                  </label>
+                </div>
+                <div class="bottom-info">
+                  <p>Đèn dài</p>
+                  <p>Off</p>
+                </div>
+              </div>
+              <div class="device-item swiper-slide">
+                <div class="top-action">
+                  <div class="icon-background">
+                    <span class="fa-solid fa-fan"></span>
+                  </div>
+                  <label class="toggle-control">
+                    <input type="checkbox" checked="checked">
+                    <span class="control"></span>
+                  </label>
+                </div>
+                <div class="bottom-info">
+                  <p>Quạt</p>
+                  <p>3</p>
+                </div>
+              </div>
+              <div class="device-item swiper-slide">
+                <div class="top-action">
+                  <div class="icon-background">
+                    <span class="material-icons-outlined">lightbulb</span>
+                  </div>
+                  <label class="toggle-control">
+                    <input type="checkbox" checked="checked">
+                    <span class="control"></span>
+                  </label>
+                </div>
+                <div class="bottom-info">
+                  <p>Đèn dài</p>
+                  <p>Off</p>
+                </div>
+              </div>
+              <div class="device-item swiper-slide">
+                <div class="top-action">
+                  <div class="icon-background">
+                    <span class="material-icons-outlined">lightbulb</span>
+                  </div>
+                  <label class="toggle-control">
+                    <input type="checkbox" checked="checked">
+                    <span class="control"></span>
+                  </label>
+                </div>
+                <div class="bottom-info">
+                  <p>Đèn dài</p>
+                  <p>Off</p>
+                </div>
+              </div>
+              <div class="device-item swiper-slide">
+                <div class="top-action">
+                  <div class="icon-background">
+                    <span class="material-icons-outlined">lightbulb</span>
+                  </div>
+                  <label class="toggle-control">
+                    <input type="checkbox" checked="checked">
+                    <span class="control"></span>
+                  </label>
+                </div>
+                <div class="bottom-info">
+                  <p>Đèn dài</p>
+                  <p>Off</p>
+                </div>
+              </div>
+              <div class="device-item swiper-slide">
+                <div class="top-action">
+                  <div class="icon-background">
+                    <span class="material-icons-outlined">lightbulb</span>
+                  </div>
+                  <label class="toggle-control">
+                    <input type="checkbox" checked="checked">
+                    <span class="control"></span>
+                  </label>
+                </div>
+                <div class="bottom-info">
+                  <p>Đèn dài</p>
+                  <p>Off</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="./assets/distributions/jquery.js"></script>
-    <script src="./assets/public/js/dropdown.js"></script>
+  </div>
+  <script src="./assets/distributions/jquery.js"></script>
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="./assets/public/js/dropdown.js"></script>
+
+  <!-- Initialize Swiper -->
+  <script>
+      // const swiper = new Swiper(".mySwiper", {
+      //     // slidesPerView: 3,
+      //     spaceBetween: 20,
+      //     // slidesPerGroup: 3,
+      //     loop: false,
+      //     loopFillGroupWithBlank: true,
+      //     pagination: {
+      //         el: ".swiper-pagination",
+      //         clickable: true,
+      //     },
+      //     // navigation: {
+      //     //     nextEl: ".swiper-button-next",
+      //     //     prevEl: ".swiper-button-prev",
+      //     // },
+      // });
+      const swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        centeredSlides: false,
+        spaceBetween: 20,
+      });
+  </script>
 </body>
 
 </html>
