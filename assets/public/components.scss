@@ -11,7 +11,7 @@ $toggle-control-ease: ease-in;
 
 // These are our computed variables
 // change at your own risk.
-$toggle-radius: $toggle-height / 2;
+$toggle-radius: calc($toggle-height / 2);
 $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
 .btn {
   background: $orange;

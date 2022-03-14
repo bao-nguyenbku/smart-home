@@ -415,7 +415,7 @@ p {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(125.8deg, #4FACFE 7.05%, #00F2FE 86.34%);
+  background: linear-gradient(125.8deg, #4facfe 7.05%, #00f2fe 86.34%);
 }
 .body-container .wrapper {
   width: 801px;
@@ -527,33 +527,6 @@ p {
 .main-container .main-feed {
   width: 100%;
   height: 60px;
-}
-.main-container .main-feed .avatar-container {
-  display: flex;
-  flex-direction: row;
-}
-.main-container .main-feed .avatar-container .avatar {
-  width: 53px;
-  height: 53px;
-  border-radius: 50%;
-  background: white;
-}
-.main-container .main-feed .avatar-container .avatar-name {
-  height: 100%;
-}
-.main-container .main-feed .avatar-container .avatar-name p {
-  font-size: 20px;
-}
-
-.main-container {
-  width: 640px;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-  padding: 30px;
-}
-.main-container .main-feed {
-  width: 100%;
-  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -568,6 +541,13 @@ p {
   height: 60px;
   border-radius: 50%;
   background: white;
+}
+.main-container .main-feed .avatar-container .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
 .main-container .main-feed .avatar-container .avatar-name {
   height: inherit;
@@ -590,6 +570,7 @@ p {
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
+  margin-top: 5px;
 }
 .main-container .main-feed .avatar-container .avatar-name .account-address p {
   margin-left: 5px;
@@ -639,16 +620,13 @@ p {
   justify-content: space-between;
 }
 .main-container .add-new-device-and-choose-room .dropdown .select > i {
-  font-size: 13px;
-  color: #888;
+  font-size: 15px;
+  color: #7297ab;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   float: right;
   line-height: 20px;
   margin-left: 5px;
-}
-.main-container .add-new-device-and-choose-room .dropdown.active .select > i {
-  transform: rotate(90deg);
 }
 .main-container .add-new-device-and-choose-room .dropdown .dropdown-menu {
   position: absolute;
@@ -663,21 +641,22 @@ p {
   max-height: 144px;
   overflow-y: auto;
   z-index: 9;
+  padding: 0;
+  list-style: none;
 }
 .main-container .add-new-device-and-choose-room .dropdown .dropdown-menu li {
   padding: 10px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
-.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu {
-  padding: 0;
-  list-style: none;
-}
 .main-container .add-new-device-and-choose-room .dropdown .dropdown-menu li:hover {
   background-color: #f2f2f2;
 }
 .main-container .add-new-device-and-choose-room .dropdown .dropdown-menu li:active {
   background-color: white;
+}
+.main-container .add-new-device-and-choose-room .dropdown.active .select > i {
+  transform: rotate(90deg);
 }
 .main-container .add-new-device-and-choose-room .add-device-btn {
   width: 125px;
@@ -726,10 +705,10 @@ p {
 .main-container .device-list-container .device-list {
   width: 580px;
   height: 96px;
-  display: inline-block !important;
+  display: inline-block;
   gap: 20px;
-  display: -webkit-inline-box !important;
-  display: -moz-inline-box !important;
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
 }
 .main-container .device-list-container .device-list .device-item {
   padding: 10px;

@@ -34,12 +34,6 @@ p {
     flex-direction: row;
   }
 }
-.sidebar-container {
-  width: 161px;
-  height: 100%;
-  background: white;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-}
+@import 'sidebar';
 
 @import 'main';
