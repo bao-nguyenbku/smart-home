@@ -1,0 +1,18 @@
+$background: #f1f6fa;
+$lightBlue: #7297ab;
+$orange: #fe834d;
+
+$toggle-background-color-on: dodgerblue;
+$toggle-background-color-off: darkgray;
+$toggle-control-color: white;
+$toggle-width: 26px;
+$toggle-height: 16px;
+$toggle-gutter: 3px;
+$toggle-radius: 50%;
+$toggle-control-speed: 0.15s;
+$toggle-control-ease: ease-in;
+
+// These are our computed variables
+// change at your own risk.
+$toggle-radius: $toggle-height / 2;
+$toggle-control-size: $toggle-height - ($toggle-gutter * 2);
