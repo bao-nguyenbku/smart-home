@@ -338,22 +338,74 @@ template {
   display: none;
 }
 
+.btn {
+  background: #fe834d;
+  border: none;
+  border-radius: 7px;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.toggle-control {
+  display: block;
+  position: relative;
+  padding-left: 26px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+}
+.toggle-control input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.toggle-control input:checked ~ .control {
+  background-color: dodgerblue;
+}
+.toggle-control input:checked ~ .control:after {
+  left: 13px;
+}
+.toggle-control .control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 16px;
+  width: 26px;
+  border-radius: 8px;
+  background-color: #E3EDF2;
+  transition: background-color 0.15s ease-in;
+}
+.toggle-control .control:after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 8px;
+  background: white;
+  transition: left 0.15s ease-in;
+}
+
 * {
   font-family: "Roboto", sans-serif;
+  font-size: 13px;
   box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 body {
   background: #c3d9e4;
 }
 
-h1 {
-  font-weight: 300;
-  text-align: center;
-}
-
-h2 {
-  text-align: center;
+p {
+  margin: 0;
+  padding: 0;
 }
 
 .body-container {
@@ -368,7 +420,7 @@ h2 {
 .body-container .wrapper {
   width: 801px;
   height: 675px;
-  background: #F1F6FA;
+  background: #f1f6fa;
   border-radius: 30px;
   display: flex;
   flex-direction: row;
@@ -491,6 +543,228 @@ h2 {
 }
 .main-container .main-feed .avatar-container .avatar-name p {
   font-size: 20px;
+}
+
+.main-container {
+  width: 640px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding: 30px;
+}
+.main-container .main-feed {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.main-container .main-feed .avatar-container {
+  display: flex;
+  flex-direction: row;
+  height: inherit;
+}
+.main-container .main-feed .avatar-container .avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white;
+}
+.main-container .main-feed .avatar-container .avatar-name {
+  height: inherit;
+  width: 239px;
+  margin-left: 25px;
+}
+.main-container .main-feed .avatar-container .avatar-name p {
+  margin: 0;
+  font-size: 12px;
+}
+.main-container .main-feed .avatar-container .avatar-name .account-name {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+}
+.main-container .main-feed .avatar-container .avatar-name .account-address {
+  height: 40px;
+  color: #7297ab;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.main-container .main-feed .avatar-container .avatar-name .account-address p {
+  margin-left: 5px;
+  width: 143px;
+}
+.main-container .main-feed .feed {
+  width: 292px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.main-container .main-feed .feed p:first-child {
+  font-size: 26px;
+}
+.main-container .main-feed .feed p:nth-child(2) {
+  font-size: 14px;
+  margin-top: 5px;
+  color: #7297ab;
+}
+.main-container .add-new-device-and-choose-room {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+  height: 41px;
+  margin: 20px 0 20px 0;
+}
+.main-container .add-new-device-and-choose-room .dropdown {
+  width: 120px;
+  height: 100%;
+  display: inline-block;
+  background-color: none;
+  border-radius: 2px;
+  transition: all 0.5s ease;
+  position: relative;
+  font-size: 13px;
+  color: #7297ab;
+  padding: 10px;
+}
+.main-container .add-new-device-and-choose-room .dropdown .select {
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-container .add-new-device-and-choose-room .dropdown .select > i {
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  float: right;
+  line-height: 20px;
+  margin-left: 5px;
+}
+.main-container .add-new-device-and-choose-room .dropdown.active .select > i {
+  transform: rotate(90deg);
+}
+.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu {
+  position: absolute;
+  background-color: #fff;
+  width: 100%;
+  left: 0;
+  margin-top: 1px;
+  box-shadow: 0 1px 2px #cccccc;
+  border-radius: 0 0px 2px 2px;
+  overflow: hidden;
+  display: none;
+  max-height: 144px;
+  overflow-y: auto;
+  z-index: 9;
+}
+.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu li {
+  padding: 10px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu {
+  padding: 0;
+  list-style: none;
+}
+.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu li:hover {
+  background-color: #f2f2f2;
+}
+.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu li:active {
+  background-color: white;
+}
+.main-container .add-new-device-and-choose-room .add-device-btn {
+  width: 125px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+}
+.main-container .add-new-device-and-choose-room .add-device-btn span {
+  padding-right: 5px;
+  opacity: 0.7;
+}
+.main-container .main-control-container {
+  height: 288px;
+  width: 100%;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1;
+}
+.main-container .main-control-container .grid-col-span-2 {
+  grid-row: span 2;
+}
+.main-container .main-control-container .main-control {
+  width: 414px;
+  height: 100%;
+  background: white;
+  border-radius: 17px;
+}
+.main-container .main-control-container .temp-container, .main-container .main-control-container .humidity-container {
+  width: 147px;
+  height: 135px;
+  background: white;
+  border-radius: 17px;
+}
+.main-container .device-list-container {
+  width: 100%;
+  margin-top: 30px;
+}
+.main-container .device-list-container .device-list-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.main-container .device-list-container .device-list {
+  width: 580px;
+  height: 96px;
+  display: inline-block !important;
+  gap: 20px;
+  display: -webkit-inline-box !important;
+  display: -moz-inline-box !important;
+}
+.main-container .device-list-container .device-list .device-item {
+  padding: 10px;
+  border-radius: 13px;
+  width: 123px !important;
+  height: 96px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.main-container .device-list-container .device-list .device-item .top-action {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.main-container .device-list-container .device-list .device-item .icon-background {
+  background: rgba(114, 151, 171, 0.3);
+  border-radius: 50%;
+  width: 31px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-container .device-list-container .device-list .device-item .icon-background > span {
+  color: #7297ab;
+}
+.main-container .device-list-container .device-list .device-item .bottom-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-container .device-list-container .device-list .device-item .bottom-info p:first-child {
+  font-weight: 600;
 }
 
 /*# sourceMappingURL=app.css.map */
