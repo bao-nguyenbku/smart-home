@@ -121,8 +121,10 @@
             </div>
             <input type="hidden" name="gender">
             <ul class="dropdown-menu">
-              <li id="male">Living room</li>
-              <li id="female">Kitchen</li>
+              <li id="living">Living room</li>
+              <li id="kitchen">Kitchen</li>
+              <li id="garage">Garage</li>
+              <li id="bathroom">Bathroom</li>
             </ul>
           </div>
         </div>
@@ -142,6 +144,13 @@
                 </label>
               </div>
             </div>
+            <div class="control-area">
+              <span class="material-icons-outlined">light_mode</span>
+              <div class="range-background">
+                <div class="slider"></div>
+              </div>
+              <span class="material-icons">light_mode</span>
+            </div>
           </div>
           <div class="temp-container">
             <p>Temperature</p>
@@ -160,7 +169,7 @@
           <p class="device-list-title">Devices</p>
           <div class="device-list swiper mySwiper">
             <div class="swiper-wrapper">
-              <div class="device-item swiper-slide">
+              <div class="device-item swiper-slide" data-item="light">
                 <div class="top-action">
                   <div class="icon-background">
                     <span class="material-icons-outlined">lightbulb</span>
@@ -175,7 +184,7 @@
                   <p>Off</p>
                 </div>
               </div>
-              <div class="device-item swiper-slide">
+              <div class="device-item swiper-slide" data-item="fan">
                 <div class="top-action">
                   <div class="icon-background">
                     <span class="fa-solid fa-fan"></span>
@@ -190,7 +199,7 @@
                   <p>3</p>
                 </div>
               </div>
-              <div class="device-item swiper-slide">
+              <div class="device-item swiper-slide" data-item="light">
                 <div class="top-action">
                   <div class="icon-background">
                     <span class="material-icons-outlined">lightbulb</span>
