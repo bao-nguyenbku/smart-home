@@ -1,0 +1,59 @@
+.title-content {
+  width: 292px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 20px;
+  p {
+    font-size: 26px;
+    color: $lightBlue;
+    font-weight: 600;
+  }
+}
+.statistic-container {
+  padding-top: 35px;
+  .table-and-rooms {
+    display: grid;
+    grid-template-columns: 195px 372px;
+    grid-column-gap: 16px;
+    padding-top: 40px;
+    .rooms-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-row-gap: 22px;
+      height: 274px;
+      overflow-y: auto;
+      padding-bottom: 10px;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      .room-item {
+        width: 192px;
+        height: 52px;
+        border-radius: 10px;
+        background: white;
+        box-shadow: $shadow;
+      }
+    }
+    .table-of-device {
+      table {
+        font-size: 10px;
+        thead {
+          tr {
+            font-size: 11px;
+            th {
+              padding: 0;
+              margin: 0;
+              font-size: inherit;
+              text-align: center;
+              color: $lightBlue;
+              &:last-child {
+                width: 42px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -498,45 +498,42 @@ p {
   color: #7297AB;
   margin-left: 7px;
 }
-.sidebar-container .ul_active {
-  background: #FFE7DC;
-  border-right: 4px solid #FF844B;
-  line-height: 33px;
-}
-.sidebar-container .ul_active .i_active {
-  color: #FF844B !important;
-  display: inline-block;
-  font-size: 12px;
-}
-.sidebar-container .ul_active .span_active {
-  color: #FF844B;
-  font-weight: 700;
-  font-size: 12px;
-  line-height: 33px;
-  margin-left: 5px;
-}
 .sidebar-container ul {
-  margin: 0 0 20px 0;
-  height: 33px;
+  padding: 0;
 }
 .sidebar-container ul li {
   list-style-type: none;
+  margin-bottom: 30px;
+  height: 33px;
+  padding: 0;
 }
 .sidebar-container ul li a {
+  padding-left: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
   text-decoration: none;
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
 }
 .sidebar-container ul li i {
-  color: #83A4B5;
-  display: inline-block;
-  font-size: 12px;
+  color: #7297ab;
+  font-size: inherit;
   font-style: normal;
 }
 .sidebar-container ul li span {
-  color: #83A4B5;
+  color: #7297ab;
   font-weight: 700;
-  font-size: 12px;
-  line-height: 33px;
+  font-size: inherit;
   margin-left: 5px;
+}
+.sidebar-container ul li.li-active {
+  background: #FFE7DC;
+  border-right: 4px solid #fe834d;
+}
+.sidebar-container ul li.li-active i, .sidebar-container ul li.li-active span {
+  color: #fe834d;
 }
 .sidebar-container .logout {
   height: 42px;
@@ -760,10 +757,10 @@ p {
   color: #7297ab;
 }
 .main-container .main-control-container .main-control .control-area span:first-child {
-  margin-right: 10px;
+  margin-right: 20px;
 }
 .main-container .main-control-container .main-control .control-area span:last-child {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 .main-container .main-control-container .main-control .control-area .range-background {
   width: 100%;
@@ -772,7 +769,7 @@ p {
   border-radius: 10px;
 }
 .main-container .main-control-container .main-control .control-area .range-background .slider {
-  width: 50%;
+  width: 30%;
   height: 100%;
   background: linear-gradient(270deg, #FE834D 38.48%, rgba(254, 131, 77, 0.376515) 80.87%, rgba(254, 131, 77, 0) 106.46%);
   border-radius: inherit;
@@ -790,8 +787,14 @@ p {
   height: 21px;
   background: white;
 }
+.main-container .main-control-container .main-control .control-area .range-background .slider:hover::before {
+  width: 25px;
+  height: 25px;
+  transform: translateY(-5.5px);
+  transition: all 0.2s;
+}
 .main-container .main-control-container .main-control .control-area .range-background .slider::after {
-  content: "50%";
+  content: attr(data-after);
   position: absolute;
   right: -19px;
   transform: translateY(-3.5px);
@@ -928,6 +931,63 @@ p {
 }
 .main-container .device-list-container .device-list .device-item-active .bottom-info {
   color: white;
+}
+
+.title-content {
+  width: 292px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 20px;
+}
+.title-content p {
+  font-size: 26px;
+  color: #7297ab;
+  font-weight: 600;
+}
+
+.statistic-container {
+  padding-top: 35px;
+}
+.statistic-container .table-and-rooms {
+  display: grid;
+  grid-template-columns: 195px 372px;
+  grid-column-gap: 16px;
+  padding-top: 40px;
+}
+.statistic-container .table-and-rooms .rooms-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 22px;
+  height: 274px;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+.statistic-container .table-and-rooms .rooms-container::-webkit-scrollbar {
+  display: none;
+}
+.statistic-container .table-and-rooms .rooms-container .room-item {
+  width: 192px;
+  height: 52px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 1px 2px #cccccc;
+}
+.statistic-container .table-and-rooms .table-of-device table {
+  font-size: 10px;
+}
+.statistic-container .table-and-rooms .table-of-device table thead tr {
+  font-size: 11px;
+}
+.statistic-container .table-and-rooms .table-of-device table thead tr th {
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  text-align: center;
+  color: #7297ab;
+}
+.statistic-container .table-and-rooms .table-of-device table thead tr th:last-child {
+  width: 42px;
 }
 
 /*# sourceMappingURL=app.css.map */

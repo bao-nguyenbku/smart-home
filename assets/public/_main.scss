@@ -194,10 +194,10 @@
         span {
           color: $lightBlue;
           &:first-child {
-            margin-right: 10px;
+            margin-right: 20px;
           }
           &:last-child {
-            margin-left: 10px;
+            margin-left: 20px;
           }
         }
         .range-background {
@@ -206,7 +206,7 @@
           background: #F4F4F4;
           border-radius: 10px;
           .slider {
-            width: 50%;
+            width: 30%;
             height: 100%;
             background: linear-gradient(270deg, #FE834D 38.48%, rgba(254, 131, 77, 0.376515) 80.87%, rgba(254, 131, 77, 0) 106.46%);
             border-radius: inherit;
@@ -223,8 +223,14 @@
               height: 21px;
               background: white;
             }
+            &:hover::before {
+              width: 25px;
+              height: 25px;
+              transform: translateY(-5.5px);
+              transition: all 0.2s;
+            }
             &::after {
-              content: '50%';
+              content: attr(data-after);
               position: absolute;
               right: -19px;
               transform: translateY(-3.5px);

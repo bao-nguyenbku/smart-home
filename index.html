@@ -32,53 +32,46 @@
           <img class="img" src="assets/images/Logo.svg" alt="Logo">
           <div class="name"> Smart Home </div>
         </div>
-        <ul class="ul_active">
+        <ul class="sidebar-items">
           <li>
-            <a href="#">
+            <a href="/">
               <!-- <i class="bi bi-grid-3x3-gap-fill i_active"></i> -->
               <i class="material-icons i_active">apps</i>
               <span class="span_active"> Dashboard </span>
             </a>
           </li>
-        </ul>
-
-        <ul>
-          <li>
-            <a href="#">
-              <!-- <i class="bi bi-chat-left-text-fill"></i> -->
-              <i class="material-icons"> message </i>
-              <span> Messages </span>
-            </a>
-          </li>
-        </ul>
-
-        <ul>
-          <li>
-            <a href="#">
-              <i class="material-icons-outlined">devices</i>
-              <span> Devices </span></a>
-          </li>
-        </ul>
-
-        <ul>
-          <li>
+          <li class="li-active">
             <a href="#">
               <!-- <i class="bi bi-gear-fill"></i> -->
               <i class="material-icons"> settings </i>
               <span> Settings</span>
             </a>
           </li>
-        </ul>
-
-        <ul>
           <li>
-            <a href="#">
+            <a href="/statistic.html">
               <!-- <i class="bi bi-bar-chart"></i> -->
               <i class="material-icons"> insert_chart_outlined </i>
               <span> Statistics </span>
             </a>
           </li>
         </ul>
+
+        <!-- <ul>
+          <li>
+            <a href="#">
+              <i class="material-icons"> message </i>
+              <span> Messages </span>
+            </a>
+          </li>
+        </ul> -->
+
+        <!-- <ul>
+          <li>
+            <a href="#">
+              <i class="material-icons-outlined">devices</i>
+              <span> Devices </span></a>
+          </li>
+        </ul> -->
 
         <div class="logout">
           <a href="#">
@@ -87,8 +80,6 @@
             <span> Log out </span>
           </a>
         </div>
-
-
       </div>
       <div class="main-container">
         <div class="main-feed">
@@ -147,7 +138,7 @@
             <div class="control-area">
               <span class="material-icons-outlined">light_mode</span>
               <div class="range-background">
-                <div class="slider"></div>
+                <div class="slider" data-after="30%"></div>
               </div>
               <span class="material-icons">light_mode</span>
             </div>
