@@ -1,4 +1,4 @@
-const $ = document.querySelector.bind(document);
+// const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
 // App will execute all operation in smart home pages
@@ -6,6 +6,7 @@ class App {
     constructor() {
         this.handleDevice();
         this.handleMainControl();
+        this.handleSidebarActive();
     }
     handleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -23,8 +24,11 @@ class App {
     }
     handleMainControl = () => {
         const handleSlider = () => {
-            $('div.slider').addEventListener('mousedown', mouseDown, false);
-            window.addEventListener('mouseup', mouseUp, false);
+            const slider = document.querySelector('div.slider');
+            if (slider) {
+                slider.addEventListener('mousedown', mouseDown, false);
+                window.addEventListener('mouseup', mouseUp, false);
+            }
         }
 
         const mouseUp = () => {
@@ -36,7 +40,7 @@ class App {
         }
 
         const divMove = (e) => {
-            let currentRatio = ((e.clientX - $('div.range-background').offsetLeft) / $('div.range-background').offsetWidth) * 100;
+            let currentRatio = ((e.clientX - document.querySelector('div.range-background').offsetLeft) / document.querySelector('div.range-background').offsetWidth) * 100;
             currentRatio = parseInt(currentRatio);
             if (currentRatio > 100) {
                 currentRatio = 100;
@@ -44,14 +48,39 @@ class App {
             else if (currentRatio < 0) {
                 currentRatio = 0;
             }
-            $('div.slider').dataset.after = currentRatio + '%';
-            $('div.slider').style.width = currentRatio + '%';
+            document.querySelector('div.slider').dataset.after = currentRatio + '%';
+            document.querySelector('div.slider').style.width = currentRatio + '%';
         }
         handleSlider();
     }
     handleSidebarActive = () => {
-
+        const sidebarItem = $$('.sidebar-items li');
+        sidebarItem.forEach((li, index) => {
+            li.addEventListener('click', () => {
+                for (let j = 0; j < sidebarItem.length; j++) {
+                    if (sidebarItem[j].classList.contains('li-active')) {
+                        sidebarItem[j].classList.remove('li-active');
+                    }
+                }
+                // li.classList.add('li-active');
+                window.localStorage.setItem('activeTab', index);
+                if (li.children[0].dataset.tab == 'statistics') {
+                    window.location.href = '/statistic.html';
+                }
+                else if (li.children[0].dataset.tab == 'dashboard') {
+                    window.location.href = '/';
+                }
+            })
+        })
     }
-}
 
+}
+window.onload = () => {
+    $$('.sidebar-items li').forEach((li, index) => {
+        const oldIndex = window.localStorage.getItem('activeTab');
+        if (index == oldIndex) {
+            li.classList.add('li-active');
+        }
+    })
+}
 const myHome = new App();

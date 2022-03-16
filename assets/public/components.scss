@@ -13,7 +13,7 @@ $toggle-control-ease: ease-in;
 // change at your own risk.
 $toggle-radius: calc($toggle-height / 2);
 $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
-.btn {
+.my-btn {
   background: $orange;
   border: none;
   border-radius: 7px;

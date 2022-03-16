@@ -81,7 +81,7 @@
     height: 41px;
     margin: 20px 0 20px 0;
     // SELECT ROOM DESIGN ====================
-    .dropdown {
+    .select-room-dropdown {
       width: 120px;
       height: 100%;
       display: inline-block;
@@ -109,7 +109,7 @@
           margin-left: 5px;
         }
       }
-      .dropdown-menu {
+      .select-room-dropdown-menu {
         position: absolute;
         background-color: #fff;
         width: 100%;
@@ -137,7 +137,7 @@
         }
       }
     }
-    .dropdown.active .select > i {
+    .select-room-dropdown.active .select > i {
       transform: rotate(90deg);
     }
     .add-device-btn {
@@ -316,10 +316,8 @@
     .device-list {
       width: 580px;
       height: 96px;
-      display: inline-block;
-      gap: 20px;
-      display: -webkit-inline-box;
-      display: -moz-inline-box;
+      display: flex;
+      flex-direction: row;
       .device-item {
         padding: 10px;
         border-radius: 13px;

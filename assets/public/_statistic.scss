@@ -33,6 +33,40 @@
         border-radius: 10px;
         background: white;
         box-shadow: $shadow;
+        display: inline-flex;
+        .border-badge {
+          width: 65px;
+          height: 100%;
+          background: #00466D;
+          border-top-left-radius: inherit;
+          border-bottom-left-radius: inherit;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          span {
+            color: white;
+            font-size: 18px;
+          }
+        }
+        .room-name {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          padding-left: 10px;
+          p {
+            &:first-child {
+              font-size: 14px;
+              font-weight: 600;
+            }
+            &:last-child {
+              font-size: 11px;
+              display: inline-flex;
+              align-items: center;
+              justify-content: flex-start;
+            }
+          }
+        }
       }
     }
     .table-of-device {

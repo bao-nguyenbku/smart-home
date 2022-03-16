@@ -338,7 +338,7 @@ template {
   display: none;
 }
 
-.btn {
+.my-btn {
   background: #fe834d;
   border: none;
   border-radius: 7px;
@@ -507,7 +507,7 @@ p {
   height: 33px;
   padding: 0;
 }
-.sidebar-container ul li a {
+.sidebar-container ul li .sidebar-item {
   padding-left: 34px;
   display: inline-flex;
   align-items: center;
@@ -516,6 +516,7 @@ p {
   width: 100%;
   height: 100%;
   font-size: 12px;
+  cursor: pointer;
 }
 .sidebar-container ul li i {
   color: #7297ab;
@@ -641,7 +642,7 @@ p {
   height: 41px;
   margin: 20px 0 20px 0;
 }
-.main-container .add-new-device-and-choose-room .dropdown {
+.main-container .add-new-device-and-choose-room .select-room-dropdown {
   width: 120px;
   height: 100%;
   display: inline-block;
@@ -653,7 +654,7 @@ p {
   color: #7297ab;
   padding: 10px;
 }
-.main-container .add-new-device-and-choose-room .dropdown .select {
+.main-container .add-new-device-and-choose-room .select-room-dropdown .select {
   cursor: pointer;
   height: 100%;
   display: flex;
@@ -661,7 +662,7 @@ p {
   align-items: center;
   justify-content: space-between;
 }
-.main-container .add-new-device-and-choose-room .dropdown .select > i {
+.main-container .add-new-device-and-choose-room .select-room-dropdown .select > i {
   font-size: 15px;
   color: #7297ab;
   cursor: pointer;
@@ -670,7 +671,7 @@ p {
   line-height: 20px;
   margin-left: 5px;
 }
-.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu {
+.main-container .add-new-device-and-choose-room .select-room-dropdown .select-room-dropdown-menu {
   position: absolute;
   background-color: #fff;
   width: 100%;
@@ -686,18 +687,18 @@ p {
   padding: 0;
   list-style: none;
 }
-.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu li {
+.main-container .add-new-device-and-choose-room .select-room-dropdown .select-room-dropdown-menu li {
   padding: 10px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
-.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu li:hover {
+.main-container .add-new-device-and-choose-room .select-room-dropdown .select-room-dropdown-menu li:hover {
   background-color: #f2f2f2;
 }
-.main-container .add-new-device-and-choose-room .dropdown .dropdown-menu li:active {
+.main-container .add-new-device-and-choose-room .select-room-dropdown .select-room-dropdown-menu li:active {
   background-color: white;
 }
-.main-container .add-new-device-and-choose-room .dropdown.active .select > i {
+.main-container .add-new-device-and-choose-room .select-room-dropdown.active .select > i {
   transform: rotate(90deg);
 }
 .main-container .add-new-device-and-choose-room .add-device-btn {
@@ -876,10 +877,8 @@ p {
 .main-container .device-list-container .device-list {
   width: 580px;
   height: 96px;
-  display: inline-block;
-  gap: 20px;
-  display: -webkit-inline-box;
-  display: -moz-inline-box;
+  display: flex;
+  flex-direction: row;
 }
 .main-container .device-list-container .device-list .device-item {
   padding: 10px;
@@ -972,6 +971,38 @@ p {
   border-radius: 10px;
   background: white;
   box-shadow: 0 1px 2px #cccccc;
+  display: inline-flex;
+}
+.statistic-container .table-and-rooms .rooms-container .room-item .border-badge {
+  width: 65px;
+  height: 100%;
+  background: #00466D;
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.statistic-container .table-and-rooms .rooms-container .room-item .border-badge span {
+  color: white;
+  font-size: 18px;
+}
+.statistic-container .table-and-rooms .rooms-container .room-item .room-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 10px;
+}
+.statistic-container .table-and-rooms .rooms-container .room-item .room-name p:first-child {
+  font-size: 14px;
+  font-weight: 600;
+}
+.statistic-container .table-and-rooms .rooms-container .room-item .room-name p:last-child {
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 .statistic-container .table-and-rooms .table-of-device table {
   font-size: 10px;
