@@ -17,14 +17,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  
-    <!-- Swiperjs -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-    
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="./assets/public/css/app.css">
-  </head>
-  
+
+  <!-- Swiperjs -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="./assets/public/css/app.css">
+</head>
+
 <body>
   <div class="body-container">
     <div class="wrapper">
@@ -47,11 +47,11 @@
             </span>
           </li>
           <li>
-              <span class="sidebar-item" data-tab="statistics">
-                <i class="material-icons">insert_chart_outlined</i>
-                <span>Statistics</span>
-              </span>
-            
+            <span class="sidebar-item" data-tab="statistics">
+              <i class="material-icons">insert_chart_outlined</i>
+              <span>Statistics</span>
+            </span>
+
           </li>
         </ul>
 
@@ -65,6 +65,35 @@
       </div>
       <div class="main-container">
         <div class="main-feed">
+          <div class="message-area">
+            <div class="dropdown">
+              <button class="material-icons-outlined dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">message</button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><h6 class="dropdown-header">Today</h6></li>
+                <li><span class="dropdown-item">
+                  <span class="material-icons-outlined">
+                      lightbulb
+                    </span>
+                  <div class="message-item">
+                    <p>Đèn 2 mở trên 5h</p>
+                    <p>Garage</p>
+                  </div>
+                </span></li>
+                <li><span class="dropdown-item">
+                  <span class="material-icons-outlined">
+                      lightbulb
+                    </span>
+                  <div class="message-item">
+                    <p>Đèn 1 cần bảo trì</p>
+                    <p>Kitchen</p>
+                  </div>
+                </span></li>
+                
+                <li><h6 class="dropdown-header">Yesterday</h6></li>
+                <li><span class="dropdown-item">Action</span></li>
+              </ul>
+            </div>
+          </div>
           <div class="avatar-container">
             <div class="avatar">
               <img src="./assets//images/avatar.jpg" alt="">
@@ -131,13 +160,13 @@
               <p>Temperature</p>
               <p>26<span>o</span> C</p>
               <i class="fa-solid fa-temperature-high"></i>
-          
+
             </div>
             <div class="humidity-container">
               <p>Humidity</p>
               <p>40%</p>
               <i class="fa-solid fa-droplet"></i>
-          
+
             </div>
           </div>
           <div class="device-list-container">
@@ -216,4 +245,5 @@
   </script>
   <script src="./assets/public/js/controllers.js"></script>
 </body>
+
 </html>

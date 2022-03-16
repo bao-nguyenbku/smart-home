@@ -9,6 +9,46 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    .message-area {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      button {
+        box-shadow: $shadow;
+        background: white;
+        border-radius: 50%;
+        font-size: 14px;
+        padding: 8px;
+        text-align: center;
+        color: $lightBlue;
+        border: none;
+        &::after {
+          content: '';
+          display: none;
+        }
+      }
+      .dropdown ul li span.dropdown-item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 5px;
+        span {
+          background: rgba($color: #7297ab, $alpha: 0.2);
+          border-radius: 5px;
+          color: $lightBlue;
+          padding: 4px;
+        }
+        .message-item {
+          p {
+            font-size: 12px;
+            &:last-child {
+              color: $lightBlue;
+            }
+          }
+        }
+      }
+    }
     .avatar-container {
       display: flex;
       flex-direction: row;
@@ -29,7 +69,7 @@
       }
       .avatar-name {
         height: inherit;
-        width: 239px;
+        width: 190px;
         margin-left: 25px;
         p {
           margin: 0;
