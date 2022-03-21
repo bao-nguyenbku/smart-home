@@ -1,23 +1,3 @@
-<<<<<<< Updated upstream
-=======
-.body-container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(125.8deg, #4FACFE 7.05%, #00F2FE 86.34%);
-    .wrapper {
-        width: 801px;
-        height: 675px;
-        background: $background;
-        border-radius: 30px;
-        display: flex;
-        flex-direction: row;
-    }
-}
->>>>>>> Stashed changes
 .sidebar-container {
     width: 161px;
     height: 100%;
@@ -44,7 +24,6 @@
             margin-left: 7px;
         }
     }
-<<<<<<< Updated upstream
     ul{
         padding: 0;
         li{
@@ -82,47 +61,6 @@
                 color: $orange;
             }
         }
-=======
-    .ul_active{
-        background: #FFE7DC;
-        border-right: 4px solid #FF844B;
-        line-height: 33px;
-        .i_active{
-            color: #FF844B !important;
-            display: inline-block;
-            font-size: 12px;
-        }
-        .span_active{
-            color: #FF844B;
-            font-weight: 700;
-            font-size: 12px;
-            line-height: 33px;
-            margin-left: 5px;
-        }
-    }
-    ul{
-        margin: 0 0 20px 0;
-        height: 33px;
-        li{
-            list-style-type: none;
-            a{
-                text-decoration: none;
-            }
-            i{
-                color: #83A4B5;
-                display: inline-block;
-                font-size: 12px;
-                font-style: normal;
-            }
-            span{
-                color: #83A4B5;
-                font-weight: 700;
-                font-size: 12px;
-                line-height: 33px;
-                margin-left: 5px;
-            }
-        }
->>>>>>> Stashed changes
     }
     .logout{
         height: 42px;
@@ -148,33 +86,4 @@
             color: #7297AB
         }
     }
-<<<<<<< Updated upstream
-=======
-}
-.main-container {
-    width: calc(801px - 161px);
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    padding: 30px;
-    .main-feed {
-        width: 100%;
-        height: 60px;
-        .avatar-container {
-            display: flex;
-            flex-direction: row;
-            .avatar {
-                width: 53px;
-                height: 53px;
-                border-radius: 50%;
-                background: white;
-            }
-            .avatar-name {
-                height: 100%;
-                p {
-                    font-size: 20px;
-                }
-            }
-        }
-    }
->>>>>>> Stashed changes
 }
