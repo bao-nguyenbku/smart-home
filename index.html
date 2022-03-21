@@ -57,7 +57,6 @@
 
         <div class="logout">
           <a href="#">
-            <!-- <i class="bi bi-box-arrow-right"></i> -->
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
             <span> Log out </span>
           </a>
@@ -67,29 +66,34 @@
         <div class="main-feed">
           <div class="message-area">
             <div class="dropdown">
-              <button class="material-icons-outlined dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">message</button>
+              <button class="material-icons-outlined dropdown-toggle" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">message</button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><h6 class="dropdown-header">Today</h6></li>
+                <li>
+                  <h6 class="dropdown-header">Today</h6>
+                </li>
                 <li><span class="dropdown-item">
-                  <span class="material-icons-outlined">
+                    <span class="material-icons-outlined">
                       lightbulb
                     </span>
-                  <div class="message-item">
-                    <p>Đèn 2 mở trên 5h</p>
-                    <p>Garage</p>
-                  </div>
-                </span></li>
+                    <div class="message-item">
+                      <p>Đèn 2 mở trên 5h</p>
+                      <p>Garage</p>
+                    </div>
+                  </span></li>
                 <li><span class="dropdown-item">
-                  <span class="material-icons-outlined">
+                    <span class="material-icons-outlined">
                       lightbulb
                     </span>
-                  <div class="message-item">
-                    <p>Đèn 1 cần bảo trì</p>
-                    <p>Kitchen</p>
-                  </div>
-                </span></li>
-                
-                <li><h6 class="dropdown-header">Yesterday</h6></li>
+                    <div class="message-item">
+                      <p>Đèn 1 cần bảo trì</p>
+                      <p>Kitchen</p>
+                    </div>
+                  </span></li>
+
+                <li>
+                  <h6 class="dropdown-header">Yesterday</h6>
+                </li>
                 <li><span class="dropdown-item">Action</span></li>
               </ul>
             </div>
@@ -114,7 +118,8 @@
         <!-- START PAGE HERE -->
         <div id="main-area-render">
           <div class="add-new-device-and-choose-room">
-            <button class="my-btn add-device-btn"><span class="material-icons">
+            <button class="my-btn add-device-btn"
+            data-bs-toggle="modal" data-bs-target="#exampleModal2"><span class="material-icons">
                 add_circle
               </span>
               New device</button>
@@ -216,6 +221,73 @@
                   <div class="bottom-info">
                     <p>Đèn chùm giữa</p>
                     <p>Off</p>
+                  </div>
+                </div>
+                <div class="device-item swiper-slide" 
+                      data-item="add"
+                      data-bs-toggle="modal" data-bs-target="#exampleModal"
+                >
+                  <span class="material-icons-outlined">add</span>
+                  <!-- Button trigger modal -->
+                  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Launch demo modal
+                  </button> -->
+
+                  <!-- Modal -->
+                </div>
+              </div>
+            </div>
+            <!-- MODAL FOR ADDING ROOM -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New device</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="formGroupExampleInput" class="form-label">Device's name</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput">
+                    </div>
+                    <div class="mb-3">
+                      <label for="formGroupExampleInput2" class="form-label">Device's code</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput2">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal"
+                    style="background: none; border: none;"
+                    >Cancel</button>
+                    <button type="button" 
+                    style="background: none; border: none; color: red;"
+                    >Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New room</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="formGroupExampleInput" class="form-label">Room's name</label>
+                      <input type="text" class="form-control" id="formGroupExampleInput">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" data-bs-dismiss="modal"
+                    style="background: none; border: none;"
+                    >Cancel</button>
+                    <button type="button" 
+                    style="background: none; border: none; color: red;"
+                    >Add</button>
                   </div>
                 </div>
               </div>
