@@ -1,0 +1,233 @@
+.main-container {
+  width: calc(801px - 161px);
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding: 30px;
+  .main-feed {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .avatar-container {
+      display: flex;
+      flex-direction: row;
+      height: inherit;
+      .avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: white;
+      }
+      .avatar-name {
+        height: inherit;
+        width: 239px;
+        margin-left: 25px;
+        p {
+          margin: 0;
+          font-size: 12px;
+        }
+        .account-name {
+          width: 100%;
+          font-size: 20px;
+          font-weight: 600;
+        }
+        .account-address {
+          height: 40px;
+          color: $lightBlue;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: flex-start;
+          p {
+            margin-left: 5px;
+            width: 143px;
+          }
+        }
+      }
+    }
+    .feed {
+      width: 292px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      p {
+        &:first-child {
+          font-size: 26px;
+        }
+        &:nth-child(2) {
+          font-size: 14px;
+          margin-top: 5px;
+          color: $lightBlue;
+        }
+      }
+    }
+  }
+  .add-new-device-and-choose-room {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: 41px;
+    margin: 20px 0 20px 0;
+    // SELECT ROOM DESIGN ====================
+    .dropdown {
+      width: 120px;
+      height: 100%;
+      display: inline-block;
+      background-color: none;
+      border-radius: 2px;
+      transition: all 0.5s ease;
+      position: relative;
+      font-size: 13px;
+      color: $lightBlue;
+      padding: 10px;
+    }
+    .dropdown .select {
+      cursor: pointer;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dropdown .select > i {
+      font-size: 13px;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      float: right;
+      line-height: 20px;
+      margin-left: 5px;
+    }
+    // .dropdown.active:hover,
+    // .dropdown.active {
+    //   box-shadow: 0 0 4px rgb(204, 204, 204);
+    //   border-radius: 2px 2px 0 0;
+    //   background-color: #f8f8f8;
+    // }
+    .dropdown.active .select > i {
+      transform: rotate(90deg);
+    }
+    .dropdown .dropdown-menu {
+      position: absolute;
+      background-color: #fff;
+      width: 100%;
+      left: 0;
+      margin-top: 1px;
+      box-shadow: 0 1px 2px rgb(204, 204, 204);
+      border-radius: 0 0px 2px 2px;
+      overflow: hidden;
+      display: none;
+      max-height: 144px;
+      overflow-y: auto;
+      z-index: 9;
+    }
+    .dropdown .dropdown-menu li {
+      padding: 10px;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+    }
+    .dropdown .dropdown-menu {
+      padding: 0;
+      list-style: none;
+    }
+    .dropdown .dropdown-menu li:hover {
+      background-color: #f2f2f2;
+    }
+    .dropdown .dropdown-menu li:active {
+      background-color: white;
+    }
+    .add-device-btn {
+      width: 125px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      span {
+        padding-right: 5px;
+        opacity: 0.7;
+      }
+    }
+  }
+  .main-control-container {
+    height: 288px;
+    width: 100%;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1;
+    .grid-col-span-2 {
+      grid-row: span 2;
+    }
+    .main-control {
+      width: 414px;
+      height: 100%;
+      background: white;
+      border-radius: 17px;
+    }
+    .temp-container, .humidity-container {
+      width: 147px;
+      height: 135px;
+      background: white;
+      border-radius: 17px;
+    }
+    
+  }
+  .device-list-container {
+    width: 100%;
+    margin-top: 30px;
+    .device-list-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .device-list {
+      width: 580px;
+      height: 96px;
+      display: inline-block !important;
+      gap: 20px;
+      display: -webkit-inline-box !important;
+      display: -moz-inline-box !important;
+      .device-item {
+        padding: 10px;
+        border-radius: 13px;
+        width: 123px !important;
+        height: 96px;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .top-action {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+        .icon-background {
+          background: rgba($color: #7297ab, $alpha: 0.3);
+          border-radius: 50%;
+          width: 31px;
+          height: 31px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          & > span {
+            color: $lightBlue;
+          }
+        }
+        .bottom-info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          p {
+            &:first-child {
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}
