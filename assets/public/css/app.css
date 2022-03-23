@@ -1205,6 +1205,9 @@ p {
 .settings-items {
   width: 210px;
 }
+.settings-items .nav1 {
+  border-bottom: 0px;
+}
 .settings-items ul {
   flex-direction: column;
   margin-top: 25px;
