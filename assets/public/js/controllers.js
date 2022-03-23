@@ -70,6 +70,9 @@ class App {
                 else if (li.children[0].dataset.tab == 'dashboard') {
                     window.location.href = '/';
                 }
+                else if (li.children[0].dataset.tab == 'settings') {
+                    window.location.href = '/settings.html';
+                }
             })
         })
     }

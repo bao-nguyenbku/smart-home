@@ -539,9 +539,9 @@ p {
 .sidebar-container .logout {
   height: 42px;
   width: 95px;
-  margin: 230px auto;
+  margin: 330px auto;
   line-height: 42px;
-  background: #F1F6FA;
+  background: #f1f6fa;
   border-radius: 10px;
 }
 .sidebar-container .logout a {
@@ -1057,6 +1057,177 @@ p {
 }
 .statistic-container .table-and-rooms .table-of-device table thead tr th:last-child {
   width: 42px;
+}
+
+.settings-container {
+  margin-top: 20px;
+  height: 100px;
+}
+.settings-container .settings-button {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+.settings-container .settings-button .settings-button-class p {
+  margin-top: 10px;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 16px;
+}
+.settings-container .settings-button .settings-button-class a {
+  width: 70px;
+  height: 70px;
+  background: #ffffff;
+  box-shadow: 1px 3px 10px rgba(165, 165, 165, 0.5);
+  border-radius: 10px;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+}
+.settings-container .settings-button .settings-button-class a span {
+  font-size: 44px;
+  color: #83A4B5;
+  margin: auto;
+}
+.settings-container .settings-button .settings-button-class .active {
+  width: 70px;
+  height: 70px;
+  background: #FF844B;
+  box-shadow: 1px 3px 10px rgba(255, 132, 75, 0.5);
+  border-radius: 10px;
+  display: inline-flex;
+  text-decoration: none;
+}
+.settings-container .settings-button .settings-button-class .active span {
+  font-size: 44px;
+  color: white;
+  margin: auto;
+}
+
+.settings-content {
+  display: flex;
+}
+
+.settings-items {
+  width: 210px;
+}
+.settings-items ul {
+  flex-direction: column;
+  margin-top: 25px;
+}
+.settings-items ul li {
+  list-style-type: none;
+  width: 175px;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 8px 0;
+}
+.settings-items ul li a {
+  text-decoration: none;
+  color: #000000;
+}
+.settings-items ul li i {
+  margin-left: 10px;
+  font-size: 18px;
+}
+.settings-items ul li span {
+  margin-left: 15px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+}
+.settings-items ul .item_active {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.settings-edit {
+  width: 397px;
+  height: 409px;
+  background: #FFFFFF;
+  border-radius: 19px;
+  margin-left: 30px;
+  margin-top: 25px;
+}
+.settings-edit .settings-avatar {
+  margin-left: 130px;
+  width: 85px;
+  height: 82px;
+}
+.settings-edit .settings-avatar img {
+  width: 100%;
+  height: 100%;
+  margin-top: 15px;
+  object-fit: cover;
+  border: 2px solid #FFFFFF;
+  box-sizing: border-box;
+  filter: drop-shadow(0px 4px 7px rgba(0, 0, 0, 0.25));
+  border-radius: 50px;
+}
+.settings-edit .form_edit {
+  position: relative;
+  width: 216px;
+  margin: 32px auto;
+}
+.settings-edit .form_edit label {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+.settings-edit .form_edit input {
+  width: 216px;
+  height: 25px;
+  background: #F4F4F4;
+  border: 1px solid #E3EDF2;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  color: #7297ab;
+  font-weight: 450;
+  padding: 4px;
+}
+.settings-edit .form_edit .cancel {
+  margin-left: 70px;
+  width: 69px;
+  height: 30px;
+  background: #F4F4F4;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #7297ab;
+}
+.settings-edit .form_edit .save {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 69px;
+  height: 30px;
+  background: #FF9900;
+  box-shadow: 1px 2px 10px rgba(255, 153, 0, 0.75);
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  color: #FFFFFF;
+}
+.settings-edit .form_change_password {
+  padding-top: 40px;
+}
+.settings-edit .myhome img {
+  display: block;
+  margin: auto;
+  padding-top: 10px;
+  width: 80%;
+}
+.settings-edit .form_myhome {
+  margin-top: 10px;
 }
 
 /*# sourceMappingURL=app.css.map */
