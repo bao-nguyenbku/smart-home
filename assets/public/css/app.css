@@ -471,6 +471,10 @@ p {
   flex-direction: row;
 }
 
+.modal-content {
+  border-radius: 20px;
+}
+
 .sidebar-container {
   width: 161px;
   height: 100%;
@@ -940,6 +944,17 @@ p {
 }
 .main-container .device-list-container .device-list .device-item .bottom-info p:first-child {
   font-weight: 600;
+}
+.main-container .device-list-container .device-list .device-item:last-child {
+  border: 2px dashed #7297ab;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.main-container .device-list-container .device-list .device-item:last-child > span {
+  color: #7297ab;
 }
 .main-container .device-list-container .device-list .device-item-active {
   transition: all 0.8s ease;

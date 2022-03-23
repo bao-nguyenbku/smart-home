@@ -382,6 +382,17 @@
             }
           }
         }
+        &:last-child {
+          border: 2px dashed $lightBlue;
+          background: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          & > span {
+            color: $lightBlue;
+          }
+        }
       }
       .device-item-active {
         transition: all 0.8s ease;
