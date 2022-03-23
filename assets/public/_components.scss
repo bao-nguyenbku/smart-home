@@ -1,0 +1,116 @@
+@import 'variable';
+$toggle-background-color-on: dodgerblue;
+$toggle-background-color-off: #E3EDF2;
+$toggle-control-color: white;
+$toggle-width: 26px;
+$toggle-height: 16px;
+$toggle-gutter: 3px;
+$toggle-radius: 50%;
+$toggle-control-speed: 0.15s;
+$toggle-control-ease: ease-in;
+
+// These are our computed variables
+// change at your own risk.
+$toggle-radius: calc($toggle-height / 2);
+$toggle-control-size: $toggle-height - ($toggle-gutter * 2);
+.my-btn {
+  background: $orange;
+  border: none;
+  border-radius: 7px;
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+}
+.toggle-control {
+  display: block;
+  position: relative;
+  padding-left: $toggle-width;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  user-select: none;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  input:checked ~ .control {
+    background-color: $toggle-background-color-on;
+
+    &:after {
+      left: $toggle-width - $toggle-control-size - $toggle-gutter;
+    }
+  }
+
+  .control {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $toggle-height;
+    width: $toggle-width;
+    border-radius: $toggle-radius;
+    background-color: $toggle-background-color-off;
+    transition: background-color $toggle-control-speed $toggle-control-ease;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: $toggle-gutter;
+      top: $toggle-gutter;
+      width: $toggle-control-size;
+      height: $toggle-control-size;
+      border-radius: $toggle-radius;
+      background: $toggle-control-color;
+      transition: left $toggle-control-speed $toggle-control-ease;
+    }
+  }
+  input:checked ~ .main-toggle {
+    background-color: $orange;
+
+    &:after {
+      left: 21px;
+    }
+  }
+  .main-toggle {
+    width: 40px;
+    height: 22px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 11px;
+    background-color: $toggle-background-color-off;
+    transition: background-color $toggle-control-speed $toggle-control-ease;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: $toggle-gutter;
+      top: $toggle-gutter;
+      width: 16px !important;
+      height: 16px !important;
+      border-radius: 11px;
+      background: $toggle-control-color;
+      transition: left $toggle-control-speed $toggle-control-ease;
+    }
+  }
+}
+.main-toggle-control {
+  width: 40px;
+  height: 22px;
+}
+.icon-background {
+  background: rgba($color: #7297ab, $alpha: 0.3);
+  border-radius: 50%;
+  width: 31px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & > span {
+    color: $lightBlue;
+  }
+}
