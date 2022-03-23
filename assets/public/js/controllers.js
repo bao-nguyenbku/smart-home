@@ -7,6 +7,7 @@ class App {
         this.handleDevice();
         this.handleMainControl();
         this.handleSidebarActive();
+        this.getData();
     }
     handleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -76,7 +77,18 @@ class App {
             })
         })
     }
-
+    getData = () => {
+        // setInterval(() => {
+        //     $.ajax({
+        //         method: 'GET',
+        //         url: 'http://localhost:5000/',
+        //         success: (res) => {
+        //             console.log(res);
+        //         }
+        //     })
+        // }, 1000)
+        
+    }
 }
 window.onload = () => {
     $$('.sidebar-items li').forEach((li, index) => {

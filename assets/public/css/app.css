@@ -1060,8 +1060,29 @@ p {
   align-items: center;
   justify-content: flex-start;
 }
+.statistic-container .table-and-rooms .table-of-device-container {
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  height: 100%;
+}
+.statistic-container .table-and-rooms .table-of-device {
+  background: white;
+  height: 255px;
+  overflow-y: auto;
+}
+.statistic-container .table-and-rooms .table-of-device::-webkit-scrollbar {
+  display: none;
+}
 .statistic-container .table-and-rooms .table-of-device table {
   font-size: 10px;
+  width: 100%;
+}
+.statistic-container .table-and-rooms .table-of-device table thead th {
+  top: 0;
+  z-index: 2;
+  position: sticky;
+  background: white;
 }
 .statistic-container .table-and-rooms .table-of-device table thead tr {
   font-size: 11px;
@@ -1072,9 +1093,29 @@ p {
   font-size: inherit;
   text-align: center;
   color: #7297ab;
+  text-align: start;
 }
 .statistic-container .table-and-rooms .table-of-device table thead tr th:last-child {
   width: 42px;
+}
+.statistic-container .table-and-rooms .table-of-device .table-pagination {
+  padding-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  bottom: 0;
+  position: sticky;
+  background: white;
+}
+.statistic-container .table-and-rooms .table-of-device .table-pagination span {
+  background: rgba(114, 151, 171, 0.2);
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 10px;
+  color: #7297ab;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .settings-container {
