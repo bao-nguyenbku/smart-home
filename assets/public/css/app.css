@@ -471,10 +471,6 @@ p {
   flex-direction: row;
 }
 
-.modal-content {
-  border-radius: 20px;
-}
-
 .sidebar-container {
   width: 161px;
   height: 100%;
