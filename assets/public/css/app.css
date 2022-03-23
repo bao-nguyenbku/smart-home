@@ -1091,6 +1091,10 @@ p {
 .statistic-container .table-and-rooms .table-of-device table thead tr th:last-child {
   width: 42px;
 }
+.statistic-container .table-and-rooms .table-of-device table tbody td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .statistic-container .table-and-rooms .table-of-device .table-pagination {
   padding-top: 10px;
   display: inline-flex;
