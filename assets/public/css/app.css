@@ -483,6 +483,7 @@ p {
   width: 100%;
   height: 48px;
   margin-top: 45px;
+  cursor: pointer;
 }
 .sidebar-container .logo .img {
   margin-left: 17px;
@@ -517,6 +518,8 @@ p {
   height: 100%;
   font-size: 12px;
   cursor: pointer;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 .sidebar-container ul li i {
   color: #7297ab;
@@ -535,6 +538,10 @@ p {
 }
 .sidebar-container ul li.li-active i, .sidebar-container ul li.li-active span {
   color: #fe834d;
+}
+.sidebar-container ul .sidebar-item:hover {
+  -webkit-transform: translateX(8px);
+  transform: translateX(8px);
 }
 .sidebar-container .logout {
   height: 42px;
@@ -1079,6 +1086,15 @@ p {
   display: flex;
   justify-content: space-around;
 }
+.settings-container .settings-button .settings-button-class {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
 .settings-container .settings-button .settings-button-class p {
   margin-top: 10px;
   font-weight: 900;
@@ -1094,11 +1110,25 @@ p {
   display: inline-flex;
   text-decoration: none;
   cursor: pointer;
+  padding: 10px 2px;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 .settings-container .settings-button .settings-button-class a span {
   font-size: 44px;
   color: #83A4B5;
-  margin: auto;
+  margin-left: 12px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
 }
 .settings-container .settings-button .settings-button-class .active {
   width: 70px;
@@ -1113,6 +1143,18 @@ p {
   font-size: 44px;
   color: white;
   margin: auto;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.settings-container .settings-button .settings-button-class:hover span {
+  -webkit-transform: scale(1.3) translateZ(0);
+  transform: scale(1.3) translateZ(0);
 }
 
 .settings-content {
@@ -1133,6 +1175,11 @@ p {
   align-items: center;
   margin-bottom: 25px;
   padding: 8px 0;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 .settings-items ul li a {
   text-decoration: none;
@@ -1147,6 +1194,36 @@ p {
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
+}
+.settings-items ul li:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #2098D1;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.settings-items ul a:hover, .settings-items ul a:focus {
+  color: white;
+}
+.settings-items ul a:active {
+  color: #FF4500;
+}
+.settings-items ul li:hover:before, .settings-items ul a:focus:before, .settings-items ul a:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
 }
 .settings-items ul .item_active {
   background: #FFFFFF;
