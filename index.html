@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 
   <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
   <link rel="stylesheet" href="./assets/public/css/app.css">
 </head>
 
@@ -156,8 +157,10 @@
               <div class="control-area">
                 <span class="material-icons-outlined">light_mode</span>
                 <div class="range-background">
-                  <div class="slider" data-after="30%"></div>
+                  <!-- <div class="slider" data-after="30%"></div> -->
+                  <input type="range" class="slider" value="30" min="0" max="100">
                 </div>
+
                 <span class="material-icons">light_mode</span>
               </div>
             </div>
@@ -176,65 +179,64 @@
           </div>
           <div class="device-list-container">
             <p class="device-list-title">Devices</p>
-            <div class="device-list swiper mySwiper">
-              <div class="swiper-wrapper">
-                <div class="device-item swiper-slide" data-item="light">
-                  <div class="top-action">
-                    <div class="icon-background">
-                      <span class="material-icons-outlined">lightbulb</span>
-                    </div>
-                    <label class="toggle-control">
-                      <input type="checkbox">
-                      <span class="control"></span>
-                    </label>
+            <div class="device-list">
+              <div class="device-item" data-item="light">
+                <div class="top-action">
+                  <div class="icon-background">
+                    <span class="material-icons-outlined">lightbulb</span>
                   </div>
-                  <div class="bottom-info">
-                    <p>Đèn dài</p>
-                    <p>Off</p>
-                  </div>
+                  <label class="toggle-control">
+                    <input type="checkbox">
+                    <span class="control"></span>
+                  </label>
                 </div>
-                <div class="device-item swiper-slide" data-item="fan">
-                  <div class="top-action">
-                    <div class="icon-background">
-                      <span class="fa-solid fa-fan"></span>
-                    </div>
-                    <label class="toggle-control">
-                      <input type="checkbox">
-                      <span class="control"></span>
-                    </label>
-                  </div>
-                  <div class="bottom-info">
-                    <p>Quạt</p>
-                    <p>3</p>
-                  </div>
+                <div class="bottom-info">
+                  <p>Đèn dài</p>
+                  <p>Off</p>
                 </div>
-                <div class="device-item swiper-slide" data-item="light">
-                  <div class="top-action">
-                    <div class="icon-background">
-                      <span class="material-icons-outlined">lightbulb</span>
-                    </div>
-                    <label class="toggle-control">
-                      <input type="checkbox">
-                      <span class="control"></span>
-                    </label>
+              </div>
+              <div class="device-item" data-item="fan">
+                <div class="top-action">
+                  <div class="icon-background">
+                    <span class="fa-solid fa-fan"></span>
                   </div>
-                  <div class="bottom-info">
-                    <p>Đèn chùm giữa</p>
-                    <p>Off</p>
-                  </div>
+                  <label class="toggle-control">
+                    <input type="checkbox">
+                    <span class="control"></span>
+                  </label>
                 </div>
-                <div class="device-item swiper-slide" 
-                      data-item="add"
-                      data-bs-toggle="modal" data-bs-target="#exampleModal"
-                >
-                  <span class="material-icons-outlined">add</span>
-                  <!-- Button trigger modal -->
-                  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Launch demo modal
-                  </button> -->
+                <div class="bottom-info">
+                  <p>Quạt</p>
+                  <p>3</p>
+                </div>
+              </div>
+              <div class="device-item" data-item="light">
+                <div class="top-action">
+                  <div class="icon-background">
+                    <span class="material-icons-outlined">lightbulb</span>
+                  </div>
+                  <label class="toggle-control">
+                    <input type="checkbox">
+                    <span class="control"></span>
+                  </label>
+                </div>
+                <div class="bottom-info">
+                  <p>Đèn chùm giữa</p>
+                  <p>Off</p>
+                </div>
+              </div>
 
-                  <!-- Modal -->
-                </div>
+              <div class="device-item" 
+                    data-item="add"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal"
+              >
+                <span class="material-icons-outlined">add</span>
+                <!-- Button trigger modal -->
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Launch demo modal
+                </button> -->
+
+                <!-- Modal -->
               </div>
             </div>
             <!-- MODAL FOR ADDING ROOM -->
@@ -304,17 +306,7 @@
   <script src="./assets/distributions/jquery.js"></script>
   <script src="./assets/distributions/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
   <!-- Swiper JS -->
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="./assets/public/js/dropdown.js"></script>
-
-  <!-- Initialize Swiper -->
-  <script>
-    const swiper = new Swiper(".mySwiper", {
-      slidesPerView: 3,
-      centeredSlides: false,
-      spaceBetween: 20,
-    });
-  </script>
   <script src="./assets/public/js/controllers.js"></script>
 </body>
 

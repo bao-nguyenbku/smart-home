@@ -34,7 +34,8 @@ p {
     flex-direction: row;
   }
 }
-@import '_sidebar';
-@import '_main';
-@import '_statistic';
-@import '_settings';
+@import 'login';
+@import 'sidebar';
+@import 'main';
+@import 'statistic';
+@import 'settings';

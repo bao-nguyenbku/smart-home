@@ -65,6 +65,40 @@
       </div>
       <div class="main-container">
         <div class="main-feed">
+          <div class="message-area">
+            <div class="dropdown">
+              <button class="material-icons-outlined dropdown-toggle" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">message</button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <h6 class="dropdown-header">Today</h6>
+                </li>
+                <li><span class="dropdown-item">
+                    <span class="material-icons-outlined">
+                      lightbulb
+                    </span>
+                    <div class="message-item">
+                      <p>Đèn 2 mở trên 5h</p>
+                      <p>Garage</p>
+                    </div>
+                  </span></li>
+                <li><span class="dropdown-item">
+                    <span class="material-icons-outlined">
+                      lightbulb
+                    </span>
+                    <div class="message-item">
+                      <p>Đèn 1 cần bảo trì</p>
+                      <p>Kitchen</p>
+                    </div>
+                  </span></li>
+
+                <li>
+                  <h6 class="dropdown-header">Yesterday</h6>
+                </li>
+                <li><span class="dropdown-item">Action</span></li>
+              </ul>
+            </div>
+          </div>
           <div class="avatar-container">
             <div class="avatar">
               <img src="./assets//images/avatar.jpg" alt="">
@@ -199,17 +233,11 @@
   <script src="./assets/distributions/jquery.js"></script>
   <!-- Swiper JS -->
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="./assets/distributions/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.11.0/mdb.min.js"></script>
   <script src="./assets/public/js/dropdown.js"></script>
 
-  <!-- Initialize Swiper -->
-  <script>
-    const swiper = new Swiper(".mySwiper", {
-      slidesPerView: 3,
-      centeredSlides: false,
-      spaceBetween: 20,
-    });
-  </script>
   <script src="./assets/public/js/controllers.js"></script>
 </body>
 

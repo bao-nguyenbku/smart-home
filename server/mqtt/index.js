@@ -1,8 +1,8 @@
 import mqtt from 'mqtt';
-const HOST = `io.adafruit.com`;
-const PORT = '1883';
-const IO_USERNAME = "kimhungtdblla24";
-const IO_KEY = "aio_UDSA14XHRvdTduRIlQnWGDlGVVah";
+const HOST = process.env.IO_HOST;
+const PORT = process.env.IO_PORT;
+const IO_USERNAME = process.env.IO_USERNAME;
+const IO_KEY = process.env.IO_KEY;
 const connectUrl = `mqtt://${HOST}:${PORT}`;
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 // connect options

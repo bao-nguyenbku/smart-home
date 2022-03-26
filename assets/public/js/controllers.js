@@ -91,8 +91,11 @@ class App {
     }
 }
 window.onload = () => {
+    const oldIndex = window.localStorage.getItem('activeTab');
+    if (!oldIndex) {
+        $$('.sidebar-items li')[0].classList.add('li-active');
+    }
     $$('.sidebar-items li').forEach((li, index) => {
-        const oldIndex = window.localStorage.getItem('activeTab');
         if (index == oldIndex) {
             li.classList.add('li-active');
         }
