@@ -337,19 +337,15 @@
     .device-list {
       width: 580px;
       height: 96px;
-      overflow-x: auto;
-      overflow-y: hidden;
       display: inline-flex;
       .device-item {
         padding: 10px;
         border-radius: 13px;
         margin-right: 20px;
         width: 123px !important;
-        height: inherit;
+        height: 96px;
         background: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        @include d-flex(column, normal, space-between);
         .top-action {
           display: flex;
           flex-direction: row;
