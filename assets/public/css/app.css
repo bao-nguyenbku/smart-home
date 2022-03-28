@@ -471,6 +471,22 @@ p {
   flex-direction: row;
 }
 
+.login {
+  background-image: url("/assets/images/cong-nghe-nha-thong-minh-1024x576.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 100%;
+  height: 100vh;
+}
+.login .login-container {
+  width: 256px;
+  height: 314px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 .sidebar-container {
   width: 161px;
   height: 100%;
@@ -483,6 +499,7 @@ p {
   width: 100%;
   height: 48px;
   margin-top: 45px;
+  cursor: pointer;
 }
 .sidebar-container .logo .img {
   margin-left: 17px;
@@ -517,6 +534,8 @@ p {
   height: 100%;
   font-size: 12px;
   cursor: pointer;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 .sidebar-container ul li i {
   color: #7297ab;
@@ -535,6 +554,10 @@ p {
 }
 .sidebar-container ul li.li-active i, .sidebar-container ul li.li-active span {
   color: #fe834d;
+}
+.sidebar-container ul .sidebar-item:hover {
+  -webkit-transform: translateX(8px);
+  transform: translateX(8px);
 }
 .sidebar-container .logout {
   height: 42px;
@@ -803,44 +826,25 @@ p {
 }
 .main-container .main-control-container .main-control .control-area .range-background {
   width: 100%;
-  height: 14px;
-  background: #F4F4F4;
+  height: 25px;
   border-radius: 10px;
 }
 .main-container .main-control-container .main-control .control-area .range-background .slider {
-  width: 30%;
-  height: 100%;
-  background: linear-gradient(270deg, #FE834D 38.48%, rgba(254, 131, 77, 0.376515) 80.87%, rgba(254, 131, 77, 0) 106.46%);
-  border-radius: inherit;
-  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #f1f1f1;
+  border-radius: 20px;
 }
-.main-container .main-control-container .main-control .control-area .range-background .slider::before {
-  content: "";
-  position: absolute;
-  box-shadow: 0 1px 2px #cccccc;
-  border-radius: 50%;
-  right: -5px;
-  transform: translateY(-3.5px);
-  top: 0;
-  width: 21px;
-  height: 21px;
-  background: white;
-}
-.main-container .main-control-container .main-control .control-area .range-background .slider:hover::before {
+.main-container .main-control-container .main-control .control-area .range-background .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
   width: 25px;
   height: 25px;
-  transform: translateY(-5.5px);
-  transition: all 0.2s;
-}
-.main-container .main-control-container .main-control .control-area .range-background .slider::after {
-  content: attr(data-after);
-  position: absolute;
-  right: -19px;
-  transform: translateY(-3.5px);
-  font-weight: 600;
-  font-size: 20px;
-  top: -30px;
-  color: #fe834d;
+  border-radius: 50%;
+  background: #fe834d;
+  cursor: pointer;
 }
 .main-container .main-control-container .temp-container,
 .main-container .main-control-container .humidity-container {
@@ -915,17 +919,18 @@ p {
 .main-container .device-list-container .device-list {
   width: 580px;
   height: 96px;
-  display: flex;
-  flex-direction: row;
+  display: inline-flex;
 }
 .main-container .device-list-container .device-list .device-item {
   padding: 10px;
   border-radius: 13px;
+  margin-right: 20px;
   width: 123px !important;
   height: 96px;
   background: white;
   display: flex;
   flex-direction: column;
+  align-items: normal;
   justify-content: space-between;
 }
 .main-container .device-list-container .device-list .device-item .top-action {
@@ -957,7 +962,7 @@ p {
   background: #fe834d;
 }
 .main-container .device-list-container .device-list .device-item-active .top-action .icon-background {
-  background: #FEB38F;
+  background: #feb38f;
   border-radius: 50%;
   width: 31px;
   height: 31px;
@@ -1053,8 +1058,29 @@ p {
   align-items: center;
   justify-content: flex-start;
 }
+.statistic-container .table-and-rooms .table-of-device-container {
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  height: 100%;
+}
+.statistic-container .table-and-rooms .table-of-device {
+  background: white;
+  height: 255px;
+  overflow-y: auto;
+}
+.statistic-container .table-and-rooms .table-of-device::-webkit-scrollbar {
+  display: none;
+}
 .statistic-container .table-and-rooms .table-of-device table {
   font-size: 10px;
+  width: 100%;
+}
+.statistic-container .table-and-rooms .table-of-device table thead th {
+  top: 0;
+  z-index: 2;
+  position: sticky;
+  background: white;
 }
 .statistic-container .table-and-rooms .table-of-device table thead tr {
   font-size: 11px;
@@ -1065,9 +1091,33 @@ p {
   font-size: inherit;
   text-align: center;
   color: #7297ab;
+  text-align: start;
 }
 .statistic-container .table-and-rooms .table-of-device table thead tr th:last-child {
   width: 42px;
+}
+.statistic-container .table-and-rooms .table-of-device table tbody td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.statistic-container .table-and-rooms .table-of-device .table-pagination {
+  padding-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  bottom: 0;
+  position: sticky;
+  background: white;
+}
+.statistic-container .table-and-rooms .table-of-device .table-pagination span {
+  background: rgba(114, 151, 171, 0.2);
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 10px;
+  color: #7297ab;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .settings-container {
@@ -1078,6 +1128,15 @@ p {
   margin-top: 15px;
   display: flex;
   justify-content: space-around;
+}
+.settings-container .settings-button .settings-button-class {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 .settings-container .settings-button .settings-button-class p {
   margin-top: 10px;
@@ -1094,11 +1153,25 @@ p {
   display: inline-flex;
   text-decoration: none;
   cursor: pointer;
+  padding: 10px 2px;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 .settings-container .settings-button .settings-button-class a span {
   font-size: 44px;
   color: #83A4B5;
-  margin: auto;
+  margin-left: 12px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
 }
 .settings-container .settings-button .settings-button-class .active {
   width: 70px;
@@ -1113,6 +1186,18 @@ p {
   font-size: 44px;
   color: white;
   margin: auto;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.settings-container .settings-button .settings-button-class:hover span {
+  -webkit-transform: scale(1.3) translateZ(0);
+  transform: scale(1.3) translateZ(0);
 }
 
 .settings-content {
@@ -1121,6 +1206,9 @@ p {
 
 .settings-items {
   width: 210px;
+}
+.settings-items .nav1 {
+  border-bottom: 0px;
 }
 .settings-items ul {
   flex-direction: column;
@@ -1133,6 +1221,11 @@ p {
   align-items: center;
   margin-bottom: 25px;
   padding: 8px 0;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
 }
 .settings-items ul li a {
   text-decoration: none;
@@ -1147,6 +1240,36 @@ p {
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
+}
+.settings-items ul li:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #2098D1;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.settings-items ul a:hover, .settings-items ul a:focus {
+  color: white;
+}
+.settings-items ul a:active {
+  color: #FF4500;
+}
+.settings-items ul li:hover:before, .settings-items ul a:focus:before, .settings-items ul a:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
 }
 .settings-items ul .item_active {
   background: #FFFFFF;

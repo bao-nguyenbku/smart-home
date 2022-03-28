@@ -69,10 +69,29 @@
         }
       }
     }
+    .table-of-device-container {
+      padding: 10px;
+      background: white;
+      border-radius: 10px;
+      height: 100%;
+    }
     .table-of-device {
+      background: white;
+      height: 255px;
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
       table {
         font-size: 10px;
+        width: 100%;
         thead {
+          th {
+            top: 0;
+            z-index: 2;
+            position: sticky;
+            background: white;
+          }
           tr {
             font-size: 11px;
             th {
@@ -81,11 +100,37 @@
               font-size: inherit;
               text-align: center;
               color: $lightBlue;
+              text-align: start;
               &:last-child {
                 width: 42px;
               }
             }
           }
+        }
+        tbody {
+          td {
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+        }
+      }
+      .table-pagination {
+        padding-top: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+        bottom: 0;
+        position: sticky;
+        background: white;
+        span {
+          background: rgba($color: $lightBlue, $alpha: 0.2);
+          padding: 5px;
+          border-radius: 5px;
+          margin-left: 10px;
+          color: $lightBlue;
+          cursor: pointer;
+          font-size: 14px;
         }
       }
     }
