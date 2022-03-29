@@ -165,9 +165,10 @@
                 
                 <div class="tab-content">
                   <!-- Edit Profile -->
-                  <div id="edit_profile" class="tab-pane fade settings-edit">
+                  <div id="edit_profile" class="tab-pane active1 settings-edit">
                     <div class="settings-avatar">
                       <img src="./assets//images/avatar.jpg" alt="avatar">
+                      <i class="fa fa-edit"></i>
                     </div>
   
                     <form class="form_edit">
@@ -205,14 +206,23 @@
                   <!-- Change Password -->
                   <div id="change_password" class="tab-pane fade settings-edit">
                     <form class="form_edit form_change_password">
-                      <label for="current_password"> Current Password </label><br>
-                      <input type="password" id="current_password" name="current_password"><br>
+                      <div>
+                        <label for="current_password"> Current Password </label><br>
+                        <input type="password" id="current_password" name="current_password">
+                        <i class="bi bi-eye-slash-fill"></i><br>
+                      </div>
   
-                      <label for="new_password"> New password </label><br>
-                      <input type="password" id="new_password" name="new_password"><br>
+                      <div>
+                        <label for="new_password"> New password </label><br>
+                        <input type="password" id="new_password" name="new_password">
+                        <i class="bi bi-eye-slash-fill"></i><br>
+                      </div>
   
-                      <label for="confirm_password"> Confirm password </label><br>
-                      <input type="password" id="confirm_password" name="confirm_password"><br>
+                      <div>
+                        <label for="confirm_password"> Confirm password </label><br>
+                        <input type="password" id="confirm_password" name="confirm_password">
+                        <i class="bi bi-eye-slash-fill"></i><br>
+                      </div>
   
                       <input type="submit" class="cancel" value="Cancel">
                       <input type="submit" class="save" value="Save">
