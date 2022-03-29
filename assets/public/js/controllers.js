@@ -3,11 +3,14 @@ const $$ = document.querySelectorAll.bind(document);
 
 // App will execute all operation in smart home pages
 class App {
+    currentRoom = '';
     constructor() {
         this.handleDevice();
         this.handleMainControl();
         this.handleSidebarActive();
         this.handleAddRoom();
+        this.handleAddNewDevice();
+        this.renderRooms();
     }
     handleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -78,7 +81,7 @@ class App {
         })
     }
     handleAddRoom = () => {
-        document.querySelector('#submit-add-room-button').addEventListener('click', (e) => {
+        document.querySelector('#submit-add-room-button').addEventListener('click', () => {
             const roomName = document.getElementById('formGroupExampleInput-room-name').value;
             document.getElementById('formGroupExampleInput-room-name').value = '';
             $.ajax({
@@ -86,10 +89,39 @@ class App {
                 method: 'POST',
                 data:{ name: roomName },
                 success: (res) => {
-                    console.log(res);
+                    
                 }
-
             })
+        })
+    }
+
+    renderRooms = () => {
+        $.ajax({
+            url: 'http://localhost:5000/rooms',
+            method: 'GET',
+            success: (res) => {
+                console.log(res);
+                res.forEach((room, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = room.name;
+                    li.addEventListener('click', () => {
+                        this.currentRoom = room.name;
+                        console.log(this.currentRoom);
+                    })
+                    document.querySelector('.select-room-dropdown-menu').appendChild(li)
+                })
+            }
+        })
+    }
+
+    handleAddNewDevice = () => {
+        document.querySelector('#submit-add-device-button').addEventListener('click', () => {
+            const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
+            const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
+            $.ajax({
+                url: 'http://localhost:5000/:roomName/add'
+            })
+            console.log(deviceName, deviceCode);
         })
     }
 }
@@ -107,8 +139,23 @@ window.onload = () => {
 }
 
 // GET DATA REAL TIME ========================
-window.onload = () => {
-    
-}
 
 const myHome = new App();
+
+/*Dropdown Menu*/
+$('.select-room-dropdown').click(function () {
+    $(this).attr('tabindex', 1).focus();
+    $(this).toggleClass('active');
+    $(this).find('.select-room-dropdown-menu').slideToggle(300);
+});
+$('.select-room-dropdown').focusout(function () {
+    $(this).removeClass('active');
+    $(this).find('.select-room-dropdown-menu').slideUp(300);
+});
+$('.select-room-dropdown .select-room-dropdown-menu li').click(function () {
+    console.log('Clicked');
+    // $(this).parents('.select-room-dropdown').find('span').text('Living');
+    // $(this).parents('.select-room-dropdown').find('input').attr('value', 'Living');
+});
+// $(this).attr('id')
+/*End Dropdown Menu*/

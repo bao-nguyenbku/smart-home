@@ -1,25 +1,25 @@
 {
-  "name": "smart-home",
+  "name": "server",
   "version": "1.0.0",
-  "description": "This is web application for controlling devices at home",
+  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "dotenv": "^16.0.0",
-    "sass": "^1.49.9"
-  },
-  "devDependencies": {},
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass": "sass assets/public/app.scss assets/public/css/app.css --watch"
+    "start": "nodemon --inspect index.js",
+    "sass": "sass views/sass/app.scss views/assets/public/css/app.css --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bao-nguyenbku/smart-home.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bao-nguyenbku/smart-home/issues"
-  },
-  "homepage": "https://github.com/bao-nguyenbku/smart-home#readme"
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.8",
+    "mqtt": "^4.3.7",
+    "nodemon": "^2.0.15",
+    "sass": "^1.49.9"
+  }
 }
