@@ -1314,4 +1314,8 @@ p {
   margin-top: 10px;
 }
 
+.active1 {
+  display: block !important;
+}
+
 /*# sourceMappingURL=app.css.map */
