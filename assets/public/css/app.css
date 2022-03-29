@@ -1234,6 +1234,9 @@ p {
 .settings-items ul li a {
   text-decoration: none;
   color: #000000;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .settings-items ul li i {
   margin-left: 10px;
@@ -1266,8 +1269,13 @@ p {
 }
 
 .settings-edit {
+<<<<<<< Updated upstream
   width: 100%;
   height: 100%;
+=======
+  width: 377px;
+  height: 409px;
+>>>>>>> Stashed changes
   background: #FFFFFF;
   border-radius: 19px;
 }
@@ -1275,6 +1283,7 @@ p {
   margin-left: 130px;
   width: 85px;
   height: 82px;
+  position: relative;
 }
 .settings-edit .settings-avatar img {
   width: 100%;
@@ -1285,6 +1294,22 @@ p {
   box-sizing: border-box;
   filter: drop-shadow(0px 4px 7px rgba(0, 0, 0, 0.25));
   border-radius: 50px;
+}
+.settings-edit .settings-avatar img:hover {
+  box-shadow: 0 0 5px #51cbee;
+}
+.settings-edit .settings-avatar i {
+  position: absolute;
+  top: 70px;
+  right: -3px;
+  color: white;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background-color: #FF9900;
 }
 .settings-edit .form_edit {
   position: relative;
@@ -1309,6 +1334,11 @@ p {
   color: #7297ab;
   font-weight: 450;
   padding: 4px;
+}
+.settings-edit .form_edit input:focus {
+  border-color: #2098D1;
+  outline: none;
+  box-shadow: 0 0 5px #51cbee;
 }
 .settings-edit .form_edit .cancel {
   margin-left: 70px;
@@ -1340,14 +1370,28 @@ p {
 .settings-edit .form_change_password {
   padding-top: 40px;
 }
+.settings-edit .form_change_password div {
+  position: relative;
+}
+.settings-edit .form_change_password div i {
+  position: absolute;
+  right: 5px;
+  top: 24px;
+  color: #7297ab;
+}
 .settings-edit .myhome img {
   display: block;
   margin: auto;
-  padding-top: 10px;
-  width: 80%;
+  padding-top: 5px;
+  width: 95%;
+  border-radius: 19px;
 }
 .settings-edit .form_myhome {
   margin-top: 10px;
+}
+
+.active1 {
+  display: block !important;
 }
 
 /*# sourceMappingURL=app.css.map */

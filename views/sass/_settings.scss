@@ -109,6 +109,9 @@
             a{
                 text-decoration: none;
                 color: #000000;
+                display: block;
+                width: 100%;
+                height: 100%;
             }
             i{
                 margin-left: 10px;
@@ -165,8 +168,13 @@
     padding-left: 20px;
 }
 .settings-edit{
+<<<<<<< Updated upstream
     width: 100%;
     height: 100%;
+=======
+    width: 377px;
+    height: 409px;
+>>>>>>> Stashed changes
     background: #FFFFFF;
     border-radius: 19px;
     .settings-avatar{
@@ -174,6 +182,7 @@
         margin-left: 130px;
         width: 85px;
         height: 82px;
+        position: relative;
         img{
             width: 100%;
             height: 100%;
@@ -183,6 +192,22 @@
             box-sizing: border-box;
             filter: drop-shadow(0px 4px 7px rgba(0, 0, 0, 0.25));
             border-radius: 50px;
+        }
+        img:hover{
+            box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+        }
+        i{
+            position: absolute;
+            top: 70px;
+            right: -3px;
+            color: white;
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            background-color: #FF9900;
         }
     }
     .form_edit{
@@ -207,6 +232,11 @@
             color: $lightBlue;
             font-weight:450;
             padding: 4px;
+        }
+        input:focus{
+            border-color: #2098D1;
+            outline: none;
+            box-shadow: 0 0 5px rgba(81, 203, 238, 1);
         }
         .cancel{
             margin-left: 70px;
@@ -238,16 +268,34 @@
     }
     .form_change_password{
         padding-top: 40px;
+        div{
+            position: relative;
+            i{
+                position: absolute;
+                right: 5px;
+                top: 24px;
+                color: $lightBlue;
+            }
+        }
     }
     .myhome{
         img{
             display: block;
             margin: auto;
-            padding-top: 10px;
-            width: 80%;
+            padding-top: 5px;
+            width: 95%;
+            border-radius: 19px;
         }
     }
     .form_myhome{
         margin-top: 10px;
     }
 }
+<<<<<<< Updated upstream
+=======
+
+.active1{
+    // opacity: 1;
+    display: block !important;
+}
+>>>>>>> Stashed changes
