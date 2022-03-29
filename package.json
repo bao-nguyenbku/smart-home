@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --inspect index.js",
-    "sass": "sass views/sass/app.scss views/assets/public/css/app.css --watch"
+    "sass": "sass views/sass/app.scss assets/public/css/app.css --watch"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
+    "express-ejs-layouts": "^2.5.1",
     "mongoose": "^6.2.8",
     "mqtt": "^4.3.7",
     "nodemon": "^2.0.15",

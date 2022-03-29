@@ -68,15 +68,6 @@ class App {
                 }
                 // li.classList.add('li-active');
                 window.localStorage.setItem('activeTab', index);
-                if (li.children[0].dataset.tab == 'statistics') {
-                    window.location.href = '/statistic.html';
-                }
-                else if (li.children[0].dataset.tab == 'dashboard') {
-                    window.location.href = '/';
-                }
-                else if (li.children[0].dataset.tab == 'settings') {
-                    window.location.href = '/settings.html';
-                }
             })
         })
     }
@@ -85,34 +76,18 @@ class App {
             const roomName = document.getElementById('formGroupExampleInput-room-name').value;
             document.getElementById('formGroupExampleInput-room-name').value = '';
             $.ajax({
-                url: 'http://localhost:5000/room/add',
+                url: '/room/add',
                 method: 'POST',
                 data:{ name: roomName },
                 success: (res) => {
-                    
+                    const option = new Option(`${res.data.name}`, `${res.data.name}`);
+                    console.log(option);
+                    document.getElementById('select-room-dropdown-menu').appendChild(option);
                 }
             })
         })
     }
 
-    renderRooms = () => {
-        $.ajax({
-            url: 'http://localhost:5000/rooms',
-            method: 'GET',
-            success: (res) => {
-                console.log(res);
-                res.forEach((room, index) => {
-                    const li = document.createElement('li');
-                    li.textContent = room.name;
-                    li.addEventListener('click', () => {
-                        this.currentRoom = room.name;
-                        console.log(this.currentRoom);
-                    })
-                    document.querySelector('.select-room-dropdown-menu').appendChild(li)
-                })
-            }
-        })
-    }
 
     handleAddNewDevice = () => {
         document.querySelector('#submit-add-device-button').addEventListener('click', () => {
@@ -141,21 +116,3 @@ window.onload = () => {
 // GET DATA REAL TIME ========================
 
 const myHome = new App();
-
-/*Dropdown Menu*/
-$('.select-room-dropdown').click(function () {
-    $(this).attr('tabindex', 1).focus();
-    $(this).toggleClass('active');
-    $(this).find('.select-room-dropdown-menu').slideToggle(300);
-});
-$('.select-room-dropdown').focusout(function () {
-    $(this).removeClass('active');
-    $(this).find('.select-room-dropdown-menu').slideUp(300);
-});
-$('.select-room-dropdown .select-room-dropdown-menu li').click(function () {
-    console.log('Clicked');
-    // $(this).parents('.select-room-dropdown').find('span').text('Living');
-    // $(this).parents('.select-room-dropdown').find('input').attr('value', 'Living');
-});
-// $(this).attr('id')
-/*End Dropdown Menu*/

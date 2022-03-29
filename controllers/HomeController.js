@@ -20,11 +20,14 @@ class HomeController {
         // client.on('message', (topicRes, payload) => {
         //    res.json(JSON.parse(payload));
         // })
-        res.render('index');
+        Room.find({}, 'name')
+            .then(result => {
+                res.render('index', { rooms: result});
+            })
+            .catch(err => console.log(err));
     }
     addNewRoom = (req, res, next) => {
         const roomName = req.body.name;
-        
         const newRoom = new Room({
             id: genId(),
             name: roomName
@@ -37,11 +40,6 @@ class HomeController {
                 })
             })
             .catch(err => console.log(err))
-        // Room.find({}, 'name')
-        //     .then(result => {
-        //         res.json(result);
-        //     })
-        //     .catch(err => console.log(err));
     }
 
     getAllRoom = (req, res, next) => {

@@ -28,26 +28,6 @@
           display: none;
         }
       }
-      .dropdown ul li span.dropdown-item {
-        display: inline-flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 5px;
-        span {
-          background: rgba($color: #7297ab, $alpha: 0.2);
-          border-radius: 5px;
-          color: $lightBlue;
-          padding: 4px;
-        }
-        .message-item {
-          p {
-            font-size: 12px;
-            &:last-child {
-              color: $lightBlue;
-            }
-          }
-        }
-      }
     }
     .avatar-container {
       display: flex;
@@ -122,65 +102,12 @@
     margin: 20px 0 20px 0;
     // SELECT ROOM DESIGN ====================
     .select-room-dropdown {
-      width: 120px;
       height: 100%;
-      display: inline-block;
-      background-color: none;
-      border-radius: 2px;
-      transition: all 0.5s ease;
-      position: relative;
-      font-size: 13px;
-      color: $lightBlue;
-      padding: 10px;
-      .select {
-        cursor: pointer;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        & > i {
-          font-size: 15px;
-          color: $lightBlue;
-          cursor: pointer;
-          transition: all 0.3s ease-in-out;
-          float: right;
-          line-height: 20px;
-          margin-left: 5px;
-        }
-      }
-      .select-room-dropdown-menu {
-        position: absolute;
-        background-color: #fff;
-        width: 100%;
-        left: 0;
-        margin-top: 1px;
-        box-shadow: 0 1px 2px rgb(204, 204, 204);
-        border-radius: 0 0px 2px 2px;
-        display: none;
-        max-height: 144px;
-        overflow-y: auto;
-        &::-webkit-scrollbar {
-          display: none;
-        }
-        z-index: 9;
-        padding: 0;
-        list-style: none;
-        li {
-          padding: 10px;
-          transition: all 0.2s ease-in-out;
-          cursor: pointer;
-          &:hover {
-            background-color: #f2f2f2;
-          }
-          &:active {
-            background-color: white;
-          }
-        }
-      }
     }
-    .select-room-dropdown.active .select > i {
-      transform: rotate(90deg);
+    #select-room-dropdown-menu {
+      border: none;
+      height: 100%;
+      background: none;
     }
     .add-device-btn {
       width: 125px;
