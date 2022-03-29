@@ -255,7 +255,7 @@
                 <!-- Modal -->
               </div>
             </div>
-            <!-- MODAL FOR ADDING ROOM -->
+            <!-- MODAL FOR ADDING DEVICE -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
@@ -267,11 +267,11 @@
                   <div class="modal-body">
                     <div class="mb-3">
                       <label for="formGroupExampleInput" class="form-label">Device's name</label>
-                      <input type="text" class="form-control" id="formGroupExampleInput">
+                      <input type="text" class="form-control" id="formGroupExampleInput-device-name">
                     </div>
                     <div class="mb-3">
                       <label for="formGroupExampleInput2" class="form-label">Device's code</label>
-                      <input type="text" class="form-control" id="formGroupExampleInput2">
+                      <input type="text" class="form-control" id="formGroupExampleInput-device-code">
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -285,6 +285,7 @@
                 </div>
               </div>
             </div>
+            <!-- MODAL FOR ADDING ROOM -->
             <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered">
@@ -296,7 +297,7 @@
                   <div class="modal-body">
                     <div class="mb-3">
                       <label for="formGroupExampleInput" class="form-label">Room's name</label>
-                      <input type="text" class="form-control" id="formGroupExampleInput">
+                      <input type="text" class="form-control" id="formGroupExampleInput-room-name">
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -304,7 +305,8 @@
                     style="background: none; border: none;"
                     >Cancel</button>
                     <button type="button" 
-                    style="background: none; border: none; color: red;"
+                            style="background: none; border: none; color: red;"
+                            id="submit-add-room-button"
                     >Add</button>
                   </div>
                 </div>

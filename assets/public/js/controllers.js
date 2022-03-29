@@ -7,7 +7,7 @@ class App {
         this.handleDevice();
         this.handleMainControl();
         this.handleSidebarActive();
-        this.getData();
+        this.handleAddRoom();
     }
     handleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -77,19 +77,23 @@ class App {
             })
         })
     }
-    getData = () => {
-        // setInterval(() => {
-        //     $.ajax({
-        //         method: 'GET',
-        //         url: 'http://localhost:5000/',
-        //         success: (res) => {
-        //             console.log(res);
-        //         }
-        //     })
-        // }, 1000)
-        
+    handleAddRoom = () => {
+        document.querySelector('#submit-add-room-button').addEventListener('click', (e) => {
+            const roomName = document.getElementById('formGroupExampleInput-room-name').value;
+            document.getElementById('formGroupExampleInput-room-name').value = '';
+            $.ajax({
+                url: 'http://localhost:5000/room/add',
+                method: 'POST',
+                data:{ name: roomName },
+                success: (res) => {
+                    console.log(res);
+                }
+
+            })
+        })
     }
 }
+// ================= GET TAB ACTIVE ================
 window.onload = () => {
     const oldIndex = window.localStorage.getItem('activeTab');
     if (!oldIndex) {
@@ -101,4 +105,10 @@ window.onload = () => {
         }
     })
 }
+
+// GET DATA REAL TIME ========================
+window.onload = () => {
+    
+}
+
 const myHome = new App();

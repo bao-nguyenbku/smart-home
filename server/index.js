@@ -2,6 +2,9 @@ import express from 'express';
 import routes from './routes/index.js';
 import cors from 'cors';
 import mongoose from './database/index.js';
+// import client from './mqtt/index.js';
+
+
 
 
 const app = express();
@@ -13,8 +16,8 @@ app.use(express.urlencoded({
 }));
 app.use(cors());
 
-routes(app);
 
+routes(app);
 
 
 
