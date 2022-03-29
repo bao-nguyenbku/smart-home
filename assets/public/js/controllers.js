@@ -3,7 +3,6 @@ const $$ = document.querySelectorAll.bind(document);
 
 // App will execute all operation in smart home pages
 class App {
-    currentRoom = '';
     constructor() {
         this.handleDevice();
         this.handleMainControl();
