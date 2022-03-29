@@ -1,0 +1,179 @@
+  <!-- START PAGE HERE -->
+  <div id="main-area-render">
+    <div class="add-new-device-and-choose-room">
+      <button class="my-btn add-device-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2"><span
+          class="material-icons">
+          add_circle
+        </span>
+        New room</button>
+      <div class="select-room-dropdown">
+        <select id="select-room-dropdown-menu">
+          <% rooms.forEach(room => { %>
+            <option value="<%=room.name %>"><%= room.name %></option>
+          <% }) %> 
+        </select>
+      </div>
+    </div>
+    <div class="main-control-container">
+      <div class="main-control grid-col-span-2">
+        <div class="toggle-switch-container">
+          <div class="device-title">
+            <div class="icon-background">
+              <span class="material-icons-outlined">lightbulb</span>
+            </div>
+            <p>Đèn dài</p>
+          </div>
+          <div class="toggle-switch">
+            <label class="toggle-control main-toggle-control">
+              <input type="checkbox" checked="checked">
+              <span class="control main-toggle"></span>
+            </label>
+          </div>
+        </div>
+        <div class="control-area">
+          <span class="material-icons-outlined">light_mode</span>
+          <div class="range-background">
+            <!-- <div class="slider" data-after="30%"></div> -->
+            <input type="range" class="slider" value="30" min="0" max="100">
+          </div>
+
+          <span class="material-icons">light_mode</span>
+        </div>
+      </div>
+      <div class="temp-container">
+        <p>Temperature</p>
+        <p>26<span>o</span> C</p>
+        <i class="fa-solid fa-temperature-high"></i>
+
+      </div>
+      <div class="humidity-container">
+        <p>Humidity</p>
+        <p>40%</p>
+        <i class="fa-solid fa-droplet"></i>
+
+      </div>
+    </div>
+    <div class="device-list-container">
+      <p class="device-list-title">Devices</p>
+      <div class="device-list">
+        <div class="device-item" data-item="light">
+          <div class="top-action">
+            <div class="icon-background">
+              <span class="material-icons-outlined">lightbulb</span>
+            </div>
+            <label class="toggle-control">
+              <input type="checkbox">
+              <span class="control"></span>
+            </label>
+          </div>
+          <div class="bottom-info">
+            <p>Đèn dài</p>
+            <p>Off</p>
+          </div>
+        </div>
+        <div class="device-item" data-item="fan">
+          <div class="top-action">
+            <div class="icon-background">
+              <span class="fa-solid fa-fan"></span>
+            </div>
+            <label class="toggle-control">
+              <input type="checkbox">
+              <span class="control"></span>
+            </label>
+          </div>
+          <div class="bottom-info">
+            <p>Quạt</p>
+            <p>3</p>
+          </div>
+        </div>
+        <div class="device-item" data-item="light">
+          <div class="top-action">
+            <div class="icon-background">
+              <span class="material-icons-outlined">lightbulb</span>
+            </div>
+            <label class="toggle-control">
+              <input type="checkbox">
+              <span class="control"></span>
+            </label>
+          </div>
+          <div class="bottom-info">
+            <p>Đèn chùm giữa</p>
+            <p>Off</p>
+          </div>
+        </div>
+        <div class="device-item" data-item="light">
+          <div class="top-action">
+            <div class="icon-background">
+              <span class="material-icons-outlined">lightbulb</span>
+            </div>
+            <label class="toggle-control">
+              <input type="checkbox">
+              <span class="control"></span>
+            </label>
+          </div>
+          <div class="bottom-info">
+            <p>Đèn chùm giữa</p>
+            <p>Off</p>
+          </div>
+        </div>
+        <div class="device-item" data-item="add" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <span class="material-icons-outlined">add</span>
+          <!-- Button trigger modal -->
+          <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Launch demo modal
+                </button> -->
+
+          <!-- Modal -->
+        </div>
+      </div>
+      <!-- MODAL FOR ADDING DEVICE -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New device</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Device's name</label>
+                <input type="text" class="form-control" id="formGroupExampleInput-device-name">
+              </div>
+              <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Device's code</label>
+                <input type="text" class="form-control" id="formGroupExampleInput-device-code">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-bs-dismiss="modal" style="background: none; border: none;">Cancel</button>
+              <button type="button" style="background: none; border: none; color: red;"
+                id="submit-add-device-button">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- MODAL FOR ADDING ROOM -->
+      <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New room</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Room's name</label>
+                <input type="text" class="form-control" id="formGroupExampleInput-room-name">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-bs-dismiss="modal" style="background: none; border: none;">Cancel</button>
+              <button type="button" style="background: none; border: none; color: red;"
+                id="submit-add-room-button">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

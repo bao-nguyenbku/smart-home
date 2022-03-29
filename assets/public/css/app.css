@@ -471,6 +471,22 @@ p {
   flex-direction: row;
 }
 
+.login {
+  background-image: url("/assets/images/cong-nghe-nha-thong-minh-1024x576.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 100%;
+  height: 100vh;
+}
+.login .login-container {
+  width: 256px;
+  height: 314px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
 .sidebar-container {
   width: 161px;
   height: 100%;
@@ -601,24 +617,6 @@ p {
   content: "";
   display: none;
 }
-.main-container .main-feed .message-area .dropdown ul li span.dropdown-item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 5px;
-}
-.main-container .main-feed .message-area .dropdown ul li span.dropdown-item span {
-  background: rgba(114, 151, 171, 0.2);
-  border-radius: 5px;
-  color: #7297ab;
-  padding: 4px;
-}
-.main-container .main-feed .message-area .dropdown ul li span.dropdown-item .message-item p {
-  font-size: 12px;
-}
-.main-container .main-feed .message-area .dropdown ul li span.dropdown-item .message-item p:last-child {
-  color: #7297ab;
-}
 .main-container .main-feed .avatar-container {
   display: flex;
   flex-direction: row;
@@ -688,63 +686,12 @@ p {
   margin: 20px 0 20px 0;
 }
 .main-container .add-new-device-and-choose-room .select-room-dropdown {
-  width: 120px;
   height: 100%;
-  display: inline-block;
-  background-color: none;
-  border-radius: 2px;
-  transition: all 0.5s ease;
-  position: relative;
-  font-size: 13px;
-  color: #7297ab;
-  padding: 10px;
 }
-.main-container .add-new-device-and-choose-room .select-room-dropdown .select {
-  cursor: pointer;
+.main-container .add-new-device-and-choose-room #select-room-dropdown-menu {
+  border: none;
   height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-.main-container .add-new-device-and-choose-room .select-room-dropdown .select > i {
-  font-size: 15px;
-  color: #7297ab;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  float: right;
-  line-height: 20px;
-  margin-left: 5px;
-}
-.main-container .add-new-device-and-choose-room .select-room-dropdown .select-room-dropdown-menu {
-  position: absolute;
-  background-color: #fff;
-  width: 100%;
-  left: 0;
-  margin-top: 1px;
-  box-shadow: 0 1px 2px #cccccc;
-  border-radius: 0 0px 2px 2px;
-  overflow: hidden;
-  display: none;
-  max-height: 144px;
-  overflow-y: auto;
-  z-index: 9;
-  padding: 0;
-  list-style: none;
-}
-.main-container .add-new-device-and-choose-room .select-room-dropdown .select-room-dropdown-menu li {
-  padding: 10px;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-}
-.main-container .add-new-device-and-choose-room .select-room-dropdown .select-room-dropdown-menu li:hover {
-  background-color: #f2f2f2;
-}
-.main-container .add-new-device-and-choose-room .select-room-dropdown .select-room-dropdown-menu li:active {
-  background-color: white;
-}
-.main-container .add-new-device-and-choose-room .select-room-dropdown.active .select > i {
-  transform: rotate(90deg);
+  background: none;
 }
 .main-container .add-new-device-and-choose-room .add-device-btn {
   width: 125px;
@@ -810,44 +757,25 @@ p {
 }
 .main-container .main-control-container .main-control .control-area .range-background {
   width: 100%;
-  height: 14px;
-  background: #F4F4F4;
+  height: 25px;
   border-radius: 10px;
 }
 .main-container .main-control-container .main-control .control-area .range-background .slider {
-  width: 30%;
-  height: 100%;
-  background: linear-gradient(270deg, #FE834D 38.48%, rgba(254, 131, 77, 0.376515) 80.87%, rgba(254, 131, 77, 0) 106.46%);
-  border-radius: inherit;
-  position: relative;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 25px;
+  background: #f1f1f1;
+  border-radius: 20px;
 }
-.main-container .main-control-container .main-control .control-area .range-background .slider::before {
-  content: "";
-  position: absolute;
-  box-shadow: 0 1px 2px #cccccc;
-  border-radius: 50%;
-  right: -5px;
-  transform: translateY(-3.5px);
-  top: 0;
-  width: 21px;
-  height: 21px;
-  background: white;
-}
-.main-container .main-control-container .main-control .control-area .range-background .slider:hover::before {
+.main-container .main-control-container .main-control .control-area .range-background .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
   width: 25px;
   height: 25px;
-  transform: translateY(-5.5px);
-  transition: all 0.2s;
-}
-.main-container .main-control-container .main-control .control-area .range-background .slider::after {
-  content: attr(data-after);
-  position: absolute;
-  right: -19px;
-  transform: translateY(-3.5px);
-  font-weight: 600;
-  font-size: 20px;
-  top: -30px;
-  color: #fe834d;
+  border-radius: 50%;
+  background: #fe834d;
+  cursor: pointer;
 }
 .main-container .main-control-container .temp-container,
 .main-container .main-control-container .humidity-container {
@@ -922,17 +850,18 @@ p {
 .main-container .device-list-container .device-list {
   width: 580px;
   height: 96px;
-  display: flex;
-  flex-direction: row;
+  display: inline-flex;
 }
 .main-container .device-list-container .device-list .device-item {
   padding: 10px;
   border-radius: 13px;
+  margin-right: 20px;
   width: 123px !important;
   height: 96px;
   background: white;
   display: flex;
   flex-direction: column;
+  align-items: normal;
   justify-content: space-between;
 }
 .main-container .device-list-container .device-list .device-item .top-action {
@@ -964,7 +893,7 @@ p {
   background: #fe834d;
 }
 .main-container .device-list-container .device-list .device-item-active .top-action .icon-background {
-  background: #FEB38F;
+  background: #feb38f;
   border-radius: 50%;
   width: 31px;
   height: 31px;
@@ -1098,6 +1027,10 @@ p {
 .statistic-container .table-and-rooms .table-of-device table thead tr th:last-child {
   width: 42px;
 }
+.statistic-container .table-and-rooms .table-of-device table tbody td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .statistic-container .table-and-rooms .table-of-device .table-pagination {
   padding-top: 10px;
   display: inline-flex;
@@ -1200,6 +1133,8 @@ p {
 
 .settings-content {
   display: flex;
+  flex-direction: row;
+  align-items: normal;
 }
 
 .settings-items {
@@ -1228,6 +1163,9 @@ p {
 .settings-items ul li a {
   text-decoration: none;
   color: #000000;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .settings-items ul li i {
   margin-left: 10px;
@@ -1238,29 +1176,6 @@ p {
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-}
-.settings-items ul li:before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #2098D1;
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
-  -webkit-transform-origin: 0 50%;
-  transform-origin: 0 50%;
-  -webkit-transition-property: transform;
-  transition-property: transform;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-.settings-items ul a:hover, .settings-items ul a:focus {
-  color: white;
 }
 .settings-items ul a:active {
   color: #FF4500;
@@ -1275,18 +1190,24 @@ p {
   border-radius: 5px;
 }
 
+.tab-content {
+  width: 100%;
+  height: 100%;
+  padding-top: 25px;
+  padding-left: 20px;
+}
+
 .settings-edit {
-  width: 397px;
-  height: 409px;
+  width: 100%;
+  height: 100%;
   background: #FFFFFF;
   border-radius: 19px;
-  margin-left: 30px;
-  margin-top: 25px;
 }
 .settings-edit .settings-avatar {
   margin-left: 130px;
   width: 85px;
   height: 82px;
+  position: relative;
 }
 .settings-edit .settings-avatar img {
   width: 100%;
@@ -1297,6 +1218,22 @@ p {
   box-sizing: border-box;
   filter: drop-shadow(0px 4px 7px rgba(0, 0, 0, 0.25));
   border-radius: 50px;
+}
+.settings-edit .settings-avatar img:hover {
+  box-shadow: 0 0 5px #51cbee;
+}
+.settings-edit .settings-avatar i {
+  position: absolute;
+  top: 70px;
+  right: -3px;
+  color: white;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background-color: #FF9900;
 }
 .settings-edit .form_edit {
   position: relative;
@@ -1321,6 +1258,11 @@ p {
   color: #7297ab;
   font-weight: 450;
   padding: 4px;
+}
+.settings-edit .form_edit input:focus {
+  border-color: #2098D1;
+  outline: none;
+  box-shadow: 0 0 5px #51cbee;
 }
 .settings-edit .form_edit .cancel {
   margin-left: 70px;
@@ -1352,14 +1294,28 @@ p {
 .settings-edit .form_change_password {
   padding-top: 40px;
 }
+.settings-edit .form_change_password div {
+  position: relative;
+}
+.settings-edit .form_change_password div i {
+  position: absolute;
+  right: 5px;
+  top: 24px;
+  color: #7297ab;
+}
 .settings-edit .myhome img {
   display: block;
   margin: auto;
-  padding-top: 10px;
-  width: 80%;
+  padding-top: 5px;
+  width: 95%;
+  border-radius: 19px;
 }
 .settings-edit .form_myhome {
   margin-top: 10px;
+}
+
+.active1 {
+  display: block !important;
 }
 
 /*# sourceMappingURL=app.css.map */

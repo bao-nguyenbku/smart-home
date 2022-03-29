@@ -7,7 +7,9 @@ class App {
         this.handleDevice();
         this.handleMainControl();
         this.handleSidebarActive();
-        this.getData();
+        this.handleAddRoom();
+        this.handleAddNewDevice();
+        this.renderRooms();
     }
     handleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -65,37 +67,51 @@ class App {
                 }
                 // li.classList.add('li-active');
                 window.localStorage.setItem('activeTab', index);
-                if (li.children[0].dataset.tab == 'statistics') {
-                    window.location.href = '/statistic.html';
-                }
-                else if (li.children[0].dataset.tab == 'dashboard') {
-                    window.location.href = '/';
-                }
-                else if (li.children[0].dataset.tab == 'settings') {
-                    window.location.href = '/settings.html';
+            })
+        })
+    }
+    handleAddRoom = () => {
+        document.querySelector('#submit-add-room-button').addEventListener('click', () => {
+            const roomName = document.getElementById('formGroupExampleInput-room-name').value;
+            document.getElementById('formGroupExampleInput-room-name').value = '';
+            $.ajax({
+                url: '/room/add',
+                method: 'POST',
+                data:{ name: roomName },
+                success: (res) => {
+                    const option = new Option(`${res.data.name}`, `${res.data.name}`);
+                    console.log(option);
+                    document.getElementById('select-room-dropdown-menu').appendChild(option);
                 }
             })
         })
     }
-    getData = () => {
-        // setInterval(() => {
-        //     $.ajax({
-        //         method: 'GET',
-        //         url: 'http://localhost:5000/',
-        //         success: (res) => {
-        //             console.log(res);
-        //         }
-        //     })
-        // }, 1000)
-        
+
+
+    handleAddNewDevice = () => {
+        document.querySelector('#submit-add-device-button').addEventListener('click', () => {
+            const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
+            const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
+            $.ajax({
+                url: 'http://localhost:5000/:roomName/add'
+            })
+            console.log(deviceName, deviceCode);
+        })
     }
 }
+// ================= GET TAB ACTIVE ================
 window.onload = () => {
+    const oldIndex = window.localStorage.getItem('activeTab');
+    if (!oldIndex) {
+        $$('.sidebar-items li')[0].classList.add('li-active');
+    }
     $$('.sidebar-items li').forEach((li, index) => {
-        const oldIndex = window.localStorage.getItem('activeTab');
         if (index == oldIndex) {
             li.classList.add('li-active');
         }
     })
 }
+
+// GET DATA REAL TIME ========================
+
 const myHome = new App();

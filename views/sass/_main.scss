@@ -1,0 +1,342 @@
+.main-container {
+  width: calc(801px - 161px);
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding: 30px;
+  .main-feed {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .message-area {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      button {
+        box-shadow: $shadow;
+        background: white;
+        border-radius: 50%;
+        font-size: 14px;
+        padding: 8px;
+        text-align: center;
+        color: $lightBlue;
+        border: none;
+        &::after {
+          content: '';
+          display: none;
+        }
+      }
+    }
+    .avatar-container {
+      display: flex;
+      flex-direction: row;
+      height: inherit;
+      .avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: white;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 50%;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+            rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+        }
+      }
+      .avatar-name {
+        height: inherit;
+        width: 190px;
+        margin-left: 25px;
+        p {
+          margin: 0;
+          font-size: 12px;
+        }
+        .account-name {
+          width: 100%;
+          font-size: 20px;
+          font-weight: 600;
+        }
+        .account-address {
+          height: 40px;
+          color: $lightBlue;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: flex-start;
+          margin-top: 5px;
+          p {
+            margin-left: 5px;
+            width: 143px;
+          }
+        }
+      }
+    }
+    .feed {
+      width: 292px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      p {
+        &:first-child {
+          font-size: 26px;
+        }
+        &:nth-child(2) {
+          font-size: 14px;
+          margin-top: 5px;
+          color: $lightBlue;
+        }
+      }
+    }
+  }
+  .add-new-device-and-choose-room {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: 41px;
+    margin: 20px 0 20px 0;
+    // SELECT ROOM DESIGN ====================
+    .select-room-dropdown {
+      height: 100%;
+    }
+    #select-room-dropdown-menu {
+      border: none;
+      height: 100%;
+      background: none;
+    }
+    .add-device-btn {
+      width: 125px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      span {
+        padding-right: 5px;
+        opacity: 0.7;
+      }
+    }
+  }
+  .main-control-container {
+    height: 288px;
+    width: 100%;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1;
+    .grid-col-span-2 {
+      grid-row: span 2;
+    }
+    .main-control {
+      width: 414px;
+      height: 100%;
+      background: white;
+      border-radius: 17px;
+      padding: 20px;
+      .toggle-switch-container {
+        height: 22px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        .device-title {
+          display: flex;
+          align-items: center;
+          font-weight: 600;
+          p {
+            font-size: 20px;
+            margin-left: 10px;
+          }
+        }
+      }
+      .control-area {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-top: 150px;
+        span {
+          color: $lightBlue;
+          &:first-child {
+            margin-right: 20px;
+          }
+          &:last-child {
+            margin-left: 20px;
+          }
+        }
+        .range-background {
+          width: 100%;
+          height: 25px;
+          border-radius: 10px;
+          .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #f1f1f1;
+            border-radius: 20px;            
+            &::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 25px;
+              height: 25px;
+              border-radius: 50%;
+              background: $orange;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+    .temp-container,
+    .humidity-container {
+      width: 147px;
+      height: 135px;
+      background: white;
+      border-radius: 17px;
+    }
+    .temp-container {
+      position: relative;
+      overflow: hidden;
+      padding-top: 10px;
+      p {
+        text-align: center;
+        font-size: 14px;
+        &:nth-child(2) {
+          font-size: 40px;
+          color: #1cba36;
+          position: relative;
+          font-weight: 600;
+          top: 35%;
+          transform: translateY(-50%);
+          span {
+            position: absolute;
+            font-size: 20px;
+          }
+        }
+      }
+      i {
+        font-size: 90px;
+        color: $lightBlue;
+        opacity: 0.4;
+        position: absolute;
+        top: 20px;
+        left: 100px;
+      }
+    }
+    .humidity-container {
+      position: relative;
+      overflow: hidden;
+      padding-top: 10px;
+      p {
+        text-align: center;
+        font-size: 14px;
+        &:nth-child(2) {
+          font-size: 40px;
+          color: $orange;
+          position: relative;
+          font-weight: 600;
+          top: 35%;
+          transform: translateY(-50%);
+        }
+      }
+      i {
+        font-size: 90px;
+        color: $lightBlue;
+        opacity: 0.4;
+        position: absolute;
+        top: 20px;
+        left: 100px;
+      }
+    }
+  }
+  .device-list-container {
+    width: 100%;
+    margin-top: 30px;
+    .device-list-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .device-list {
+      width: 580px;
+      height: 96px;
+      display: inline-flex;
+      .device-item {
+        padding: 10px;
+        border-radius: 13px;
+        margin-right: 20px;
+        width: 123px !important;
+        height: 96px;
+        background: white;
+        @include d-flex(column, normal, space-between);
+        .top-action {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        }
+        .bottom-info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          p {
+            &:first-child {
+              font-weight: 600;
+            }
+          }
+        }
+        &:last-child {
+          border: 2px dashed $lightBlue;
+          background: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          & > span {
+            color: $lightBlue;
+          }
+        }
+      }
+      .device-item-active {
+        transition: all 0.8s ease;
+        background: $orange;
+        .top-action {
+          .icon-background {
+            background: #feb38f;
+            border-radius: 50%;
+            width: 31px;
+            height: 31px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            & > span {
+              color: white;
+            }
+          }
+          .toggle-control {
+            .control {
+              &:after {
+                background: $orange;
+              }
+            }
+            input:checked ~ .control {
+              background-color: white;
+
+              &:after {
+                left: $toggle-width - $toggle-control-size - $toggle-gutter;
+              }
+            }
+          }
+        }
+        .bottom-info {
+          color: white;
+        }
+      }
+    }
+  }
+}
