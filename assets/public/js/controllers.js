@@ -9,7 +9,8 @@ class App {
         this.handleSidebarActive();
         this.handleAddRoom();
         this.handleAddNewDevice();
-        this.renderRooms();
+        this.handleSelectRoom();
+        
     }
     handleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -87,15 +88,37 @@ class App {
         })
     }
 
-
+    handleSelectRoom = () => {
+        document.querySelector('#select-room-dropdown-menu').addEventListener('change', (e) => {
+            const currentRoom = e.target.value;
+            window.location.href = `/?roomName=${currentRoom.toLowerCase().split(' ').join('-')}`;
+        });
+    }
+    getCurrentSelectRoom = () => document.querySelector('#select-room-dropdown-menu').value;
+        
     handleAddNewDevice = () => {
         document.querySelector('#submit-add-device-button').addEventListener('click', () => {
             const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
             const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
+            const currentRoom = this.getCurrentSelectRoom();
+            
             $.ajax({
-                url: 'http://localhost:5000/:roomName/add'
+                url: '/device/add',
+                method: 'POST',
+                data: { 
+                    deviceName: deviceName,
+                    deviceCode: deviceCode,
+                    room: currentRoom
+                },
+                dataType: 'json',
+                success: (result) => {
+                    if (result.status === 200) {
+                        // TODO: Fix this to add new device without reload page
+                        location.reload();
+                    }
+                }
             })
-            console.log(deviceName, deviceCode);
+            // console.log(deviceName, deviceCode);
         })
     }
 }

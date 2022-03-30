@@ -1,5 +1,6 @@
 import client, { topicRes, topicReq } from '../mqtt/index.js';
-import { Room } from '../models/index.js';
+import { Room, Device } from '../models/index.js';
+import { getAllRoomWithField } from '../models/RoomQuery.js';
 import { genId } from './generateID.js';
 class HomeController {
     show = (req, res, next) => {
@@ -20,9 +21,32 @@ class HomeController {
         // client.on('message', (topicRes, payload) => {
         //    res.json(JSON.parse(payload));
         // })
-        Room.find({}, 'name')
-            .then(result => {
-                res.render('index', { rooms: result});
+        const { roomName } = req.query;
+        Room.find({}, 'name id')
+            .then(rooms => {
+                let currentRoomId;
+                if (roomName) {
+                    for (let i = 0; i < rooms.length; i++) {
+                        if (rooms[i].name.toLowerCase().split(' ').join('-') === roomName) {
+                            currentRoomId = rooms[i].id;
+                            break;
+                        }
+                    }
+                }
+                else {
+                    currentRoomId = rooms[0].id;
+                }
+                
+                Device.find({roomId: currentRoomId})
+                    .then(devices => {
+                        // res.send(devices);
+                        res.render('index', { 
+                            rooms: rooms, 
+                            currentRoomId: currentRoomId, 
+                            devices: devices 
+                        });
+                    })
+                    .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
     }
@@ -41,7 +65,32 @@ class HomeController {
             })
             .catch(err => console.log(err))
     }
+    addNewDevice = (req, res, next) => {
+        const { deviceName, deviceCode, room } = req.body;
+        
+        // Find a room in database which match 'room'
+        getAllRoomWithField('name', (err, result) => {
+            if (!err) {
+                const newDevice = new Device({
+                    id: genId(),
+                    name: deviceName,
+                    status: false,
+                    type: deviceCode,
+                    roomId: result.find(el => el.name === room).id
+                });
+                newDevice.save()
+                    .then(result => {
+                        res.status(200).json({
+                            status: 200,
+                            data: result
+                        })
+                    })
+                    .catch(err => console.log(err));
+            }
+        });
+        
 
+    }
     getAllRoom = (req, res, next) => {
         Room.find({}, 'name')
             .then(result => {
