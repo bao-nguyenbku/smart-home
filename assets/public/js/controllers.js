@@ -129,7 +129,26 @@ class App {
             })
         }
     }
+
+    updateTempAndHumi = () => {
+        setTimeout(() => {
+            $.ajax({
+                url: '/temp-and-humidity',
+                method: 'GET',
+                dataType: 'json',
+                success: (data) => {
+                    console.log(data);
+                    $('.temp-container p:nth-child(2)').html(`${parseInt(data.temp)}<span>o</span> C`); 
+                    $('.humidity-container p:nth-child(2)').html(`${parseInt(data.humidity)}%`);
+                    this.updateTempAndHumi();
+                }
+            })
+        }, 4000)
+    }
 }
+// INITIAL APP
+const myHome = new App();
+
 // ================= GET TAB ACTIVE ================
 window.onload = () => {
     const oldIndex = window.localStorage.getItem('activeTab');
@@ -141,8 +160,8 @@ window.onload = () => {
             li.classList.add('li-active');
         }
     })
+
+    myHome.updateTempAndHumi();
 }
 
-// GET DATA REAL TIME ========================
 
-const myHome = new App();

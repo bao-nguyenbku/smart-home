@@ -1,6 +1,7 @@
 import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device } from '../models/index.js';
 import { getAllRoomWithField } from '../models/RoomQuery.js';
+import { getTempAndHumi } from '../models/TempAndHumiQuery.js';
 import { genId } from './generateID.js';
 class HomeController {
     show = (req, res, next) => {
@@ -39,12 +40,17 @@ class HomeController {
                 
                 Device.find({roomId: currentRoomId})
                     .then(devices => {
-                        // res.send(devices);
-                        res.render('index', { 
-                            rooms: rooms, 
-                            currentRoomId: currentRoomId, 
-                            devices: devices 
-                        });
+                        getTempAndHumi((err, data) => {
+                            if (!err) {
+                                res.render('index', { 
+                                    rooms: rooms, 
+                                    currentRoomId: currentRoomId, 
+                                    devices: devices, 
+                                    temp: parseInt(data.temp),
+                                    humi: parseInt(data.humidity)
+                                });
+                            }
+                        })
                     })
                     .catch(err => console.log(err));
             })
@@ -91,12 +97,22 @@ class HomeController {
         
 
     }
-    getAllRoom = (req, res, next) => {
-        Room.find({}, 'name')
-            .then(result => {
-                res.json(result);
-            })
-            .catch(err => console.log(err));
+    // getAllRoom = (req, res, next) => {
+    //     Room.find({}, 'name')
+    //         .then(result => {
+    //             res.json(result);
+    //         })
+    //         .catch(err => console.log(err));
+    // }
+    getTempAndHumidity = (req, res, next) => {
+        getTempAndHumi((err, data) => {
+            if (!err) {
+                res.status(200).json(data);
+            }
+            else {
+                console.log(err);
+            }
+        })
     }
 }
 export default new HomeController;
