@@ -9,7 +9,7 @@
       <div class="select-room-dropdown">
         <select id="select-room-dropdown-menu">
           <% rooms.forEach(room => { %>
-            <option value="<%=room.name %>"><%= room.name %></option>
+            <option <%= (room.id === currentRoomId) ? 'selected': '' %>  value="<%=room.name %>"><%= room.name %></option>
           <% }) %> 
         </select>
       </div>
@@ -42,88 +42,41 @@
       </div>
       <div class="temp-container">
         <p>Temperature</p>
-        <p>26<span>o</span> C</p>
+        <p><%= temp %><span>o</span> C</p>
         <i class="fa-solid fa-temperature-high"></i>
-
       </div>
       <div class="humidity-container">
         <p>Humidity</p>
-        <p>40%</p>
+        <p><%= humi %>%</p>
         <i class="fa-solid fa-droplet"></i>
-
       </div>
     </div>
     <div class="device-list-container">
       <p class="device-list-title">Devices</p>
       <div class="device-list">
-        <div class="device-item" data-item="light">
-          <div class="top-action">
-            <div class="icon-background">
-              <span class="material-icons-outlined">lightbulb</span>
+        <% devices.forEach(device => { %>
+          <div class="device-item <%= device.status ? 'device-item-active' : '' %>" 
+               data-item="light" 
+               data-id="<%= device.id %>"
+                     
+          >
+            <div class="top-action">
+              <div class="icon-background">
+                <span class="material-icons-outlined"><%= device.type %>bulb</span>
+              </div>
+              <label class="toggle-control">
+                <input type="checkbox" <%= device.status ? 'checked' : '' %>>
+                <span class="control"></span>
+              </label>
             </div>
-            <label class="toggle-control">
-              <input type="checkbox">
-              <span class="control"></span>
-            </label>
-          </div>
-          <div class="bottom-info">
-            <p>Đèn dài</p>
-            <p>Off</p>
-          </div>
-        </div>
-        <div class="device-item" data-item="fan">
-          <div class="top-action">
-            <div class="icon-background">
-              <span class="fa-solid fa-fan"></span>
+            <div class="bottom-info">
+              <p><%= device.name %></p>
+              <p><%= device.status ? 'On' : 'Off' %></p>
             </div>
-            <label class="toggle-control">
-              <input type="checkbox">
-              <span class="control"></span>
-            </label>
           </div>
-          <div class="bottom-info">
-            <p>Quạt</p>
-            <p>3</p>
-          </div>
-        </div>
-        <div class="device-item" data-item="light">
-          <div class="top-action">
-            <div class="icon-background">
-              <span class="material-icons-outlined">lightbulb</span>
-            </div>
-            <label class="toggle-control">
-              <input type="checkbox">
-              <span class="control"></span>
-            </label>
-          </div>
-          <div class="bottom-info">
-            <p>Đèn chùm giữa</p>
-            <p>Off</p>
-          </div>
-        </div>
-        <div class="device-item" data-item="light">
-          <div class="top-action">
-            <div class="icon-background">
-              <span class="material-icons-outlined">lightbulb</span>
-            </div>
-            <label class="toggle-control">
-              <input type="checkbox">
-              <span class="control"></span>
-            </label>
-          </div>
-          <div class="bottom-info">
-            <p>Đèn chùm giữa</p>
-            <p>Off</p>
-          </div>
-        </div>
+        <% }) %> 
         <div class="device-item" data-item="add" data-bs-toggle="modal" data-bs-target="#exampleModal">
           <span class="material-icons-outlined">add</span>
-          <!-- Button trigger modal -->
-          <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Launch demo modal
-                </button> -->
-
-          <!-- Modal -->
         </div>
       </div>
       <!-- MODAL FOR ADDING DEVICE -->
@@ -141,7 +94,13 @@
               </div>
               <div class="mb-3">
                 <label for="formGroupExampleInput2" class="form-label">Device's code</label>
-                <input type="text" class="form-control" id="formGroupExampleInput-device-code">
+                <select id="formGroupExampleInput-device-code" 
+                        class="form-select" 
+                        aria-label="Default select example">
+                  <option value="light">light</option>
+                  <option value="fan">fan</option>
+                  <option value="door">door</option>
+                </select>
               </div>
             </div>
             <div class="modal-footer">

@@ -1,3 +1,4 @@
+@import 'mixins';
 .main-container {
   width: calc(801px - 161px);
   border-top-right-radius: 30px;
@@ -6,13 +7,9 @@
   .main-feed {
     width: 100%;
     height: 60px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    @include d-flex(row, normal, center);
     .message-area {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      @include d-flex(row, center, center);
       margin-right: 20px;
       button {
         box-shadow: $shadow;
@@ -77,9 +74,7 @@
     }
     .feed {
       width: 292px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
+      @include d-flex(column, flex-end, normal);
       p {
         &:first-child {
           font-size: 26px;
@@ -88,6 +83,7 @@
           font-size: 14px;
           margin-top: 5px;
           color: $lightBlue;
+          animation: 2s infinite slideup;
         }
       }
     }

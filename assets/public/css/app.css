@@ -595,10 +595,12 @@ p {
   height: 60px;
   display: flex;
   flex-direction: row;
+  align-items: normal;
   justify-content: center;
 }
 .main-container .main-feed .message-area {
-  display: inline-flex;
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   margin-right: 20px;
@@ -667,6 +669,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: normal;
 }
 .main-container .main-feed .feed p:first-child {
   font-size: 26px;
@@ -675,6 +678,7 @@ p {
   font-size: 14px;
   margin-top: 5px;
   color: #7297ab;
+  animation: 2s infinite slideup;
 }
 .main-container .add-new-device-and-choose-room {
   width: 100%;
