@@ -8,5 +8,6 @@ router.get('/temp-and-humidity', HomeController.getTempAndHumidity);
 router.get('/settings', SettingsController.show);
 router.post('/room/add', HomeController.addNewRoom);
 router.post('/device/add', HomeController.addNewDevice);
+router.post('/device/toggle', HomeController.toggleDevice);
 
 export default router;

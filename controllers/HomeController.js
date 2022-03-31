@@ -114,5 +114,14 @@ class HomeController {
             }
         })
     }
+
+    toggleDevice = (req, res, next) => {
+        const { deviceId, status } = req.body;
+        Device.findOneAndUpdate({ id: deviceId }, { status: status })
+            .then(result => {
+                res.json(result);
+            })
+            .catch(err => console.log(err));
+    }
 }
 export default new HomeController;

@@ -55,13 +55,17 @@
       <p class="device-list-title">Devices</p>
       <div class="device-list">
         <% devices.forEach(device => { %>
-          <div class="device-item" data-item="light">
+          <div class="device-item <%= device.status ? 'device-item-active' : '' %>" 
+               data-item="light" 
+               data-id="<%= device.id %>"
+                     
+          >
             <div class="top-action">
               <div class="icon-background">
                 <span class="material-icons-outlined"><%= device.type %>bulb</span>
               </div>
               <label class="toggle-control">
-                <input type="checkbox">
+                <input type="checkbox" <%= device.status ? 'checked' : '' %>>
                 <span class="control"></span>
               </label>
             </div>

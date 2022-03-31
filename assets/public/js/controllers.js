@@ -10,6 +10,7 @@ class App {
         this.handleAddRoom();
         this.handleAddNewDevice();
         this.handleSelectRoom();
+        this.handleToggleDevice();
         
     }
     handleDevice = () => {
@@ -137,13 +138,34 @@ class App {
                 method: 'GET',
                 dataType: 'json',
                 success: (data) => {
-                    console.log(data);
                     $('.temp-container p:nth-child(2)').html(`${parseInt(data.temp)}<span>o</span> C`); 
                     $('.humidity-container p:nth-child(2)').html(`${parseInt(data.humidity)}%`);
                     this.updateTempAndHumi();
                 }
             })
         }, 4000)
+    }
+
+
+    handleToggleDevice = () => {
+        $$('.device-list .device-item').forEach((item) => {
+            if (item.dataset.item !== 'add') {
+                item.children[0].children[1].children[0].addEventListener('change', (e) => {
+                    $.ajax({
+                        url: '/device/toggle',
+                        method: 'POST',
+                        data: { 
+                            deviceId: item.dataset.id,
+                            status:  e.target.checked
+                        },
+                        dataType: 'json',
+                        success: (res) => {
+                            console.log(res);
+                        }
+                    })
+                })
+            }
+        })
     }
 }
 // INITIAL APP
