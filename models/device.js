@@ -14,6 +14,10 @@ const deviceSchema = new Schema({
         type: Boolean,
         required: true
     },
+    type: {
+        type: String,
+        required: true
+    },
     roomId: {
         type: Number,
         required: true

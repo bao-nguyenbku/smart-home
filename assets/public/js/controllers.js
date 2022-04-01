@@ -9,7 +9,9 @@ class App {
         this.handleSidebarActive();
         this.handleAddRoom();
         this.handleAddNewDevice();
-        this.renderRooms();
+        this.handleSelectRoom();
+        this.handleToggleDevice();
+        
     }
     handleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -71,34 +73,109 @@ class App {
         })
     }
     handleAddRoom = () => {
-        document.querySelector('#submit-add-room-button').addEventListener('click', () => {
-            const roomName = document.getElementById('formGroupExampleInput-room-name').value;
-            document.getElementById('formGroupExampleInput-room-name').value = '';
+        const addRoomBtn = document.querySelector('#submit-add-room-button');
+        if (addRoomBtn) {
+            addRoomBtn.addEventListener('click', () => {
+                const roomName = document.getElementById('formGroupExampleInput-room-name').value;
+                document.getElementById('formGroupExampleInput-room-name').value = '';
+                $.ajax({
+                    url: '/room/add',
+                    method: 'POST',
+                    data:{ name: roomName },
+                    success: (res) => {
+                        const option = new Option(`${res.data.name}`, `${res.data.name}`);
+                        console.log(option);
+                        document.getElementById('select-room-dropdown-menu').appendChild(option);
+                    }
+                })
+            })
+        }
+    }
+
+    handleSelectRoom = () => {
+        const selectRoomBtn = document.querySelector('#select-room-dropdown-menu');
+        if (selectRoomBtn) {
+            selectRoomBtn.addEventListener('change', (e) => {
+                const currentRoom = e.target.value;
+                window.location.href = `/?roomName=${currentRoom.toLowerCase().split(' ').join('-')}`;
+            });
+        }
+    }
+    getCurrentSelectRoom = () => document.querySelector('#select-room-dropdown-menu').value;
+        
+    handleAddNewDevice = () => {
+        const addDeviceBtn = document.querySelector('#submit-add-device-button');
+        if (addDeviceBtn) {
+            addDeviceBtn.addEventListener('click', () => {
+                const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
+                const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
+                const currentRoom = this.getCurrentSelectRoom();
+                
+                $.ajax({
+                    url: '/device/add',
+                    method: 'POST',
+                    data: { 
+                        deviceName: deviceName,
+                        deviceCode: deviceCode,
+                        room: currentRoom
+                    },
+                    dataType: 'json',
+                    success: (result) => {
+                        if (result.status === 200) {
+                            // TODO: Fix this to add new device without reload page
+                            location.reload();
+                        }
+                    }
+                })
+            })
+        }
+    }
+
+    updateTempAndHumi = () => {
+        setTimeout(() => {
+            const previous = new Date(Date.now() - 9 * 60 * 60 * 1000);
             $.ajax({
-                url: '/room/add',
-                method: 'POST',
-                data:{ name: roomName },
-                success: (res) => {
-                    const option = new Option(`${res.data.name}`, `${res.data.name}`);
-                    console.log(option);
-                    document.getElementById('select-room-dropdown-menu').appendChild(option);
+                url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?start_time=${previous.toISOString()}`,
+                method: 'GET',
+                success: (data) => {
+                    const lastData = JSON.parse(data[0].value);
+                    
+                    if (lastData.name === 'TempHumi') {
+                        const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
+                        $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`); 
+                        $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+                    }
+                    this.updateTempAndHumi();
                 }
             })
-        })
+        }, 20000)
     }
 
 
-    handleAddNewDevice = () => {
-        document.querySelector('#submit-add-device-button').addEventListener('click', () => {
-            const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
-            const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
-            $.ajax({
-                url: 'http://localhost:5000/:roomName/add'
-            })
-            console.log(deviceName, deviceCode);
+    handleToggleDevice = () => {
+        $$('.device-list .device-item').forEach((item) => {
+            if (item.dataset.item !== 'add') {
+                item.children[0].children[1].children[0].addEventListener('change', (e) => {
+                    $.ajax({
+                        url: '/device/toggle',
+                        method: 'POST',
+                        data: { 
+                            deviceId: item.dataset.id,
+                            status:  e.target.checked
+                        },
+                        dataType: 'json',
+                        success: (res) => {
+                            console.log(res);
+                        }
+                    })
+                })
+            }
         })
     }
 }
+// INITIAL APP
+const myHome = new App();
+
 // ================= GET TAB ACTIVE ================
 window.onload = () => {
     const oldIndex = window.localStorage.getItem('activeTab');
@@ -110,8 +187,8 @@ window.onload = () => {
             li.classList.add('li-active');
         }
     })
+
+    myHome.updateTempAndHumi();
 }
 
-// GET DATA REAL TIME ========================
 
-const myHome = new App();

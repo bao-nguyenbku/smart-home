@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --inspect index.js",
+    "stop": "taskkill -f -im node.exe",
     "sass": "sass views/sass/app.scss assets/public/css/app.css --watch"
   },
   "keywords": [],
