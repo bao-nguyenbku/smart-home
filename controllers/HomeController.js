@@ -1,4 +1,4 @@
-import client, { topicRes, topicReq } from '../mqtt/index.js';
+// import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device } from '../models/index.js';
 import { getAllRoomWithField } from '../models/RoomQuery.js';
 import { getTempAndHumi } from '../models/TempAndHumiQuery.js';

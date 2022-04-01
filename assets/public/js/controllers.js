@@ -11,7 +11,7 @@ class App {
         this.handleAddNewDevice();
         this.handleSelectRoom();
         this.handleToggleDevice();
-        
+        this.updateTempAndHumi();
     }
     handleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -81,7 +81,7 @@ class App {
                 $.ajax({
                     url: '/room/add',
                     method: 'POST',
-                    data:{ name: roomName },
+                    data: { name: roomName },
                     success: (res) => {
                         const option = new Option(`${res.data.name}`, `${res.data.name}`);
                         console.log(option);
@@ -102,7 +102,7 @@ class App {
         }
     }
     getCurrentSelectRoom = () => document.querySelector('#select-room-dropdown-menu').value;
-        
+
     handleAddNewDevice = () => {
         const addDeviceBtn = document.querySelector('#submit-add-device-button');
         if (addDeviceBtn) {
@@ -110,11 +110,11 @@ class App {
                 const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
                 const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
                 const currentRoom = this.getCurrentSelectRoom();
-                
+
                 $.ajax({
                     url: '/device/add',
                     method: 'POST',
-                    data: { 
+                    data: {
                         deviceName: deviceName,
                         deviceCode: deviceCode,
                         room: currentRoom
@@ -130,25 +130,25 @@ class App {
             })
         }
     }
-
     updateTempAndHumi = () => {
         setTimeout(() => {
-            const previous = new Date(Date.now() - 9 * 60 * 60 * 1000);
+            const previous = new Date(Date.now() - 24 * 60 * 60 * 1000);
+            console.log('True');
             $.ajax({
                 url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?start_time=${previous.toISOString()}`,
                 method: 'GET',
                 success: (data) => {
                     const lastData = JSON.parse(data[0].value);
-                    
+
                     if (lastData.name === 'TempHumi') {
                         const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
-                        $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`); 
+                        $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
                         $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+                        this.updateTempAndHumi();
                     }
-                    this.updateTempAndHumi();
                 }
             })
-        }, 20000)
+        }, 5000)
     }
 
 
@@ -159,9 +159,9 @@ class App {
                     $.ajax({
                         url: '/device/toggle',
                         method: 'POST',
-                        data: { 
+                        data: {
                             deviceId: item.dataset.id,
-                            status:  e.target.checked
+                            status: e.target.checked
                         },
                         dataType: 'json',
                         success: (res) => {
