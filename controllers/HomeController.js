@@ -46,8 +46,8 @@ class HomeController {
                                     rooms: rooms, 
                                     currentRoomId: currentRoomId, 
                                     devices: devices, 
-                                    temp: parseInt(data.temp),
-                                    humi: parseInt(data.humidity)
+                                    temp: '--',
+                                    humi: '--'
                                 });
                             }
                         })
@@ -105,13 +105,9 @@ class HomeController {
     //         .catch(err => console.log(err));
     // }
     getTempAndHumidity = (req, res, next) => {
-        getTempAndHumi((err, data) => {
-            if (!err) {
-                res.status(200).json(data);
-            }
-            else {
-                console.log(err);
-            }
+        client.on('message', (topicRes, payload) => {
+            res.json(JSON.parse(payload));
+            return;
         })
     }
 

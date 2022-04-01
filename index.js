@@ -5,7 +5,6 @@ import path from 'path';
 import ejsLayouts from 'express-ejs-layouts';
 import { fileURLToPath } from 'url';
 import mongoose from './database/index.js';
-// import client from './mqtt/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

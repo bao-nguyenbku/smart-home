@@ -18,7 +18,7 @@ const OPTIONS = {
 }
 export const topicReq = 'kimhungtdblla24/feeds/ttda-cnpm-so2ha';
 export const topicRes = 'kimhungtdblla24/feeds/ttda-cnpm-ha2so';
-const client = mqtt.connect(connectUrl, OPTIONS);
+let client = mqtt.connect(connectUrl, OPTIONS);
 
 client.on('connect', () => {
     console.log('Connected');

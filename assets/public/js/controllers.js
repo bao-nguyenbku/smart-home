@@ -133,17 +133,22 @@ class App {
 
     updateTempAndHumi = () => {
         setTimeout(() => {
+            const previous = new Date(Date.now() - 9 * 60 * 60 * 1000);
             $.ajax({
-                url: '/temp-and-humidity',
+                url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?start_time=${previous.toISOString()}`,
                 method: 'GET',
-                dataType: 'json',
                 success: (data) => {
-                    $('.temp-container p:nth-child(2)').html(`${parseInt(data.temp)}<span>o</span> C`); 
-                    $('.humidity-container p:nth-child(2)').html(`${parseInt(data.humidity)}%`);
+                    const lastData = JSON.parse(data[0].value);
+                    
+                    if (lastData.name === 'TempHumi') {
+                        const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
+                        $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`); 
+                        $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+                    }
                     this.updateTempAndHumi();
                 }
             })
-        }, 4000)
+        }, 20000)
     }
 
 
