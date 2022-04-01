@@ -1,0 +1,101 @@
+<div class="settings-container">
+  <div class="settings-button">
+    <div class="settings-button-class">
+      <a onclick="change()" class="active" id="energy">
+        <span class="material-icons-outlined">power_settings_new</span>
+      </a>
+      <p>Off energy</p>
+    </div>
+
+    <div class="settings-button-class">
+      <a onclick="change()" class="" id="left-home">
+        <span class="material-icons-outlined">lock</span>
+      </a>
+      <p>Left home</p>
+    </div>
+  </div>
+
+  <div class="settings-content">
+    <div class="settings-items">
+      <ul class="nav nav-tabs nav1">
+        <li id="nav_edit_profile" class="item_active">
+          <a href="/settings#edit_profile">
+            <i class="bi bi-person-lines-fill"></i>
+            <span> Edit profile </span>
+          </a>
+        </li>
+
+        <li id="nav_myhome" class="">
+          <a href="/settings#my_home">
+            <i class="bi bi-house-heart-fill"></i>
+            <span> My home </span>
+          </a>
+        </li>
+
+        <li id="nav_change_password" class="">
+          <a href="/settings#change_password">
+            <i class="bi bi-key"></i>
+            <span> Change password </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tab-content">
+      <!-- Edit Profile -->
+      <div id="edit_profile" class="tab-pane active1 settings-edit">
+        <div class="settings-avatar">
+          <img src="./assets/images/avatar.jpg" alt="avatar">
+        </div>
+
+        <form class="form_edit">
+          <label for="username">Username</label><br>
+          <input type="text" id="username" name="username" value="Jenny"><br>
+
+          <label for="phone">Phone</label><br>
+          <input type="text" id="phone" name="phone" value="0123456789"><br>
+
+          <label for="email">Email</label><br>
+          <input type="text" id="email" name="email" value="jennynguyen@gmail.com"><br>
+
+          <input type="submit" class="cancel" value="Cancel">
+          <input type="submit" class="save" value="Save">
+        </form>
+      </div>
+
+      <!-- My Home -->
+      <div id="my_home" class="tab-pane settings-edit">
+        <div class="myhome">
+          <img src="./assets/images/living3.jpg" alt="livingroom">
+        </div>
+        <form class="form_edit form_myhome">
+          <label for="name"> Name </label><br>
+          <input type="text" id="name" name="name" value="Jenny's House"><br>
+
+          <label for="address"> Address </label><br>
+          <input type="text" id="address" name="address" value="36, Wall Street, 5 District, Ho Chi Minh"><br>
+
+          <input type="submit" class="cancel" value="Cancel">
+          <input type="submit" class="save" value="Save">
+        </form>
+      </div>
+
+      <!-- Change Password -->
+      <div id="change_password" class="tab-pane settings-edit">
+        <form class="form_edit form_change_password">
+          <label for="current_password"> Current Password </label><br>
+          <input type="password" id="current_password" name="current_password"><br>
+
+          <label for="new_password"> New password </label><br>
+          <input type="password" id="new_password" name="new_password"><br>
+
+          <label for="confirm_password"> Confirm password </label><br>
+          <input type="password" id="confirm_password" name="confirm_password"><br>
+
+          <input type="submit" class="cancel" value="Cancel">
+          <input type="submit" class="save" value="Save">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
