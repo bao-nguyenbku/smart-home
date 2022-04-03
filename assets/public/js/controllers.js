@@ -11,7 +11,7 @@ class App {
         this.handleAddNewDevice();
         this.handleSelectRoom();
         this.handleToggleDevice();
-        this.updateTempAndHumi();
+        // this.updateTempAndHumi();
     }
     handleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -97,7 +97,7 @@ class App {
         if (selectRoomBtn) {
             selectRoomBtn.addEventListener('change', (e) => {
                 const currentRoom = e.target.value;
-                window.location.href = `/?roomName=${currentRoom.toLowerCase().split(' ').join('-')}`;
+                window.location.href = `/?room=${currentRoom.toLowerCase().split(' ').join('-')}`;
             });
         }
     }
@@ -188,7 +188,7 @@ window.onload = () => {
         }
     })
 
-    myHome.updateTempAndHumi();
+    // myHome.updateTempAndHumi();
 }
 
 

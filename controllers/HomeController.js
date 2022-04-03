@@ -3,6 +3,7 @@ import { Room, Device } from '../models/index.js';
 import { getAllRoomWithField } from '../models/RoomQuery.js';
 import { getTempAndHumi } from '../models/TempAndHumiQuery.js';
 import { genId } from './generateID.js';
+
 class HomeController {
     show = (req, res, next) => {
         // const temp = {
@@ -18,17 +19,13 @@ class HomeController {
         //         }
         //     })
         // })
-        // res.json('Success');
-        // client.on('message', (topicRes, payload) => {
-        //    res.json(JSON.parse(payload));
-        // })
-        const { roomName } = req.query;
+        const { room } = req.query;
         Room.find({}, 'name id')
             .then(rooms => {
                 let currentRoomId;
-                if (roomName) {
+                if (room) {
                     for (let i = 0; i < rooms.length; i++) {
-                        if (rooms[i].name.toLowerCase().split(' ').join('-') === roomName) {
+                        if (rooms[i].name.toLowerCase().split(' ').join('-') === room) {
                             currentRoomId = rooms[i].id;
                             break;
                         }
@@ -37,15 +34,15 @@ class HomeController {
                 else {
                     currentRoomId = rooms[0].id;
                 }
-                
-                Device.find({roomId: currentRoomId})
+
+                Device.find({ roomId: currentRoomId })
                     .then(devices => {
                         getTempAndHumi((err, data) => {
                             if (!err) {
-                                res.render('index', { 
-                                    rooms: rooms, 
-                                    currentRoomId: currentRoomId, 
-                                    devices: devices, 
+                                res.render('index', {
+                                    rooms: rooms,
+                                    currentRoomId: currentRoomId,
+                                    devices: devices,
                                     temp: '--',
                                     humi: '--'
                                 });
@@ -55,6 +52,40 @@ class HomeController {
                     .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
+    }
+    showWithRoom = (req, res, next) => {
+        const { roomName } = req.body;
+        Room.find({}, 'name id')
+            .then(rooms => {
+                let currentRoomId;
+                for (let i = 0; i < rooms.length; i++) {
+                    if (rooms[i].name.toLowerCase().split(' ').join('-') === roomName) {
+                        currentRoomId = rooms[i].id;
+                        break;
+                    }
+                }
+
+                Device.find({ roomId: currentRoomId })
+                    .then(devices => {   
+                        res.render('index', {
+                            rooms: rooms,
+                            currentRoomId: currentRoomId,
+                            devices: devices,
+                            temp: '--',
+                            humi: '--'
+                        })
+                        // fs.readFile('views/partials/devices.ejs', "utf-8", function (err, template) {
+                        //     const test_template = ejs.compile(template, { client: true });
+                        //     const html = test_template({
+                        //         devices: devices,
+                        //     });
+                        //     res.status(200).send(html);
+                        // });
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+        
     }
     addNewRoom = (req, res, next) => {
         const roomName = req.body.name;
@@ -73,7 +104,7 @@ class HomeController {
     }
     addNewDevice = (req, res, next) => {
         const { deviceName, deviceCode, room } = req.body;
-        
+
         // Find a room in database which match 'room'
         getAllRoomWithField('name', (err, result) => {
             if (!err) {
@@ -94,7 +125,7 @@ class HomeController {
                     .catch(err => console.log(err));
             }
         });
-        
+
 
     }
     // getAllRoom = (req, res, next) => {
