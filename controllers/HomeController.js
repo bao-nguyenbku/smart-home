@@ -3,7 +3,8 @@ import { Room, Device } from '../models/index.js';
 import { getAllRoomWithField } from '../models/RoomQuery.js';
 import { getTempAndHumi } from '../models/TempAndHumiQuery.js';
 import { genId } from './generateID.js';
-
+import fs from 'fs';
+import ejs from 'ejs';
 class HomeController {
     show = (req, res, next) => {
         // const temp = {
@@ -54,7 +55,7 @@ class HomeController {
             .catch(err => console.log(err));
     }
     showWithRoom = (req, res, next) => {
-        const { roomName } = req.body;
+        const roomName = req.body.room;
         Room.find({}, 'name id')
             .then(rooms => {
                 let currentRoomId;
@@ -64,23 +65,24 @@ class HomeController {
                         break;
                     }
                 }
-
+                console.log(roomName);
                 Device.find({ roomId: currentRoomId })
                     .then(devices => {   
-                        res.render('index', {
-                            rooms: rooms,
-                            currentRoomId: currentRoomId,
-                            devices: devices,
-                            temp: '--',
-                            humi: '--'
-                        })
-                        // fs.readFile('views/partials/devices.ejs', "utf-8", function (err, template) {
-                        //     const test_template = ejs.compile(template, { client: true });
-                        //     const html = test_template({
-                        //         devices: devices,
-                        //     });
-                        //     res.status(200).send(html);
-                        // });
+                        // res.render('index', {
+                        //     rooms: rooms,
+                        //     currentRoomId: currentRoomId,
+                        //     devices: devices,
+                        //     temp: '--',
+                        //     humi: '--'
+                        // })
+                        console.log(devices);
+                        fs.readFile('views/partials/devices.ejs', "utf-8", function (err, template) {
+                            const test_template = ejs.compile(template, { client: true });
+                            const html = test_template({
+                                devices: devices,
+                            });
+                            res.status(200).send(html);
+                        });
                     })
                     .catch(err => console.log(err));
             })

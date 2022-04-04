@@ -1,83 +1,27 @@
-<p class="device-list-title">Devices</p>
-<div class="device-list">
-    <% devices.forEach(device=> { %>
-        <div class="device-item <%= device.status ? 'device-item-active' : '' %>" data-item="light"
-            data-id="<%= device.id %>">
-            <div class="top-action">
-                <div class="icon-background">
-                    <span class="material-icons-outlined">
-                        <%= device.type %>bulb
-                    </span>
-                </div>
-                <label class="toggle-control">
-                    <input type="checkbox" <%=device.status ? 'checked' : '' %>>
-                    <span class="control"></span>
-                </label>
+<% devices.forEach(device=> { %>
+    <div class="device-item <%= device.status ? 'device-item-active' : '' %>" data-item="light"
+        data-id="<%= device.id %>">
+        <div class="top-action">
+            <div class="icon-background">
+                <span class="material-icons-outlined">
+                    <%= device.type %>bulb
+                </span>
             </div>
-            <div class="bottom-info">
-                <p>
-                    <%= device.name %>
-                </p>
-                <p>
-                    <%= device.status ? 'On' : 'Off' %>
-                </p>
-            </div>
+            <label class="toggle-control">
+                <input type="checkbox" <%=device.status ? 'checked' : '' %>>
+                <span class="control"></span>
+            </label>
         </div>
-        <% }) %>
-            <div class="device-item" data-item="add" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <span class="material-icons-outlined">add</span>
-            </div>
-</div>
-<!-- MODAL FOR ADDING DEVICE -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New device</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="formGroupExampleInput" class="form-label">Device's name</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput-device-name">
-                </div>
-                <div class="mb-3">
-                    <label for="formGroupExampleInput2" class="form-label">Device's code</label>
-                    <select id="formGroupExampleInput-device-code" class="form-select"
-                        aria-label="Default select example">
-                        <option value="light">light</option>
-                        <option value="fan">fan</option>
-                        <option value="door">door</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-bs-dismiss="modal" style="background: none; border: none;">Cancel</button>
-                <button type="button" style="background: none; border: none; color: red;"
-                    id="submit-add-device-button">Add</button>
-            </div>
+        <div class="bottom-info">
+            <p>
+                <%= device.name %>
+            </p>
+            <p>
+                <%= device.status ? 'On' : 'Off' %>
+            </p>
         </div>
     </div>
-</div>
-<!-- MODAL FOR ADDING ROOM -->
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New room</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="formGroupExampleInput" class="form-label">Room's name</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput-room-name">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-bs-dismiss="modal" style="background: none; border: none;">Cancel</button>
-                <button type="button" style="background: none; border: none; color: red;"
-                    id="submit-add-room-button">Add</button>
-            </div>
-        </div>
+<% }) %>
+    <div class="device-item" data-item="add" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <span class="material-icons-outlined">add</span>
     </div>
-</div>

@@ -4,7 +4,6 @@ const $$ = document.querySelectorAll.bind(document);
 // App will execute all operation in smart home pages
 class App {
     constructor() {
-        this.handleDevice();
         this.handleMainControl();
         this.handleSidebarActive();
         this.handleAddRoom();
@@ -13,20 +12,7 @@ class App {
         this.handleToggleDevice();
         // this.updateTempAndHumi();
     }
-    handleDevice = () => {
-        $$('.toggle-control input').forEach(btn => {
-            btn.addEventListener('change', (e) => {
-                const deviceItem = e.path[3];
-                deviceItem.classList.toggle('device-item-active');
-                if (deviceItem.dataset.item == 'light') {
-                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? 'On' : 'Off';
-                }
-                else if (deviceItem.dataset.item == 'fan') {
-                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? '1' : 'Off';
-                }
-            })
-        })
-    }
+
     handleMainControl = () => {
         const handleSlider = () => {
             const slider = document.querySelector('div.slider');
@@ -96,8 +82,8 @@ class App {
         const selectRoomBtn = document.querySelector('#select-room-dropdown-menu');
         if (selectRoomBtn) {
             selectRoomBtn.addEventListener('change', (e) => {
-                const currentRoom = e.target.value;
-                window.location.href = `/?room=${currentRoom.toLowerCase().split(' ').join('-')}`;
+                const currentRoom = e.target.value.toLowerCase().split(' ').join('-');
+                window.location.href = `/?room=${currentRoom}`;
             });
         }
     }
@@ -153,6 +139,31 @@ class App {
 
 
     handleToggleDevice = () => {
+        $$('.toggle-control input').forEach(btn => {
+            btn.addEventListener('change', (e) => {
+                const deviceItem = e.path[3];
+                const message = deviceItem.children[1].children[0].textContent + 'đã được ' + (e.target.checked ? 'mở' : 'tắt');
+                Toastify({
+                    text: message,
+                    duration: 3000,
+                    // destination: "https://github.com/apvarun/toastify-js",
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    className: 'custom-toast',
+                    // onClick: function(){} // Callback after click
+                  }).showToast();
+                deviceItem.classList.toggle('device-item-active');
+                if (deviceItem.dataset.item == 'light') {
+                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? 'On' : 'Off';
+                }
+                else if (deviceItem.dataset.item == 'fan') {
+                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? '1' : 'Off';
+                }
+            })
+        })
         $$('.device-list .device-item').forEach((item) => {
             if (item.dataset.item !== 'add') {
                 item.children[0].children[1].children[0].addEventListener('change', (e) => {

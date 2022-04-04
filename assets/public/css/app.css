@@ -436,6 +436,16 @@ template {
   color: #7297ab;
 }
 
+.custom-toast {
+  font-size: 20px;
+  background: #fff;
+  border-radius: 10px;
+  color: black;
+}
+.custom-toast br {
+  display: none;
+}
+
 * {
   font-family: "Roboto", sans-serif;
   font-size: 13px;
