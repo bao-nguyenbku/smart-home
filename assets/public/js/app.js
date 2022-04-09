@@ -2,8 +2,19 @@
 const $$ = document.querySelectorAll.bind(document);
 
 // Global method
-const addRoomToDevice = (rooms, devices) = {
-    
+// const addRoomToDevice = (rooms, devices) = {
+
+// }
+const validatePassword = (password) => {
+    const lower = /[a-z]/g;
+    const upper = /[A-Z]/g;
+    const number = /[0-9]/g;
+    if (password.search(lower) === -1 || password.search(upper) === -1 || password.search(number) === -1) {
+        return 'Password must contain lower-case, upper-case and number characters';
+    }
+    else {
+        return 'OK';
+    }
 }
 // App will execute all operation in smart home pages
 class App {
@@ -15,11 +26,32 @@ class App {
         this.handleSelectRoom();
         this.handleToggleDevice();
         this.updateTempAndHumi();
+
+        if (window.location.pathname.split('/').includes('login')) {
+            this.handleLogin();
+        }
         if (window.location.pathname.split('/').includes('statistics')) {
             this.handleTableDeviceInStatistic();
         }
     }
+    handleLogin = () => {
+        document.querySelector('#login-form').onsubmit = (e) => {
+            e.preventDefault();
+            const email = e.target[0].value;
+            const password = e.target[1].value;
+            const message = validatePassword(password);
+            if (message === 'OK') {
+                document.querySelector('#login-form').submit();
+            }
+            else {
+                document.querySelector('#login-form .login-field:nth-child(2)').classList.add('login-field-error');
+                document.querySelector('#login-form .error-message').textContent = message;
+                document.querySelector('#login-form .error-message').style.display = 'block';
 
+            }
+            console.log(email, password);
+        }
+    }
     handleMainControl = () => {
         const handleSlider = () => {
             const slider = document.querySelector('div.slider');

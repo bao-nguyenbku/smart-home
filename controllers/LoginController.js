@@ -7,5 +7,9 @@ class LoginController {
             layout: 'layouts/login.ejs'
         })
     }
+    loginUser = (req, res, next) => {
+        const { email, password } = req.body;
+        console.log(email, password);
+    }
 } 
 export default new LoginController;

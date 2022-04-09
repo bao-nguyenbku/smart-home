@@ -1,17 +1,20 @@
 <div class="login-container">
     <div class="login-area">
-        <p class="login-area-title">Log in to your home</p>
-        <div class="login-field">
-            <span class="material-icons-outlined">
-                email</span>
-            <input type="email" id="login-email" placeholder="Email">
-        </div>
-        <div class="login-field">
-            <span class="material-icons-outlined">
-                lock</span>
-            <input type="password" id="login-password" placeholder='Password'>
-        </div>
-        <button class="login-field login-btn">Enter your home</button>
+        <p class="login-area-title">Log in to your home!</p>
+        <form action="/login" id="login-form" method="POST">
+            <div class="login-field">
+                <span class="material-icons-outlined">
+                    email</span>
+                <input type="email" id="login-email" placeholder="Email" name="email">
+            </div>
+            <div class="login-field">
+                <span class="material-icons-outlined">
+                    lock</span>
+                <input type="password" id="login-password" placeholder='Password' name="password">
+            </div>
+            <p class="error-message"></p>
+            <button type="submit" class="login-field login-btn">Enter your home</button>
+        </form>
     </div>
     <div class="login-image">
         <svg class="animated" id="freepik_stories-smart-home" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"
