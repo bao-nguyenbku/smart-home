@@ -1,25 +1,11 @@
-import client, { topicRes, topicReq } from '../mqtt/index.js';
+// import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device } from '../models/index.js';
 import { getAllRoomWithField } from '../models/RoomQuery.js';
-import { getTempAndHumi } from '../models/TempAndHumiQuery.js';
 import { genId } from './generateID.js';
 import fs from 'fs';
 import ejs from 'ejs';
 class HomeController {
     show = (req, res, next) => {
-        // const temp = {
-        //     cmd:'info',
-        //     name:'temp',
-        //     paras:'none'
-        // }
-        // client.on('connect', () => {
-        //     console.log('Connected');
-        //     client.publish(topicReq, `${JSON.stringify(temp)}`, { qos: 0, retain: true }, (error) => {
-        //         if (error) {
-        //             console.error(error)
-        //         }
-        //     })
-        // })
         const { room } = req.query;
         Room.find({}, 'name id')
             .then(rooms => {
@@ -38,17 +24,13 @@ class HomeController {
 
                 Device.find({ roomId: currentRoomId })
                     .then(devices => {
-                        getTempAndHumi((err, data) => {
-                            if (!err) {
-                                res.render('index', {
-                                    rooms: rooms,
-                                    currentRoomId: currentRoomId,
-                                    devices: devices,
-                                    temp: '--',
-                                    humi: '--'
-                                });
-                            }
-                        })
+                        res.render('index', {
+                            rooms: rooms,
+                            currentRoomId: currentRoomId,
+                            devices: devices,
+                            temp: '--',
+                            humi: '--'
+                        });
                     })
                     .catch(err => console.log(err));
             })

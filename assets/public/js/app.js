@@ -1,6 +1,10 @@
 // const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+// Global method
+const addRoomToDevice = (rooms, devices) = {
+    
+}
 // App will execute all operation in smart home pages
 class App {
     constructor() {
@@ -11,6 +15,9 @@ class App {
         this.handleSelectRoom();
         this.handleToggleDevice();
         this.updateTempAndHumi();
+        if (window.location.pathname.split('/').includes('statistics')) {
+            this.handleTableDeviceInStatistic();
+        }
     }
 
     handleMainControl = () => {
@@ -139,7 +146,15 @@ class App {
         }, 5000)
     }
 
-
+    handleTableDeviceInStatistic = () => {
+        $.ajax({
+            url: '/statistics/devices',
+            method: 'GET',
+            success: (res) => {
+                console.log(res);
+            }
+        })
+    }
     handleToggleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
             btn.addEventListener('change', (e) => {
