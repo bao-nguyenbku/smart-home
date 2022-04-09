@@ -1,4 +1,4 @@
-// import client, { topicRes, topicReq } from '../mqtt/index.js';
+import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device } from '../models/index.js';
 import { getAllRoomWithField } from '../models/RoomQuery.js';
 import { getTempAndHumi } from '../models/TempAndHumiQuery.js';
@@ -130,24 +130,25 @@ class HomeController {
 
 
     }
-    // getAllRoom = (req, res, next) => {
-    //     Room.find({}, 'name')
-    //         .then(result => {
-    //             res.json(result);
-    //         })
-    //         .catch(err => console.log(err));
-    // }
-    getTempAndHumidity = (req, res, next) => {
-        client.on('message', (topicRes, payload) => {
-            res.json(JSON.parse(payload));
-            return;
-        })
-    }
-
+    
     toggleDevice = (req, res, next) => {
         const { deviceId, status } = req.body;
         Device.findOneAndUpdate({ id: deviceId }, { status: status })
             .then(result => {
+                const device = {
+                    id: deviceId,
+                    cmd: status ? 'open' : 'close',
+                    name: result.type,
+                    paras: 'none'
+                }
+
+                // console.log(JSON.stringify(device));
+                client.publish(topicReq, `${JSON.stringify(device)}`, { qos: 0, retain: true }, (error) => {
+                    if (error) {
+                        console.error(error);
+                    }
+                })
+            
                 res.json(result);
             })
             .catch(err => console.log(err));

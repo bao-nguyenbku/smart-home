@@ -10,7 +10,7 @@ class App {
         this.handleAddNewDevice();
         this.handleSelectRoom();
         this.handleToggleDevice();
-        // this.updateTempAndHumi();
+        this.updateTempAndHumi();
     }
 
     handleMainControl = () => {
@@ -118,19 +118,21 @@ class App {
     }
     updateTempAndHumi = () => {
         setTimeout(() => {
-            const previous = new Date(Date.now() - 24 * 60 * 60 * 1000);
-            console.log('True');
+            // get time at 2 minutes ago
+            const previous = new Date(Date.now() - 2 * 60 * 1000);
             $.ajax({
+                // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
                 url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?start_time=${previous.toISOString()}`,
                 method: 'GET',
                 success: (data) => {
-                    const lastData = JSON.parse(data[0].value);
-
-                    if (lastData.name === 'TempHumi') {
-                        const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
-                        $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
-                        $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
-                        this.updateTempAndHumi();
+                    if (data.length !== 0) {
+                        const lastData = JSON.parse(data[0].value);
+                        if (lastData.name === 'TempHumi') {
+                            const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
+                            $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
+                            $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+                            this.updateTempAndHumi();
+                        }
                     }
                 }
             })
@@ -198,8 +200,6 @@ window.onload = () => {
             li.classList.add('li-active');
         }
     })
-
-    // myHome.updateTempAndHumi();
 }
 
 
