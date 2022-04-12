@@ -14,14 +14,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "chart.js": "^3.7.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
     "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.2",
     "mongoose": "^6.2.8",
     "mqtt": "^4.3.7",
     "nodemon": "^2.0.15",
-    "sass": "^1.49.9"
+    "sass": "^1.49.9",
+    "toastify-js": "^1.11.2"
+  },
+  "devDependencies": {
+    "connect-livereload": "^0.6.1",
+    "livereload": "^0.9.3"
   }
 }

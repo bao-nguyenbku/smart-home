@@ -1,31 +1,56 @@
 // const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+// Global method
+// const addRoomToDevice = (rooms, devices) = {
+
+// }
+const validatePassword = (password) => {
+    const lower = /[a-z]/g;
+    const upper = /[A-Z]/g;
+    const number = /[0-9]/g;
+    if (password.search(lower) === -1 || password.search(upper) === -1 || password.search(number) === -1) {
+        return 'Password must contain lower-case, upper-case and number characters';
+    }
+    else {
+        return 'OK';
+    }
+}
 // App will execute all operation in smart home pages
 class App {
     constructor() {
-        this.handleDevice();
         this.handleMainControl();
         this.handleSidebarActive();
         this.handleAddRoom();
         this.handleAddNewDevice();
         this.handleSelectRoom();
         this.handleToggleDevice();
-        
+        this.updateTempAndHumi();
+
+        if (window.location.pathname.split('/').includes('login')) {
+            this.handleLogin();
+        }
+        if (window.location.pathname.split('/').includes('statistics')) {
+            this.handleTableDeviceInStatistic();
+        }
     }
-    handleDevice = () => {
-        $$('.toggle-control input').forEach(btn => {
-            btn.addEventListener('change', (e) => {
-                const deviceItem = e.path[3];
-                deviceItem.classList.toggle('device-item-active');
-                if (deviceItem.dataset.item == 'light') {
-                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? 'On' : 'Off';
-                }
-                else if (deviceItem.dataset.item == 'fan') {
-                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? '1' : 'Off';
-                }
-            })
-        })
+    handleLogin = () => {
+        document.querySelector('#login-form').onsubmit = (e) => {
+            e.preventDefault();
+            const email = e.target[0].value;
+            const password = e.target[1].value;
+            const message = validatePassword(password);
+            if (message === 'OK') {
+                document.querySelector('#login-form').submit();
+            }
+            else {
+                document.querySelector('#login-form .login-field:nth-child(2)').classList.add('login-field-error');
+                document.querySelector('#login-form .error-message').textContent = message;
+                document.querySelector('#login-form .error-message').style.display = 'block';
+
+            }
+            console.log(email, password);
+        }
     }
     handleMainControl = () => {
         const handleSlider = () => {
@@ -81,7 +106,7 @@ class App {
                 $.ajax({
                     url: '/room/add',
                     method: 'POST',
-                    data:{ name: roomName },
+                    data: { name: roomName },
                     success: (res) => {
                         const option = new Option(`${res.data.name}`, `${res.data.name}`);
                         console.log(option);
@@ -96,13 +121,13 @@ class App {
         const selectRoomBtn = document.querySelector('#select-room-dropdown-menu');
         if (selectRoomBtn) {
             selectRoomBtn.addEventListener('change', (e) => {
-                const currentRoom = e.target.value;
-                window.location.href = `/?roomName=${currentRoom.toLowerCase().split(' ').join('-')}`;
+                const currentRoom = e.target.value.toLowerCase().split(' ').join('-');
+                window.location.href = `/?room=${currentRoom}`;
             });
         }
     }
     getCurrentSelectRoom = () => document.querySelector('#select-room-dropdown-menu').value;
-        
+
     handleAddNewDevice = () => {
         const addDeviceBtn = document.querySelector('#submit-add-device-button');
         if (addDeviceBtn) {
@@ -110,11 +135,11 @@ class App {
                 const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
                 const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
                 const currentRoom = this.getCurrentSelectRoom();
-                
+
                 $.ajax({
                     url: '/device/add',
                     method: 'POST',
-                    data: { 
+                    data: {
                         deviceName: deviceName,
                         deviceCode: deviceCode,
                         room: currentRoom
@@ -130,38 +155,73 @@ class App {
             })
         }
     }
-
     updateTempAndHumi = () => {
         setTimeout(() => {
-            const previous = new Date(Date.now() - 9 * 60 * 60 * 1000);
+            // get time at 2 minutes ago
+            const previous = new Date(Date.now() - 2 * 60 * 1000);
             $.ajax({
+                // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
                 url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?start_time=${previous.toISOString()}`,
                 method: 'GET',
                 success: (data) => {
-                    const lastData = JSON.parse(data[0].value);
-                    
-                    if (lastData.name === 'TempHumi') {
-                        const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
-                        $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`); 
-                        $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+                    if (data.length !== 0) {
+                        const lastData = JSON.parse(data[0].value);
+                        if (lastData.name === 'TempHumi') {
+                            const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
+                            $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
+                            $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+                            this.updateTempAndHumi();
+                        }
                     }
-                    this.updateTempAndHumi();
                 }
             })
-        }, 20000)
+        }, 5000)
     }
 
-
+    handleTableDeviceInStatistic = () => {
+        $.ajax({
+            url: '/statistics/devices',
+            method: 'GET',
+            success: (res) => {
+                console.log(res);
+            }
+        })
+    }
     handleToggleDevice = () => {
+        $$('.toggle-control input').forEach(btn => {
+            btn.addEventListener('change', (e) => {
+                const deviceItem = e.path[3];
+                const message = deviceItem.children[1].children[0].textContent + 'đã được ' + (e.target.checked ? 'mở' : 'tắt');
+                Toastify({
+                    text: message,
+                    duration: 3000,
+                    // destination: "https://github.com/apvarun/toastify-js",
+                    newWindow: true,
+                    close: true,
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    className: 'custom-toast',
+                    // onClick: function(){} // Callback after click
+                  }).showToast();
+                deviceItem.classList.toggle('device-item-active');
+                if (deviceItem.dataset.item == 'light') {
+                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? 'On' : 'Off';
+                }
+                else if (deviceItem.dataset.item == 'fan') {
+                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? '1' : 'Off';
+                }
+            })
+        })
         $$('.device-list .device-item').forEach((item) => {
             if (item.dataset.item !== 'add') {
                 item.children[0].children[1].children[0].addEventListener('change', (e) => {
                     $.ajax({
                         url: '/device/toggle',
                         method: 'POST',
-                        data: { 
+                        data: {
                             deviceId: item.dataset.id,
-                            status:  e.target.checked
+                            status: e.target.checked
                         },
                         dataType: 'json',
                         success: (res) => {
@@ -187,8 +247,6 @@ window.onload = () => {
             li.classList.add('li-active');
         }
     })
-
-    myHome.updateTempAndHumi();
 }
 
 
