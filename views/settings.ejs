@@ -50,7 +50,7 @@
 
         <form class="form_edit">
           <label for="username">Username</label><br>
-          <input type="text" id="username" name="username" value="Jenny"><br>
+          <input type="text" id="username" name="username" value=<%= session.user ? session.user.name : ''  %> ><br>
 
           <label for="phone">Phone</label><br>
           <input type="text" id="phone" name="phone" value="0123456789"><br>

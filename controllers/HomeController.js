@@ -36,41 +36,41 @@ class HomeController {
             })
             .catch(err => console.log(err));
     }
-    showWithRoom = (req, res, next) => {
-        const roomName = req.body.room;
-        Room.find({}, 'name id')
-            .then(rooms => {
-                let currentRoomId;
-                for (let i = 0; i < rooms.length; i++) {
-                    if (rooms[i].name.toLowerCase().split(' ').join('-') === roomName) {
-                        currentRoomId = rooms[i].id;
-                        break;
-                    }
-                }
-                console.log(roomName);
-                Device.find({ roomId: currentRoomId })
-                    .then(devices => {   
-                        // res.render('index', {
-                        //     rooms: rooms,
-                        //     currentRoomId: currentRoomId,
-                        //     devices: devices,
-                        //     temp: '--',
-                        //     humi: '--'
-                        // })
-                        console.log(devices);
-                        fs.readFile('views/partials/devices.ejs', "utf-8", function (err, template) {
-                            const test_template = ejs.compile(template, { client: true });
-                            const html = test_template({
-                                devices: devices,
-                            });
-                            res.status(200).send(html);
-                        });
-                    })
-                    .catch(err => console.log(err));
-            })
-            .catch(err => console.log(err));
+    // showWithRoom = (req, res, next) => {
+    //     const roomName = req.body.room;
+    //     Room.find({}, 'name id')
+    //         .then(rooms => {
+    //             let currentRoomId;
+    //             for (let i = 0; i < rooms.length; i++) {
+    //                 if (rooms[i].name.toLowerCase().split(' ').join('-') === roomName) {
+    //                     currentRoomId = rooms[i].id;
+    //                     break;
+    //                 }
+    //             }
+    //             console.log(roomName);
+    //             Device.find({ roomId: currentRoomId })
+    //                 .then(devices => {   
+    //                     // res.render('index', {
+    //                     //     rooms: rooms,
+    //                     //     currentRoomId: currentRoomId,
+    //                     //     devices: devices,
+    //                     //     temp: '--',
+    //                     //     humi: '--'
+    //                     // })
+    //                     console.log(devices);
+    //                     fs.readFile('views/partials/devices.ejs', "utf-8", function (err, template) {
+    //                         const test_template = ejs.compile(template, { client: true });
+    //                         const html = test_template({
+    //                             devices: devices,
+    //                         });
+    //                         res.status(200).send(html);
+    //                     });
+    //                 })
+    //                 .catch(err => console.log(err));
+    //         })
+    //         .catch(err => console.log(err));
         
-    }
+    // }
     addNewRoom = (req, res, next) => {
         const roomName = req.body.name;
         const newRoom = new Room({
@@ -96,7 +96,7 @@ class HomeController {
                     id: genId(),
                     name: deviceName,
                     status: false,
-                    type: deviceCode,
+                    type: deviceCode === 'light' ? 'led' : '',
                     roomId: result.find(el => el.name === room).id
                 });
                 newDevice.save()

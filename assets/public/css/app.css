@@ -1078,6 +1078,9 @@ p {
   background: white;
   height: 255px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .statistic-container .table-and-rooms .table-of-device::-webkit-scrollbar {
   display: none;
@@ -1111,6 +1114,8 @@ p {
   padding-bottom: 10px;
 }
 .statistic-container .table-and-rooms .table-of-device .table-pagination {
+  margin-top: auto;
+  margin-bottom: 0;
   padding-top: 10px;
   display: inline-flex;
   align-items: center;

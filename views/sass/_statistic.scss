@@ -79,6 +79,9 @@
       background: white;
       height: 255px;
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       &::-webkit-scrollbar {
         display: none;
       }
@@ -115,6 +118,8 @@
         }
       }
       .table-pagination {
+        margin-top: auto;
+        margin-bottom: 0;
         padding-top: 10px;
         display: inline-flex;
         align-items: center;
