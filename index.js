@@ -1,5 +1,6 @@
 import express from 'express';
 import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import routes from './routes/index.js';
 import livereload from 'livereload';
 import connectLiveReload from 'connect-livereload';
@@ -25,9 +26,10 @@ app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: 'smart home',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true, maxAge: 2 * 60 * 60 * 1000 }
+  saveUninitialized: false,
+  cookie: { maxAge: 2 * 60 * 60 * 1000 }
 }))
+app.use(cookieParser());
 app.use(connectLiveReload());
 
 

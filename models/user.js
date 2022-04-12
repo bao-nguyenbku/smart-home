@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const user = new Schema({
+const userSchema = new Schema({
     id: {
         type: Number,
         required: true
@@ -20,5 +20,5 @@ const user = new Schema({
     }
 }, { timestamps: true });
 
-const User = mongoose.model('User', user);
+const User = mongoose.model('User', userSchema);
 export default User;
