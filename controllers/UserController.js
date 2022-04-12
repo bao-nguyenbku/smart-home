@@ -39,7 +39,12 @@ class UserController {
         // console.log(email, password);
     }
     logout = (req, res, next) => {
-        res.send('Logout');
+        if (req.session.user) {
+            req.session.destroy((err) => {
+                if (err) console.log(err);
+                else res.redirect('/login');
+            })
+        }
     }
 } 
 export default new UserController;

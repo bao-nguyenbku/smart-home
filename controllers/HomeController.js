@@ -6,7 +6,6 @@ import fs from 'fs';
 import ejs from 'ejs';
 class HomeController {
     show = (req, res, next) => {
-        console.log(req.session.user);
         const { room } = req.query;
         Room.find({}, 'name id')
             .then(rooms => {
