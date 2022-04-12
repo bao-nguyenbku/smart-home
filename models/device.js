@@ -21,6 +21,20 @@ const deviceSchema = new Schema({
     roomId: {
         type: Number,
         required: true
+    },
+    capacity: {
+        type: Number,
+        default: 36,
+        required: true
+    },
+    duration: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    lastUse: {
+        type: Date,
+        required: true
     }
 }, { timestamps: true });
 

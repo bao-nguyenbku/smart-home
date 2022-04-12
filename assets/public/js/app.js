@@ -19,15 +19,26 @@ const $$ = document.querySelectorAll.bind(document);
 // 2: {_id: '6242d14069034d38f754f7c6', id: 2022329162832, name: 'Toilet', createdAt: '2022-03-29T09:28:32.148Z', updatedAt: '2022-03-29T09:28:32.148Z', …}
 // 3: {_id: '62430f1044a66a5ce52aafc4', id: 2022329205216, name: 'Garage', createdAt: '2022-03-29T13:52:17.001Z', updatedAt: '2022-03-29T13:52:17.001Z', …}
 // 4: {_id: '62451e5ca53d7dd1d85c28a8', id: 202233110224, name: 'Bathroom', createdAt: '2022-03-31T03:22:04.131Z', updatedAt: '2022-03-31T03:22:04.131Z', …}
+const  milisecondToHour = (time) => {
+    const second = parseInt(time / 1000);
+    const minute = parseInt(time / 60000);
+    const hour = parseInt(time / 3600000);
+    return {
+        str: `${hour}:${minute}:${second}`,
+        hour: parseFloat(time / 3600000)
+    };
+}
 const renderTable = (page, numOfPage, devices) => {
     let row = '';
+    
     devices.forEach(device => {
+        timeUsed = milisecondToHour(device.duration);
         row += `
             <tr>
                 <td scope="row">${device.name}</td>
                 <td>${device.roomName}</td>
-                <td>250</td>
-                <td>9</td>
+                <td>${timeUsed.str}</td>
+                <td>${(Math.round(timeUsed.hour * device.capacity * 0.001 * 100) / 100).toFixed(2)}</td>
                 <td><span class="badge bg-success">active</span></td>
             </tr>
             `
@@ -36,7 +47,7 @@ const renderTable = (page, numOfPage, devices) => {
     $('.table-of-device .table-pagination > p').text(`page ${page} of ${numOfPage}`);
     $('.table-of-device .table-pagination > p').data('page', page);
 }
-const getDevicesPerPage = (page, numOfPage, devices) => {
+const getDevicesPerPage = (page, devices) => {
     const itemPerPage = 4;
     let idx = 0;
     while (page > 1) {
@@ -244,14 +255,14 @@ class App {
         })
     }
     handleChangePageInStatistic = (devices) => {
-        const pages = parseInt(devices.length / 4) + (devices.length % 4);
-        const devicePerPage = getDevicesPerPage(1, pages, devices);
-
+        let pages = devices.length < 4 ? 1 : parseInt(devices.length / 4) + (devices.length % 4);
+        const devicePerPage = getDevicesPerPage(1, devices);
         renderTable(1, pages, devicePerPage);
+
         $('.table-of-device .table-pagination .back').on('click', () => {
             const page = parseInt($('.table-of-device .table-pagination > p').data('page'));
             if (page !== 1) {
-                const devicePerPage = getDevicesPerPage(page - 1, pages, devices);
+                const devicePerPage = getDevicesPerPage(page - 1, devices);
                 renderTable(page - 1, pages, devicePerPage);
             }
         })
