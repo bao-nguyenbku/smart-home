@@ -1,6 +1,5 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device } from '../models/index.js';
-import { getAllRoomWithField } from '../models/RoomQuery.js';
 import { genId } from './generateID.js';
 
 class HomeController {
@@ -66,33 +65,19 @@ class HomeController {
     toggleDevice = (req, res, next) => {
         const { deviceId, status } = req.body;
         // Turn off
-        if (status == 'false') {
-            Device.find({ id: deviceId })
+        if (status == false) {
+            Device.findOne({ id: deviceId })
                 .then(result => {
                     const currentTime = new Date();
-                    const usedTime = currentTime - result[0].lastUse;
-                    const lastDuration = result[0].duration;
+                    const usedTime = currentTime - result.lastUse;
+                    const lastDuration = result.duration;
                     Device.findOneAndUpdate({ id: deviceId }, { 
                         status: status, 
                         duration: usedTime + lastDuration,
                     }).then(result2 => {
-                        const device = {
-                            id: deviceId,
-                            cmd: status ? 'open' : 'close',
-                            name: result.type,
-                            paras: 'none'
-                        }
-        
-                        // console.log(JSON.stringify(device));
-                        // client.publish(topicReq, `${JSON.stringify(device)}`, { qos: 0, retain: true }, (error) => {
-                        //     if (error) {
-                        //         console.error(error);
-                        //     }
-                        // })
-        
-                        res.json(result);
-                    }).catch(err => console.log(err))
-                }).catch(err => console.log(err))
+                        res.json(result2);
+                    }).catch(err => res.json(err))
+                }).catch(err => res.json(err))
         }
         else {
             Device.findOneAndUpdate({ id: deviceId }, { status: status, lastUse: new Date() })

@@ -123,4 +123,7 @@ Example response:
     }
 }
 
+6. UPDATE STATUS OF DEVICE
+POST http://localhost:5000/device/add
+
 

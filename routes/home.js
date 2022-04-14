@@ -12,7 +12,8 @@ router.post('/room/delete', isLoggedIn(), HomeController.deleteRoom);
 
 router.get('/device/all', isLoggedIn(), HomeController.getAllDevice);
 router.post('/device/add', isLoggedIn(), HomeController.addNewDevice);
-router.get('/settings', isLoggedIn(), SettingsController.show);
 router.post('/device/toggle', isLoggedIn(), HomeController.toggleDevice);
+
+router.get('/settings', isLoggedIn(), SettingsController.show);
 
 export default router;
