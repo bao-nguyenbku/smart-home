@@ -91,13 +91,25 @@ class App {
         this.handleSelectRoom();
         this.handleToggleDevice();
         this.updateTempAndHumi();
-
+        this.handleOffEnergy();
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
         }
         if (window.location.pathname.split('/').includes('statistics')) {
             this.handleTableDeviceInStatistic();
         }
+    }
+    handleOffEnergy = () => {
+        $('#setting-energy').on('click', () => {
+            $.ajax({
+                url: '/settings/offEnergy',
+                method: 'GET',
+                success: (res) => {
+                    console.log(res);
+                }
+            })
+            console.log('Clicked');
+        })
     }
     handleLogin = () => {
         document.querySelector('#login-form').onsubmit = (e) => {
