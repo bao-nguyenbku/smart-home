@@ -1,0 +1,126 @@
+
+1. GET ALL ROOM
+GET http://localhost:5000/room/all
+Example response:
+[
+    {
+        "_id": "624281390ee4e33c6fffb543",
+        "id": 202232910475,
+        "name": "Kitchen",
+        "createdAt": "2022-03-29T03:47:05.527Z",
+        "updatedAt": "2022-03-29T03:47:05.527Z",
+        "__v": 0
+    },
+    {
+        "_id": "6242817bafae31267e86b6ab",
+        "id": 2022329104811,
+        "name": "Living room",
+        "createdAt": "2022-03-29T03:48:11.493Z",
+        "updatedAt": "2022-03-29T03:48:11.493Z",
+        "__v": 0
+    },
+]
+2. ADD NEW ROOM
+Header: Content-Type: application/json
+POST http://localhost:5000/room/add
+{
+    "name": "DFSFSDame"
+}
+
+Example response:
+{
+    "status": 200,
+    "data": {
+        "id": 202241495334,
+        "name": "DFSFSDame",
+        "_id": "62578cae7dcdc13e3c157d6c",
+        "createdAt": "2022-04-14T02:53:34.123Z",
+        "updatedAt": "2022-04-14T02:53:34.123Z",
+        "__v": 0
+    }
+}
+
+
+3. DELETE A ROOM
+POST http://localhost:5000/room/delete
+{
+    "id": 202241410318
+}
+
+Example response:
+{
+    "status": 200,
+    "data": {
+        "_id": "62578ef6b1f290052bc5d01b",
+        "id": 202241410318,
+        "name": "New room",
+        "createdAt": "2022-04-14T03:03:18.849Z",
+        "updatedAt": "2022-04-14T03:03:18.849Z",
+        "__v": 0
+    }
+}
+
+
+4. GET ALL DEVICES
+GET http://localhost:5000/device/all
+Example response:
+[
+    {
+        "_id": "6255311805fd070ba87eb217",
+        "id": 2022412145816,
+        "name": "Đèn bếp",
+        "status": false,
+        "type": "led",
+        "roomId": 202232910475,
+        "capacity": 36,
+        "duration": 11316,
+        "lastUse": "2022-04-12T07:58:36.281Z",
+        "createdAt": "2022-04-12T07:58:16.987Z",
+        "updatedAt": "2022-04-12T07:58:41.138Z",
+        "__v": 0
+    },
+    {
+        "_id": "6255325804cc8b5a55baa2fe",
+        "id": 202241215336,
+        "name": "Đèn góc trái",
+        "status": false,
+        "type": "led",
+        "roomId": 202232910475,
+        "capacity": 36,
+        "duration": 4019,
+        "lastUse": "2022-04-12T08:03:44.674Z",
+        "createdAt": "2022-04-12T08:03:36.530Z",
+        "updatedAt": "2022-04-12T08:03:48.694Z",
+        "__v": 0
+    }
+]
+
+5. ADD NEW DEVICE
+POST http://localhost:5000/device/add
+{
+    "name": "new device",
+    "id": 452,
+    "type": "led",
+    "roomId": 322348042434
+}
+
+Example response:
+{
+    "status": 200,
+    "data": {
+        "id": 452,
+        "name": "new device",
+        "status": false,
+        "type": "led",
+        "roomId": 322348042434,
+        "capacity": 36,
+        "duration": 0,
+        "lastUse": "2022-04-14T03:13:49.124Z",
+        "_id": "6257916de032034d3f10dffe",
+        "createdAt": "2022-04-14T03:13:49.162Z",
+        "updatedAt": "2022-04-14T03:13:49.162Z",
+        "__v": 0
+    }
+}
+
+

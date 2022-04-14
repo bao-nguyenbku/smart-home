@@ -2,80 +2,14 @@
 import { Room, Device } from '../models/index.js';
 import { getAllRoomWithField } from '../models/RoomQuery.js';
 import { genId } from './generateID.js';
-import fs from 'fs';
-import ejs from 'ejs';
+
 class HomeController {
-    show = (req, res, next) => {
-        const { room } = req.query;
-        Room.find({}, 'name id')
-            .then(rooms => {
-                let currentRoomId;
-                if (room) {
-                    for (let i = 0; i < rooms.length; i++) {
-                        if (rooms[i].name.toLowerCase().split(' ').join('-') === room) {
-                            currentRoomId = rooms[i].id;
-                            break;
-                        }
-                    }
-                }
-                else {
-                    currentRoomId = rooms[0].id;
-                }
-
-                Device.find({ roomId: currentRoomId })
-                    .then(devices => {
-                        res.render('index', {
-                            rooms: rooms,
-                            currentRoomId: currentRoomId,
-                            devices: devices,
-                            temp: '--',
-                            humi: '--'
-                        });
-                    })
-                    .catch(err => console.log(err));
-            })
-            .catch(err => console.log(err));
-    }
-    // showWithRoom = (req, res, next) => {
-    //     const roomName = req.body.room;
-    //     Room.find({}, 'name id')
-    //         .then(rooms => {
-    //             let currentRoomId;
-    //             for (let i = 0; i < rooms.length; i++) {
-    //                 if (rooms[i].name.toLowerCase().split(' ').join('-') === roomName) {
-    //                     currentRoomId = rooms[i].id;
-    //                     break;
-    //                 }
-    //             }
-    //             console.log(roomName);
-    //             Device.find({ roomId: currentRoomId })
-    //                 .then(devices => {   
-    //                     // res.render('index', {
-    //                     //     rooms: rooms,
-    //                     //     currentRoomId: currentRoomId,
-    //                     //     devices: devices,
-    //                     //     temp: '--',
-    //                     //     humi: '--'
-    //                     // })
-    //                     console.log(devices);
-    //                     fs.readFile('views/partials/devices.ejs', "utf-8", function (err, template) {
-    //                         const test_template = ejs.compile(template, { client: true });
-    //                         const html = test_template({
-    //                             devices: devices,
-    //                         });
-    //                         res.status(200).send(html);
-    //                     });
-    //                 })
-    //                 .catch(err => console.log(err));
-    //         })
-    //         .catch(err => console.log(err));
-
-    // }
     addNewRoom = (req, res, next) => {
-        const roomName = req.body.name;
+        const { name } = req.body;
+        console.log(name);
         const newRoom = new Room({
             id: genId(),
-            name: roomName
+            name: name
         })
         newRoom.save()
             .then(result => {
@@ -84,20 +18,31 @@ class HomeController {
                     data: result
                 })
             })
-            .catch(err => console.log(err))
+            .catch(err => res.json(err))
+    }
+    deleteRoom = (req, res, next) => {
+        const { id } = req.body;
+        Room.findOneAndDelete({ id: id })
+            .then(result => {
+                res.status(200).json({
+                    status: 200,
+                    data: result
+                })
+            })
+            .catch(err => res.json(err))
+
     }
     addNewDevice = (req, res, next) => {
-        const { deviceName, deviceCode, room } = req.body;
-
+        const { name, id, type, roomId } = req.body;
         // Find a room in database which match 'room'
-        getAllRoomWithField('name', (err, result) => {
-            if (!err) {
+        Room.findOne({id: roomId})
+            .then(result => {
                 const newDevice = new Device({
-                    id: genId(),
-                    name: deviceName,
+                    id: id,
+                    name: name,
                     status: false,
-                    type: deviceCode === 'light' ? 'led' : '',
-                    roomId: result.find(el => el.name === room).id,
+                    type: type,
+                    roomId: roomId,
                     lastUse: new Date()
                 });
                 newDevice.save()
@@ -108,12 +53,16 @@ class HomeController {
                         })
                     })
                     .catch(err => console.log(err));
-            }
-        });
-
-
+            })
+            .catch(err => res.json(err))
     }
-
+    getAllDevice = (req, res, next) => {
+        Device.find()
+            .then(result => {
+                res.json(result)
+            })
+            .catch(err => res.json(err))
+    }
     toggleDevice = (req, res, next) => {
         const { deviceId, status } = req.body;
         // Turn off
@@ -166,6 +115,12 @@ class HomeController {
                 })
                 .catch(err => console.log(err))
         }
+    }
+    getAllRoom = (req, res, next) => {
+        Room.find()
+            .then(result => {
+                res.status(200).json(result)
+            }).catch(err => res.json(err))
     }
 }
 export default new HomeController;
