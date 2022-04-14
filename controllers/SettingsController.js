@@ -8,15 +8,10 @@ class SettingsController {
     show = (req, res, next) => {
         res.render('settings');
     }
-    
-    OffEnergy = (req, res, next) => {
-        Device.find({ status: true})
-            .then(result => console.log(result))
-            // .then(result => 
-            //     for (x in result){
-            //         console.log(x)
-            //     })
-            .catch(err => console.log(err))
+    offEnergy = (req, res, next) => {
+        Device.findOne({ status: true })
+            .then(result => res.json(result))
+            .catch(err => res.json(err))
     }
 }
 export default new SettingsController;

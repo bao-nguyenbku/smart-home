@@ -2,9 +2,74 @@
 const $$ = document.querySelectorAll.bind(document);
 
 // Global method
-// const addRoomToDevice = (rooms, devices) = {
-
-// }
+// devices: Array(8)
+// 0: {_id: '6244053e840a9faf0b473eea', id: 2022330142238, name: 'Đèn trần', status: true, type: 'led', …}
+// 1: {_id: '62440554840a9faf0b473eef', id: 202233014230, name: 'Đèn góc bếp', status: false, type: 'led', …}
+// 2: {_id: '62441fc83d8220fcc91220d2', id: 2022330161552, name: 'Đèn sau', status: true, type: 'led', …}
+// 3: {_id: '62442ac8d53150160bacc01e', id: 202233017248, name: 'Đèn chùm', status: true, type: 'led', …}
+// 4: {_id: '62451e21a53d7dd1d85c28a0', id: 202233110215, name: 'Đèn chân tủ', status: false, type: 'led', …}
+// 5: {_id: '624673df394ce8cfa456b34f', id: 202241103911, name: 'Đèn toilet', status: false, type: 'led', …}
+// 6: {_id: '624674453e74511028ec8d27', id: 202241104053, name: 'Đèn nhà xe', status: true, type: 'led', …}
+// 7: {_id: '624b083a1cc083410a96ba6d', id: 20224422114, name: 'Đèn nhà tắm', status: false, type: 'led', …}
+// length: 8
+// [[Prototype]]: Array(0)
+// rooms: Array(5)
+// 0: {_id: '624281390ee4e33c6fffb543', id: 202232910475, name: 'Kitchen', createdAt: '2022-03-29T03:47:05.527Z', updatedAt: '2022-03-29T03:47:05.527Z', …}
+// 1: {_id: '6242817bafae31267e86b6ab', id: 2022329104811, name: 'Living room', createdAt: '2022-03-29T03:48:11.493Z', updatedAt: '2022-03-29T03:48:11.493Z', …}
+// 2: {_id: '6242d14069034d38f754f7c6', id: 2022329162832, name: 'Toilet', createdAt: '2022-03-29T09:28:32.148Z', updatedAt: '2022-03-29T09:28:32.148Z', …}
+// 3: {_id: '62430f1044a66a5ce52aafc4', id: 2022329205216, name: 'Garage', createdAt: '2022-03-29T13:52:17.001Z', updatedAt: '2022-03-29T13:52:17.001Z', …}
+// 4: {_id: '62451e5ca53d7dd1d85c28a8', id: 202233110224, name: 'Bathroom', createdAt: '2022-03-31T03:22:04.131Z', updatedAt: '2022-03-31T03:22:04.131Z', …}
+const  milisecondToHour = (time) => {
+    const second = parseInt(time / 1000);
+    const minute = parseInt(time / 60000);
+    const hour = parseInt(time / 3600000);
+    return {
+        str: `${hour}:${minute}:${second}`,
+        hour: parseFloat(time / 3600000)
+    };
+}
+const renderTable = (page, numOfPage, devices) => {
+    let row = '';
+    
+    devices.forEach(device => {
+        timeUsed = milisecondToHour(device.duration);
+        row += `
+            <tr>
+                <td scope="row">${device.name}</td>
+                <td>${device.roomName}</td>
+                <td>${timeUsed.str}</td>
+                <td>${(Math.round(timeUsed.hour * device.capacity * 0.001 * 100) / 100).toFixed(2)}</td>
+                <td><span class="badge bg-success">active</span></td>
+            </tr>
+            `
+    });
+    $('#table-of-device tbody').html(row);
+    $('.table-of-device .table-pagination > p').text(`page ${page} of ${numOfPage}`);
+    $('.table-of-device .table-pagination > p').data('page', page);
+}
+const getDevicesPerPage = (page, devices) => {
+    const itemPerPage = 4;
+    let idx = 0;
+    while (page > 1) {
+        idx += 4;
+        page--;
+    }
+    const devicePerPage = devices.slice(idx, idx + 4);
+    return devicePerPage;
+}
+const addRoomToDevice = (rooms, devices) => {
+    let hashRoom = {};
+    rooms.forEach((room, index) => {
+        hashRoom[room.id] = room.name;
+    });
+    const newDevices = devices.map((device) => {
+        return {
+            ...device,
+            roomName: hashRoom[device.roomId]
+        }
+    })
+    return newDevices;
+}
 const validatePassword = (password) => {
     const lower = /[a-z]/g;
     const upper = /[A-Z]/g;
@@ -26,14 +91,25 @@ class App {
         this.handleSelectRoom();
         this.handleToggleDevice();
         this.updateTempAndHumi();
-        this.toggleOffEnergy();
-
+        this.handleOffEnergy();
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
         }
         if (window.location.pathname.split('/').includes('statistics')) {
             this.handleTableDeviceInStatistic();
         }
+    }
+    handleOffEnergy = () => {
+        $('#setting-energy').on('click', () => {
+            $.ajax({
+                url: '/settings/offEnergy',
+                method: 'GET',
+                success: (res) => {
+                    console.log(res);
+                }
+            })
+            console.log('Clicked');
+        })
     }
     handleLogin = () => {
         document.querySelector('#login-form').onsubmit = (e) => {
@@ -192,13 +268,36 @@ class App {
     }
 
     handleTableDeviceInStatistic = () => {
+        // let newDevices;
         $.ajax({
             url: '/statistics/devices',
             method: 'GET',
             success: (res) => {
-                console.log(res);
+                const newDevices = addRoomToDevice(res.rooms, res.devices);
+                this.handleChangePageInStatistic(newDevices);
             }
         })
+    }
+    handleChangePageInStatistic = (devices) => {
+        let pages = devices.length < 4 ? 1 : parseInt(devices.length / 4) + (devices.length % 4);
+        const devicePerPage = getDevicesPerPage(1, devices);
+        renderTable(1, pages, devicePerPage);
+
+        $('.table-of-device .table-pagination .back').on('click', () => {
+            const page = parseInt($('.table-of-device .table-pagination > p').data('page'));
+            if (page !== 1) {
+                const devicePerPage = getDevicesPerPage(page - 1, devices);
+                renderTable(page - 1, pages, devicePerPage);
+            }
+        })
+        $('.table-of-device .table-pagination .forward').on('click', () => {
+            const page = parseInt($('.table-of-device .table-pagination > p').data('page'));
+            if (page !== pages) {
+                const devicePerPage = getDevicesPerPage(page + 1, pages, devices);
+                renderTable(page + 1, pages, devicePerPage);
+            }
+        })
+
     }
     handleToggleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
@@ -216,7 +315,7 @@ class App {
                     stopOnFocus: true, // Prevents dismissing of toast on hover
                     className: 'custom-toast',
                     // onClick: function(){} // Callback after click
-                  }).showToast();
+                }).showToast();
                 deviceItem.classList.toggle('device-item-active');
                 if (deviceItem.dataset.item == 'light') {
                     deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? 'On' : 'Off';

@@ -4,6 +4,6 @@ import isLoggedIn from '../controllers/isLoggedIn.js';
 const router = Router();
 
 router.get('/', isLoggedIn(), SettingsController.show);
-router.get('/OffEnergy', isLoggedIn(), SettingsController.show);
+router.get('/offEnergy', isLoggedIn(), SettingsController.offEnergy);
 
 export default router;

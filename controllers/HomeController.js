@@ -6,7 +6,6 @@ import fs from 'fs';
 import ejs from 'ejs';
 class HomeController {
     show = (req, res, next) => {
-        console.log(req.session.user);
         const { room } = req.query;
         Room.find({}, 'name id')
             .then(rooms => {
@@ -70,7 +69,6 @@ class HomeController {
     //                 .catch(err => console.log(err));
     //         })
     //         .catch(err => console.log(err));
-        
     // }
     addNewRoom = (req, res, next) => {
         const roomName = req.body.name;
@@ -97,8 +95,9 @@ class HomeController {
                     id: genId(),
                     name: deviceName,
                     status: false,
-                    type: deviceCode,
-                    roomId: result.find(el => el.name === room).id
+                    type: deviceCode === 'light' ? 'led' : '',
+                    roomId: result.find(el => el.name === room).id,
+                    lastUse: new Date()
                 });
                 newDevice.save()
                     .then(result => {
@@ -113,28 +112,59 @@ class HomeController {
 
 
     }
-    
+
     toggleDevice = (req, res, next) => {
         const { deviceId, status } = req.body;
-        Device.findOneAndUpdate({ id: deviceId }, { status: status })
-            .then(result => {
-                const device = {
-                    id: deviceId,
-                    cmd: status ? 'open' : 'close',
-                    name: result.type,
-                    paras: 'none'
-                }
-
-                // console.log(JSON.stringify(device));
-                client.publish(topicReq, `${JSON.stringify(device)}`, { qos: 0, retain: true }, (error) => {
-                    if (error) {
-                        console.error(error);
+        // Turn off
+        if (status == 'false') {
+            Device.find({ id: deviceId })
+                .then(result => {
+                    const currentTime = new Date();
+                    const usedTime = currentTime - result[0].lastUse;
+                    const lastDuration = result[0].duration;
+                    Device.findOneAndUpdate({ id: deviceId }, { 
+                        status: status, 
+                        duration: usedTime + lastDuration,
+                    }).then(result2 => {
+                        const device = {
+                            id: deviceId,
+                            cmd: status ? 'open' : 'close',
+                            name: result.type,
+                            paras: 'none'
+                        }
+        
+                        // console.log(JSON.stringify(device));
+                        // client.publish(topicReq, `${JSON.stringify(device)}`, { qos: 0, retain: true }, (error) => {
+                        //     if (error) {
+                        //         console.error(error);
+                        //     }
+                        // })
+        
+                        res.json(result);
+                    }).catch(err => console.log(err))
+                }).catch(err => console.log(err))
+        }
+        else {
+            Device.findOneAndUpdate({ id: deviceId }, { status: status, lastUse: new Date() })
+                .then(result => {
+                    const device = {
+                        id: deviceId,
+                        cmd: status ? 'open' : 'close',
+                        name: result.type,
+                        paras: 'none'
                     }
+    
+                    // console.log(JSON.stringify(device));
+                    // client.publish(topicReq, `${JSON.stringify(device)}`, { qos: 0, retain: true }, (error) => {
+                    //     if (error) {
+                    //         console.error(error);
+                    //     }
+                    // })
+    
+                    res.json(result);
                 })
-            
-                res.json(result);
-            })
-            .catch(err => console.log(err));
+                .catch(err => console.log(err))
+        }
     }
 
     

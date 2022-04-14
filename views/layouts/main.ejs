@@ -52,7 +52,7 @@
               <img src="./assets/images/avatar.jpg" alt="">
             </div>
             <div class="avatar-name">
-              <p class="account-name">Jenny</p>
+              <p class="account-name"><%= session.user ? session.user.name : '' %></p>
               <div class="account-address">
                 <span class="material-icons-outlined">location_on</span>
                 <p>3, Wald street, 9 District, Ho Chi Minh city, Vietnam</p>
