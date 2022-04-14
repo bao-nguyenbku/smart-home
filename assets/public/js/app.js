@@ -26,6 +26,7 @@ class App {
         this.handleSelectRoom();
         this.handleToggleDevice();
         this.updateTempAndHumi();
+        this.toggleOffEnergy();
 
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
@@ -176,6 +177,18 @@ class App {
                 }
             })
         }, 5000)
+    }
+
+    toggleOffEnergy = () => {
+        onclick 
+        $.ajax({
+            url: '/settings/OffEnergy',
+            method: 'GET',
+            dataType: 'json',
+            success: (res) => {
+                console.log(res);
+            }
+        })
     }
 
     handleTableDeviceInStatistic = () => {
