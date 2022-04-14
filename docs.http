@@ -1,4 +1,3 @@
-
 1. GET ALL ROOM
 GET http://localhost:5000/room/all
 Example response:
@@ -124,6 +123,30 @@ Example response:
 }
 
 6. UPDATE STATUS OF DEVICE
-POST http://localhost:5000/device/add
+POST http://localhost:5000/device/toggle
+{
+    "id": 452,
+    "status": false
+}
+
+Note: When expected status is false/true and that device's status also false/true, then status of header response is '304 Not Modified' and no body data send to client.
+Example response:
+{
+    "status": 200,
+    "data": {
+        "_id": "6257916de032034d3f10dffe",
+        "id": 452,
+        "name": "new device",
+        "status": false,
+        "type": "led",
+        "roomId": 322348042434,
+        "capacity": 36,
+        "duration": 0,
+        "lastUse": "2022-04-14T03:13:49.124Z",
+        "createdAt": "2022-04-14T03:13:49.162Z",
+        "updatedAt": "2022-04-14T03:58:33.313Z",
+        "__v": 0
+    }
+}
 
 

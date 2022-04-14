@@ -63,42 +63,53 @@ class HomeController {
             .catch(err => res.json(err))
     }
     toggleDevice = (req, res, next) => {
-        const { deviceId, status } = req.body;
+        const { id, status } = req.body;
         // Turn off
-        if (status == false) {
-            Device.findOne({ id: deviceId })
+        if (!status) {
+            Device.findOne({ id: id })
                 .then(result => {
-                    const currentTime = new Date();
-                    const usedTime = currentTime - result.lastUse;
-                    const lastDuration = result.duration;
-                    Device.findOneAndUpdate({ id: deviceId }, { 
-                        status: status, 
-                        duration: usedTime + lastDuration,
-                    }).then(result2 => {
-                        res.json(result2);
-                    }).catch(err => res.json(err))
+                    if (!result.status) {
+                        res.status(304).json({
+                            status: 304,
+                            message: 'This device is currently off'
+                        })
+                    }
+                    else {
+                        const currentTime = new Date();
+                        const usedTime = currentTime - result.lastUse;
+                        const lastDuration = result.duration;
+                        Device.findOneAndUpdate({ id: id }, { 
+                            status: status, 
+                            duration: usedTime + lastDuration,
+                        }).then(result2 => {
+                            res.status(200).json({
+                                status: 200,    
+                                data: result2
+                            });
+                        }).catch(err => res.json(err))
+                    }
                 }).catch(err => res.json(err))
         }
         else {
-            Device.findOneAndUpdate({ id: deviceId }, { status: status, lastUse: new Date() })
+            Device.findOne({ id: id })
                 .then(result => {
-                    const device = {
-                        id: deviceId,
-                        cmd: status ? 'open' : 'close',
-                        name: result.type,
-                        paras: 'none'
+                    if (result.status) {
+                        res.status(304).json({
+                            status: 304,
+                            message: 'This device is currently on'
+                        })
                     }
-    
-                    // console.log(JSON.stringify(device));
-                    // client.publish(topicReq, `${JSON.stringify(device)}`, { qos: 0, retain: true }, (error) => {
-                    //     if (error) {
-                    //         console.error(error);
-                    //     }
-                    // })
-    
-                    res.json(result);
-                })
-                .catch(err => console.log(err))
+                    else {
+                        Device.findOneAndUpdate({ id: id }, { status: status, lastUse: new Date() })
+                            .then(result => {
+                                res.status(200).json({
+                                    status: 200,
+                                    data: result
+                                });
+                            })
+                            .catch(err => res.json(err))
+                    }
+                }).catch(err => req.json(err))
         }
     }
     getAllRoom = (req, res, next) => {
