@@ -7,6 +7,7 @@ const router = Router();
 router.get('/room/all', isLoggedIn(), HomeController.getAllRoom);
 router.post('/room/add', isLoggedIn(), HomeController.addNewRoom);
 router.post('/room/delete', isLoggedIn(), HomeController.deleteRoom);
+router.post('/room/device/all', isLoggedIn(), HomeController.getDeviceByRoomId);
 
 
 

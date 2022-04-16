@@ -98,6 +98,7 @@ Example response:
 ```
 
 ## GET ALL DEVICES
+
 ```
 GET http://localhost:5000/device/all
 ```
@@ -136,7 +137,51 @@ Example response:
     ]
 }
 ```
+
+## GET ALL DEVICE BY ROOM ID
+
+```json
+POST http://localhost:5000/room/device/all
+{
+    "id": 202232910475
+}
+```
+```json
+{
+    "data": [
+        {
+            "_id": "6255311805fd070ba87eb217",
+            "id": 2022412145816,
+            "name": "Đèn bếp",
+            "status": false,
+            "type": "led",
+            "roomId": 202232910475,
+            "capacity": 36,
+            "duration": 607371365,
+            "lastUse": "2022-04-16T08:13:33.338Z",
+            "createdAt": "2022-04-12T07:58:16.987Z",
+            "updatedAt": "2022-04-16T08:13:39.547Z",
+            "__v": 0
+        },
+        {
+            "_id": "6255325804cc8b5a55baa2fe",
+            "id": 202241215336,
+            "name": "Đèn góc trái",
+            "status": false,
+            "type": "led",
+            "roomId": 202232910475,
+            "capacity": 36,
+            "duration": 569665363,
+            "lastUse": "2022-04-16T04:17:18.893Z",
+            "createdAt": "2022-04-12T08:03:36.530Z",
+            "updatedAt": "2022-04-16T04:17:21.097Z",
+            "__v": 0
+        }
+    ]
+}
+```
 ## ADD NEW DEVICE
+
 ```json
 POST http://localhost:5000/device/add
 

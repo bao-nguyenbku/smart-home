@@ -122,5 +122,17 @@ class HomeController {
                 })
             }).catch(err => res.json(err))
     }
+
+    getDeviceByRoomId = (req, res, next) => {
+        const { id } = req.body;
+        Device.find({roomId: id})
+            .then(result => {
+                res.status(200).json({
+                    data: result
+                })
+            })
+            .catch(err => res.json(err))
+        console.log(id);
+    }
 }
 export default new HomeController;
