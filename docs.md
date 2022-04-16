@@ -176,7 +176,7 @@ POST http://localhost:5000/device/toggle
     "status": false
 }
 ```
-Note: When expected status is false/true and that device's status also false/true, then status of header response is '304 Not Modified' and no body data send to client.
+Note: When expected status is false/true and that device's status also false/true, then status of header response is `304 Not Modified` and no body data send to client.
 
 Example response:
 ```json
