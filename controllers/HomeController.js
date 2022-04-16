@@ -58,7 +58,9 @@ class HomeController {
     getAllDevice = (req, res, next) => {
         Device.find()
             .then(result => {
-                res.json(result)
+                res.status(200).json({
+                    data: result
+                })
             })
             .catch(err => res.json(err))
     }
@@ -115,7 +117,9 @@ class HomeController {
     getAllRoom = (req, res, next) => {
         Room.find()
             .then(result => {
-                res.status(200).json(result)
+                res.status(200).json({
+                    data: result
+                })
             }).catch(err => res.json(err))
     }
 }
