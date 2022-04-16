@@ -146,6 +146,8 @@ POST http://localhost:5000/room/device/all
     "id": 202232910475
 }
 ```
+Example response:
+
 ```json
 {
     "data": [
