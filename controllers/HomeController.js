@@ -30,7 +30,7 @@ class HomeController {
                             temp: '--',
                             humi: '--'
                         });
-                    })
+                    })  
                     .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
@@ -68,7 +68,6 @@ class HomeController {
     //                 .catch(err => console.log(err));
     //         })
     //         .catch(err => console.log(err));
-
     // }
     addNewRoom = (req, res, next) => {
         const roomName = req.body.name;
@@ -166,5 +165,7 @@ class HomeController {
                 .catch(err => console.log(err))
         }
     }
+
+    
 }
 export default new HomeController;

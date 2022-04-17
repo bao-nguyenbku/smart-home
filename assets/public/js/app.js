@@ -83,7 +83,7 @@ class App {
         }
     }
     handleOffEnergy = () => {
-        $('#setting-energy').on('click', () => {
+        $('#energy').on('click', () => {
             $.ajax({
                 url: '/settings/offEnergy',
                 method: 'GET',
@@ -237,7 +237,6 @@ class App {
             })
         }, 5000)
     }
-
     handleTableDeviceInStatistic = () => {
         // let newDevices;
         $.ajax({

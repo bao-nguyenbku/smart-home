@@ -1,18 +1,18 @@
 <div class="settings-container">
   <div class="settings-button">
     <div class="settings-button-class">
-      <a class="active" id="setting-energy">
+      <a class="active" id="energy">
         <span class="material-icons-outlined">power_settings_new</span>
       </a>
       <p>Off energy</p>
     </div>
 
-    <div class="settings-button-class">
-      <a onclick="change()" class="" id="left-home">
+    <!-- <div class="settings-button-class">
+      <a class="" id="left-home">
         <span class="material-icons-outlined">lock</span>
       </a>
       <p>Left home</p>
-    </div>
+    </div> -->
   </div>
 
   <div class="settings-content">
@@ -45,18 +45,20 @@
       <!-- Edit Profile -->
       <div id="edit_profile" class="tab-pane active1 settings-edit">
         <div class="settings-avatar">
+           <!-- <form action="/" method="post" enctype="multipart/form-data"> -->
+            <!-- <input type="file" name="file">  -->
           <img src="./assets/images/avatar.jpg" alt="avatar">
         </div>
 
         <form class="form_edit">
           <label for="username">Username</label><br>
-          <input type="text" id="username" name="username" value=<%= session.user ? session.user.name : ''  %> ><br>
+          <input type="text" id="username" name="username" value= <%= session.user ? session.user.name : '' %>><br>
 
           <label for="phone">Phone</label><br>
-          <input type="text" id="phone" name="phone" value="0123456789"><br>
+          <input type="text" id="phone" name="phone" value= <%= session.user ? session.user.phone : '' %>><br>
 
           <label for="email">Email</label><br>
-          <input type="text" id="email" name="email" value="jennynguyen@gmail.com"><br>
+          <input type="text" id="email" name="email" readonly value= <%= session.user ? session.user.email : ''%> ><br>
 
           <input type="submit" class="cancel" value="Cancel">
           <input type="submit" class="save" value="Save">
