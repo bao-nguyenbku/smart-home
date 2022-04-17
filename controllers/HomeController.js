@@ -2,8 +2,7 @@
 import { Room, Device } from '../models/index.js';
 import { getAllRoomWithField } from '../models/RoomQuery.js';
 import { genId } from './generateID.js';
-import fs from 'fs';
-import ejs from 'ejs';
+
 class HomeController {
     show = (req, res, next) => {
         const { room } = req.query;

@@ -2,26 +2,9 @@
 const $$ = document.querySelectorAll.bind(document);
 
 // Global method
-// devices: Array(8)
-// 0: {_id: '6244053e840a9faf0b473eea', id: 2022330142238, name: 'Đèn trần', status: true, type: 'led', …}
-// 1: {_id: '62440554840a9faf0b473eef', id: 202233014230, name: 'Đèn góc bếp', status: false, type: 'led', …}
-// 2: {_id: '62441fc83d8220fcc91220d2', id: 2022330161552, name: 'Đèn sau', status: true, type: 'led', …}
-// 3: {_id: '62442ac8d53150160bacc01e', id: 202233017248, name: 'Đèn chùm', status: true, type: 'led', …}
-// 4: {_id: '62451e21a53d7dd1d85c28a0', id: 202233110215, name: 'Đèn chân tủ', status: false, type: 'led', …}
-// 5: {_id: '624673df394ce8cfa456b34f', id: 202241103911, name: 'Đèn toilet', status: false, type: 'led', …}
-// 6: {_id: '624674453e74511028ec8d27', id: 202241104053, name: 'Đèn nhà xe', status: true, type: 'led', …}
-// 7: {_id: '624b083a1cc083410a96ba6d', id: 20224422114, name: 'Đèn nhà tắm', status: false, type: 'led', …}
-// length: 8
-// [[Prototype]]: Array(0)
-// rooms: Array(5)
-// 0: {_id: '624281390ee4e33c6fffb543', id: 202232910475, name: 'Kitchen', createdAt: '2022-03-29T03:47:05.527Z', updatedAt: '2022-03-29T03:47:05.527Z', …}
-// 1: {_id: '6242817bafae31267e86b6ab', id: 2022329104811, name: 'Living room', createdAt: '2022-03-29T03:48:11.493Z', updatedAt: '2022-03-29T03:48:11.493Z', …}
-// 2: {_id: '6242d14069034d38f754f7c6', id: 2022329162832, name: 'Toilet', createdAt: '2022-03-29T09:28:32.148Z', updatedAt: '2022-03-29T09:28:32.148Z', …}
-// 3: {_id: '62430f1044a66a5ce52aafc4', id: 2022329205216, name: 'Garage', createdAt: '2022-03-29T13:52:17.001Z', updatedAt: '2022-03-29T13:52:17.001Z', …}
-// 4: {_id: '62451e5ca53d7dd1d85c28a8', id: 202233110224, name: 'Bathroom', createdAt: '2022-03-31T03:22:04.131Z', updatedAt: '2022-03-31T03:22:04.131Z', …}
-const  milisecondToHour = (time) => {
-    const second = parseInt(time / 1000);
-    const minute = parseInt(time / 60000);
+const milisecondToHour = (time) => {
+    const second = parseInt(time / 1000) % 60;
+    const minute = parseInt(time / 60000) % 60;
     const hour = parseInt(time / 3600000);
     return {
         str: `${hour}:${minute}:${second}`,
