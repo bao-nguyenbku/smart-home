@@ -245,7 +245,7 @@ Example response:
     }
 }
 ```
-## GEET FEED DATA FROM ADAFRUIT (Hardware)
+## GET FEED DATA FROM ADAFRUIT (Hardware)
 ```
 GET http://localhost:5000/adafruit/hardware/all
 ```
