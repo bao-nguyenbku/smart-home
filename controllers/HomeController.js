@@ -31,7 +31,7 @@ class HomeController {
                             temp: '--',
                             humi: '--'
                         });
-                    })
+                    })  
                     .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
