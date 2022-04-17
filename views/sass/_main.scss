@@ -362,13 +362,18 @@
   // @include d-flex(row, flex-start, flex-start);
   align-items: flex-start;
   justify-content: flex-start;
-  display: none;
+  display: flex;
   background-color: #f3f3f3;
   padding: 5px;
   width: 100%;
   border-radius: 5px;
   height: 50px;
   cursor: pointer;
+  .submit-add-device-button {
+    height: 100%;
+    margin-left: auto;
+    margin-right: 0;
+  }
   span {
     margin: auto 0;
     background-color: white;
@@ -379,6 +384,12 @@
   .new-device-content {
     margin-left: 10px;
     @include d-flex(column, flex-start, center);
+    input {
+      border: none;
+      outline: none;
+      background: none;
+      font-weight: 600;
+    }
   }
   &:hover {
     background-color: #eeeeee;

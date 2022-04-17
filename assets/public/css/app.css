@@ -1069,13 +1069,18 @@ p {
 .new-device-found {
   align-items: flex-start;
   justify-content: flex-start;
-  display: none;
+  display: flex;
   background-color: #f3f3f3;
   padding: 5px;
   width: 100%;
   border-radius: 5px;
   height: 50px;
   cursor: pointer;
+}
+.new-device-found .submit-add-device-button {
+  height: 100%;
+  margin-left: auto;
+  margin-right: 0;
 }
 .new-device-found span {
   margin: auto 0;
@@ -1090,6 +1095,12 @@ p {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+}
+.new-device-found .new-device-content input {
+  border: none;
+  outline: none;
+  background: none;
+  font-weight: 600;
 }
 .new-device-found:hover {
   background-color: #eeeeee;

@@ -224,20 +224,53 @@ class App {
                 method: 'GET',
                 dataType: 'json',
                 success: (res) => {
+                    let newDevice = ``;
                     console.log(res);
-                    const newDevice = `<span class="material-icons-outlined">lightbulb</span>
-                                        <div class="new-device-content">
-                                        <p>Name: <strong>led (default)</strong></p>
-                                        <p>ID: <strong>1234</strong></p>
+                    res.forEach(data => {
+                        newDevice += `  <div class="new-device-found">
+                                            <span class="material-icons-outlined">lightbulb</span>
+                                            <div class="new-device-content" data-id="${data.id}">
+                                                <p>Name: <input type="text" value="${data.name} (default)"></p>
+                                                <p>ID: <strong>${data.id}</strong></p>
+                                            </div>
+                                            <button type="button" style="background: none; border: none; color: red;"
+                        class="submit-add-device-button">Add</button>   
                                         </div>`
+                    })
                     $('#exampleModal .new-device-found').css('display', 'flex');
                     $('#exampleModal .loading').css('display', 'none');
-                    $('#exampleModal .new-device-found').html(newDevice);
+                    $('#exampleModal .new-device-found-container').append(newDevice);
+                    const addDeviceBtn = document.querySelectorAll('.submit-add-device-button');
+                    if (addDeviceBtn.length !== 0) {
+                        addDeviceBtn.forEach(btn => {
+                            btn.addEventListener('click', (e) => {
+                                console.log(e);
+                                const id = e.path[1].children[1].dataset.id;
+                                const deviceName = e.path[1].children[1].children[0].children[0].value;
+                                const currentRoom = this.getCurrentSelectRoom();
+                                $.ajax({
+                                    url: '/device/add',
+                                    method: 'POST',
+                                    data: {
+                                        deviceName: deviceName,
+                                        deviceId: parseInt(id),
+                                        room: currentRoom
+                                    },
+                                    dataType: 'json',
+                                    success: (result) => {
+                                        if (result.status === 200) {
+                                            // TODO: Fix this to add new device without reload page
+                                            location.reload();
+                                        }
+                                    }
+                                })
+                            })
+                        })
+                    }
                 }
             })
-
         })
-        // const addDeviceBtn = document.querySelector('#submit-add-device-button');
+        
         // if (addDeviceBtn) {
         //     addDeviceBtn.addEventListener('click', () => {
         //         const deviceName = document.getElementById('formGroupExampleInput-device-name').value;

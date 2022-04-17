@@ -56,8 +56,12 @@ class HomeController {
         // while (true) {
             try {
                 const result = await axios.get(`https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=${limit}`);
-                const data = result.data;
-                res.status(200).json(result.data)
+                // const data = result.data;
+                const data = JSON.parse('{"id":-1,"cmd":"info","name":"TempHumi","paras":"{31.00,75.00}"}');
+                res.json([
+                    data
+                ])
+                // res.status(200).json(result.data)
             } 
             catch (error) {
                 console.log(error);
@@ -66,13 +70,12 @@ class HomeController {
 
     }
     addNewDevice = (req, res, next) => {
-        const { deviceName, deviceCode, room } = req.body;
-
+        const { deviceName, deviceId, room } = req.body;
         // Find a room in database which match 'room'
         getAllRoomWithField('name', (err, result) => {
             if (!err) {
                 const newDevice = new Device({
-                    id: genId(),
+                    id: deviceId,
                     name: deviceName,
                     status: false,
                     type: deviceCode === 'light' ? 'led' : '',
@@ -89,8 +92,6 @@ class HomeController {
                     .catch(err => console.log(err));
             }
         });
-
-
     }
 
     toggleDevice = (req, res, next) => {
