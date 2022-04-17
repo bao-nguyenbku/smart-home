@@ -1,8 +1,6 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device } from '../models/index.js';
 // import { genId } from './generateID.js';
-import ejs from 'ejs';
-import fs from 'fs';
 
 class SettingsController {
     show = (req, res, next) => {
@@ -11,6 +9,13 @@ class SettingsController {
     offEnergy = (req, res, next) => {
         Device.find({ status: true })
             .then(result => {
+                // No device turned on
+                if (result.length == 0) {
+                    res.status(200).json({
+                        status: 304
+                    })
+                }
+
                 for (let i = 0; i < result.length; i++){      
                     const currentTime = new Date();
                     const usedTime = currentTime - result[i].lastUse;
@@ -18,6 +23,7 @@ class SettingsController {
                     const deviceId = result[i].id;
                     Device.findOneAndUpdate({ id: deviceId }, { 
                         duration: usedTime + lastDuration,
+                        status: false
                     }).then(result2 => {
                         const device = {
                             id: deviceId,
@@ -25,19 +31,12 @@ class SettingsController {
                             name: result.type,
                             paras: 'none'
                         }
-                    })
-                    .catch(err => res.json(err))
+                    }).catch(err => res.json(err))
                 }
-                Device.updateMany({ status: 'true' }, { status: 'false'}).then(result3 => {
-                    console.log(result3)
-                })
                 res.status(200).json({
-                    status: 200,
-                    data: result
+                    status: 200
                 })
-                .catch(err => res.json(err))
-            })
-            .catch(err => res.json(err))
+            }).catch(err => res.json(err))
     }
 }
 export default new SettingsController;

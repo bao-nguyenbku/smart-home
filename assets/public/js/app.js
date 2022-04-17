@@ -66,6 +66,18 @@ const validatePassword = (password) => {
 }
 // App will execute all operation in smart home pages
 class App {
+    toastOption = {
+        text: '',
+        duration: 3000,
+        // destination: "https://github.com/apvarun/toastify-js",
+        newWindow: true,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        className: 'custom-toast',
+        // onClick: function(){} // Callback after click
+    }
     constructor() {
         this.handleMainControl();
         this.handleSidebarActive();
@@ -88,10 +100,24 @@ class App {
                 url: '/settings/offEnergy',
                 method: 'GET',
                 success: (res) => {
+                    // Not modified
+                    if (res.status === 304) {
+                        const message = 'Tất cả thiết bị đang tắt';
+                        Toastify({
+                            ...this.toastOption,
+                            text: message
+                        }).showToast();
+                    }
+                    else if (res.status === 200) {
+                        const message = 'Đã tắt toàn bộ thiết bị';
+                        Toastify({
+                            ...this.toastOption,
+                            text: message,
+                        }).showToast();
+                    }
                     console.log(res);
                 }
             })
-            console.log('Clicked');
         })
     }
     handleLogin = () => {
@@ -189,31 +215,53 @@ class App {
     getCurrentSelectRoom = () => document.querySelector('#select-room-dropdown-menu').value;
 
     handleAddNewDevice = () => {
-        const addDeviceBtn = document.querySelector('#submit-add-device-button');
-        if (addDeviceBtn) {
-            addDeviceBtn.addEventListener('click', () => {
-                const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
-                const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
-                const currentRoom = this.getCurrentSelectRoom();
-
-                $.ajax({
-                    url: '/device/add',
-                    method: 'POST',
-                    data: {
-                        deviceName: deviceName,
-                        deviceCode: deviceCode,
-                        room: currentRoom
-                    },
-                    dataType: 'json',
-                    success: (result) => {
-                        if (result.status === 200) {
-                            // TODO: Fix this to add new device without reload page
-                            location.reload();
-                        }
-                    }
-                })
+        $('.find-new-device').on('click', () => {
+            console.log('Clicked');
+            $('.find-new-device').css('display', 'none');
+            $('#exampleModal .loading').css('display', 'flex');
+            $.ajax({
+                url: '/find-new-device',
+                method: 'GET',
+                dataType: 'json',
+                success: (res) => {
+                    console.log(res);
+                    const newDevice = `<span class="material-icons-outlined">lightbulb</span>
+                                        <div class="new-device-content">
+                                        <p>Name: <strong>led (default)</strong></p>
+                                        <p>ID: <strong>1234</strong></p>
+                                        </div>`
+                    $('#exampleModal .new-device-found').css('display', 'flex');
+                    $('#exampleModal .loading').css('display', 'none');
+                    $('#exampleModal .new-device-found').html(newDevice);
+                }
             })
-        }
+
+        })
+        // const addDeviceBtn = document.querySelector('#submit-add-device-button');
+        // if (addDeviceBtn) {
+        //     addDeviceBtn.addEventListener('click', () => {
+        //         const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
+        //         const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
+        //         const currentRoom = this.getCurrentSelectRoom();
+
+        //         $.ajax({
+        //             url: '/device/add',
+        //             method: 'POST',
+        //             data: {
+        //                 deviceName: deviceName,
+        //                 deviceCode: deviceCode,
+        //                 room: currentRoom
+        //             },
+        //             dataType: 'json',
+        //             success: (result) => {
+        //                 if (result.status === 200) {
+        //                     // TODO: Fix this to add new device without reload page
+        //                     location.reload();
+        //                 }
+        //             }
+        //         })
+        //     })
+        // }
     }
     updateTempAndHumi = () => {
         setTimeout(() => {

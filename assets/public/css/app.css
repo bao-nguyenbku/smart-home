@@ -659,6 +659,55 @@ p {
   color: #7297AB;
 }
 
+.spinner {
+  animation: rotator 1.4s linear infinite;
+}
+
+@keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(270deg);
+  }
+}
+.path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285f4;
+  }
+  25% {
+    stroke: #de3e35;
+  }
+  50% {
+    stroke: #f7c223;
+  }
+  75% {
+    stroke: #1b9a59;
+  }
+  100% {
+    stroke: #4285f4;
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+  50% {
+    stroke-dashoffset: 46.75;
+    transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 187;
+    transform: rotate(450deg);
+  }
+}
 .main-container {
   width: 640px;
   border-top-right-radius: 30px;
@@ -996,6 +1045,56 @@ p {
   color: white;
 }
 
+.find-new-device {
+  width: 100%;
+  height: 60px;
+  border-radius: 5px;
+  border: 2px dashed #7297ab;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #7297ab;
+  font-weight: 600;
+}
+
+.loading {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.new-device-found {
+  align-items: flex-start;
+  justify-content: flex-start;
+  display: none;
+  background-color: #f3f3f3;
+  padding: 5px;
+  width: 100%;
+  border-radius: 5px;
+  height: 50px;
+  cursor: pointer;
+}
+.new-device-found span {
+  margin: auto 0;
+  background-color: white;
+  padding: 5px;
+  color: #7297ab;
+  border-radius: 5px;
+}
+.new-device-found .new-device-content {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.new-device-found:hover {
+  background-color: #eeeeee;
+}
+
 .title-content {
   width: 292px;
   display: flex;
@@ -1162,7 +1261,7 @@ p {
 .settings-container .settings-button .settings-button-class a {
   width: 70px;
   height: 70px;
-  background: #ffffff;
+  background: #FF844B;
   box-shadow: 1px 3px 10px rgba(165, 165, 165, 0.5);
   border-radius: 10px;
   display: inline-flex;

@@ -7,6 +7,7 @@ const router = Router();
 router.get('/', isLoggedIn(), HomeController.show);
 router.get('/settings', isLoggedIn(), SettingsController.show);
 router.post('/room/add', isLoggedIn(), HomeController.addNewRoom);
+router.get('/find-new-device', isLoggedIn(), HomeController.getNewDevice);
 router.post('/device/add', isLoggedIn(), HomeController.addNewDevice);
 router.post('/device/toggle', isLoggedIn(), HomeController.toggleDevice);
 

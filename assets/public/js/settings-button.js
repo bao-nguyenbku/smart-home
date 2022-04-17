@@ -1,31 +1,31 @@
 // import e = require("express");
 
 // Button Off Energy and button Left Home
-$(document).ready(function(){
-    $("#energy").click(function(){
-        // const message = 'Đã tắt hết tất cả thiết bị';
-        // Toastify({
-        //     text: message,
-        //     duration: 3000,
-        //     // destination: "https://github.com/apvarun/toastify-js",
-        //     newWindow: true,
-        //     close: true,
-        //     gravity: "top", // `top` or `bottom`
-        //     position: "right", // `left`, `center` or `right`
-        //     stopOnFocus: true, // Prevents dismissing of toast on hover
-        //     className: 'custom-toast',
-        //     // onClick: function(){} // Callback after click
-        // }).showToast();
+// $(document).ready(function(){
+//     $("#energy").click(function(){
+//         // const message = 'Đã tắt hết tất cả thiết bị';
+//         // Toastify({
+//         //     text: message,
+//         //     duration: 3000,
+//         //     // destination: "https://github.com/apvarun/toastify-js",
+//         //     newWindow: true,
+//         //     close: true,
+//         //     gravity: "top", // `top` or `bottom`
+//         //     position: "right", // `left`, `center` or `right`
+//         //     stopOnFocus: true, // Prevents dismissing of toast on hover
+//         //     className: 'custom-toast',
+//         //     // onClick: function(){} // Callback after click
+//         // }).showToast();
 
-        const active = document.querySelector('#energy.active');
-        if (active){
-            $("#energy").removeClass("active");
-        }
-        else{
-            $("#energy").addClass("active");
-        }
-    });
-});
+//         const active = document.querySelector('#energy.active');
+//         if (active){
+//             $("#energy").removeClass("active");
+//         }
+//         else{
+//             $("#energy").addClass("active");
+//         }
+//     });
+// });
 
 // $(document).ready(function(){
 //     $("#left-home").click(function(){
