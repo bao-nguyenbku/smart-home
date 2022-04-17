@@ -245,4 +245,41 @@ Example response:
     }
 }
 ```
-
+## GEET FEED DATA FROM ADAFRUIT (Hardware)
+```
+GET http://localhost:5000/adafruit/hardware/all
+```
+Example response:
+```json
+{
+    "data": [
+        {
+            "id": "0EZVMZ3Y98V0G6561HNSD8CNCT",
+            "value": "{\"id\":-1,\"cmd\":\"info\",\"name\":\"TempHumi\",\"paras\":\"{31.00,75.00}\"}",
+            "feed_id": 1846209,
+            "feed_key": "ttda-cnpm-ha2so",
+            "created_at": "2022-04-01T08:15:43Z",
+            "created_epoch": 1648800943,
+            "expiration": "2022-05-01T08:15:43Z"
+        },
+        {
+            "id": "0EZVMX3S0RCJF948627TTSMH8J",
+            "value": "{\"id\":-1,\"cmd\":\"info\",\"name\":\"TempHumi\",\"paras\":\"{32.00,71.00}\"}",
+            "feed_id": 1846209,
+            "feed_key": "ttda-cnpm-ha2so",
+            "created_at": "2022-04-01T08:12:12Z",
+            "created_epoch": 1648800732,
+            "expiration": "2022-05-01T08:12:12Z"
+        },
+        {
+            "id": "0EZVMW9NXEXQJDWY3VB5G2TA91",
+            "value": "{\"id\":-1,\"cmd\":\"info\",\"name\":\"TempHumi\",\"paras\":\"{32.00,71.00}\"}",
+            "feed_id": 1846209,
+            "feed_key": "ttda-cnpm-ha2so",
+            "created_at": "2022-04-01T08:10:47Z",
+            "created_epoch": 1648800647,
+            "expiration": "2022-05-01T08:10:47Z"
+        },
+    ]
+}
+```

@@ -12,6 +12,7 @@ router.post('/room/device/all', isLoggedIn(), HomeController.getDeviceByRoomId);
 
 
 router.get('/device/all', isLoggedIn(), HomeController.getAllDevice);
+router.get('/adafruit/hardware/all', isLoggedIn(), HomeController.getDataFeed);
 router.post('/device/add', isLoggedIn(), HomeController.addNewDevice);
 router.post('/device/toggle', isLoggedIn(), HomeController.toggleDevice);
 

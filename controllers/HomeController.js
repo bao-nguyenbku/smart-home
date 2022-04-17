@@ -1,7 +1,7 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device } from '../models/index.js';
 import { genId } from './generateID.js';
-
+import axios from 'axios';
 class HomeController {
     addNewRoom = (req, res, next) => {
         const { name } = req.body;
@@ -122,7 +122,6 @@ class HomeController {
                 })
             }).catch(err => res.json(err))
     }
-
     getDeviceByRoomId = (req, res, next) => {
         const { id } = req.body;
         Device.find({roomId: id})
@@ -133,6 +132,13 @@ class HomeController {
             })
             .catch(err => res.json(err))
         console.log(id);
+    }
+    getDataFeed = (req, res, next) => {
+        axios.get('https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data')
+            .then(result => res.status(200).json({
+                data: result.data
+            }))
+            .catch(err => res.json(err))
     }
 }
 export default new HomeController;
