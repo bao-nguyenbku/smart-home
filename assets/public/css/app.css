@@ -1072,10 +1072,22 @@ p {
   display: flex;
   background-color: #f3f3f3;
   padding: 5px;
+  margin-bottom: 10px;
   width: 100%;
   border-radius: 5px;
   height: 50px;
   cursor: pointer;
+}
+.new-device-found > p {
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 .new-device-found .submit-add-device-button {
   height: 100%;
@@ -1148,7 +1160,9 @@ p {
   display: inline-flex;
 }
 .statistic-container .table-and-rooms .rooms-container .room-item .border-badge {
-  width: 65px;
+  width: max-content;
+  padding-left: 4px;
+  padding-right: 4px;
   height: 100%;
   background: #00466D;
   border-top-left-radius: inherit;

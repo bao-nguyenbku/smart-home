@@ -52,20 +52,69 @@ class HomeController {
     }
     getNewDevice = async (req, res, next) => {
         const limit = 10;
-        // while (true) {
-            try {
-                // const result = await axios.get(`https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=${limit}`);
-                // const data = result.data;
-                const data = JSON.parse('{"id":-1,"cmd":"info","name":"TempHumi","paras":"{31.00,75.00}"}');
-                res.json([
-                    data
-                ])
-                // res.status(200).json(result.data)
-            } 
-            catch (error) {
-                console.log(error);
+        let end_time = new Date();
+        
+        try {
+            // const result = await axios.get(`https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=${limit}&end_time=${end_time}`);
+            const result = {
+                data: [
+                    {              
+                        "id": "0EZV49AXP149NG2T555BM41BEK",
+                        "value": "{\"id\":1235,\"cmd\":\"add\",\"name\":\"led\",\"paras\":\"none\"}",
+                        "feed_id": 1846206,
+                        "feed_key": "ttda-cnpm-so2ha",
+                        "created_at": "2022-03-31T16:42:52Z",
+                        "created_epoch": 1648744972,
+                        "expiration": "2022-04-30T16:42:52Z"
+                    },
+                    {
+                        "id": "0EZV498YK84Q0X8EEX5BVNM0FN",
+                        "value": "{\"id\":1,\"cmd\":\"close\",\"name\":\"led\",\"paras\":\"none\"}",
+                        "feed_id": 1846206,
+                        "feed_key": "ttda-cnpm-so2ha",
+                        "created_at": "2022-03-31T16:42:45Z",
+                        "created_epoch": 1648744965,
+                        "expiration": "2022-04-30T16:42:45Z"
+                    },
+                ]
             }
-        // }
+            // const data = result.data;
+            const allNewDevice = result.data.map(async (item) => {
+                try {
+                    const value = JSON.parse(item.value);
+                    if (value.cmd == 'add') {
+                        const device = await Device.findOne({id: value.id})
+                            .then(result => {
+                                if (result) return null;
+                                else return value;
+                            }).catch(err => console.log(err));
+                        return device;
+                    }
+                    else return null;
+                } catch (error) {
+                    return;
+                }
+            })
+
+            Promise.all(allNewDevice).then((result) => {
+                if (result.every((curr) => curr === null)) {
+                    res.status(200).json({status: 404, message: 'New device not found'});
+                }
+                else {
+                    res.status(200).json({
+                        status: 200,
+                        data: result.filter((item) => item !== null)
+                    })
+                }
+            })
+            // const value = JSON.parse('{"id":1234,"cmd":"add","name":"led","paras":"none"}');
+            
+            // res.status(200).json(result.data)
+        } 
+        catch (error) {
+            console.log(error);
+        }
+        
 
     }
     addNewDevice = (req, res, next) => {

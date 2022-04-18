@@ -365,10 +365,19 @@
   display: flex;
   background-color: #f3f3f3;
   padding: 5px;
+  margin-bottom: 10px;
   width: 100%;
   border-radius: 5px;
   height: 50px;
   cursor: pointer;
+  & > p {
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 20px;
+    height: 100%;
+    @include d-flex(row, center, center);
+  }
   .submit-add-device-button {
     height: 100%;
     margin-left: auto;
