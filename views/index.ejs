@@ -36,7 +36,27 @@
   </div>
 </div>
 <div class="main-control-container">
-  <div class="main-control grid-col-span-2">
+  <p class="device-list-title">Devices</p>
+  <div class="device-list">
+    <%- include('./partials/devices.ejs'); %>
+  </div>
+  <div class="temp-and-humi-container">
+    <div class="temp-container">
+      <p>Temperature</p>
+      <p>
+        <%= temp %><span>o</span> C
+      </p>
+      <i class="fa-solid fa-temperature-high"></i>
+    </div>
+    <div class="humidity-container">
+      <p>Humidity</p>
+      <p>
+        <%= humi %>%
+      </p>
+      <i class="fa-solid fa-droplet"></i>
+    </div>
+  </div>
+  <!-- <div class="main-control grid-col-span-2">
     <div class="toggle-switch-container">
       <div class="device-title">
         <div class="icon-background">
@@ -54,74 +74,41 @@
     <div class="control-area">
       <span class="material-icons-outlined">light_mode</span>
       <div class="range-background">
-        <!-- <div class="slider" data-after="30%"></div> -->
+        <div class="slider" data-after="30%"></div>
         <input type="range" class="slider" value="30" min="0" max="100">
       </div>
 
       <span class="material-icons">light_mode</span>
     </div>
-  </div>
-  <div class="temp-container">
-    <p>Temperature</p>
-    <p>
-      <%= temp %><span>o</span> C
-    </p>
-    <i class="fa-solid fa-temperature-high"></i>
-  </div>
-  <div class="humidity-container">
-    <p>Humidity</p>
-    <p>
-      <%= humi %>%
-    </p>
-    <i class="fa-solid fa-droplet"></i>
-  </div>
+  </div> -->
+  
 </div>
-<div class="device-list-container">
+<!-- <div class="device-list-container">
   <p class="device-list-title">Devices</p>
   <div class="device-list">
-    <%- include('./partials/devices.ejs'); %>
   </div>
-    <!-- MODAL FOR ADDING DEVICE -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New device</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  MODAL FOR ADDING DEVICE
+</div> -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New device</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <button class="find-new-device">Find new device</button>
+          <div class="loading">
+            <svg class="spinner loading" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+              <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+           </svg>
           </div>
-          <div class="modal-body">
-            <button class="find-new-device">Find new device</button>
-            <div class="loading">
-              <svg class="spinner loading" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-                <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-             </svg>
-            </div>
-            <div class="new-device-found-container">
-            </div>
-            <!-- <span class="material-icons-outlined">lightbulb</span>
-            <div class="new-device-content" data-id="1234">
-              <p>Name: <input type="text" value="led (default)" /></p>
-              <p>ID: <strong>1234</strong></p>
-            </div>
-            <button type="button" style="background: none; border: none; color: red;"
-          class="submit-add-device-button">Add</button> -->
-            <!-- <div class="mb-3">
-              <label for="formGroupExampleInput" class="form-label">Device's name</label>
-              <input type="text" class="form-control" id="formGroupExampleInput-device-name">
-            </div>
-            <div class="mb-3">
-              <label for="formGroupExampleInput2" class="form-label">Device's code</label>
-              <select id="formGroupExampleInput-device-code" class="form-select" aria-label="Default select example">
-                <option value="light">light</option>
-                <option value="fan">fan</option>
-                <option value="door">door</option>
-              </select>
-            </div> -->
+          <div class="new-device-found-container">
           </div>
-          <div class="modal-footer">
-            <button type="button" data-bs-dismiss="modal" style="background: none; border: none;">Cancel</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-bs-dismiss="modal" style="background: none; border: none;">Cancel</button>
         </div>
       </div>
     </div>
-</div>
+  </div>

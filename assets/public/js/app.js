@@ -37,7 +37,9 @@ const getDevicesPerPage = (page, devices) => {
         idx += 4;
         page--;
     }
+
     const devicePerPage = devices.slice(idx, idx + 4);
+    console.log(devicePerPage);
     return devicePerPage;
 }
 const addRoomToDevice = (rooms, devices) => {
@@ -322,7 +324,7 @@ class App {
             const previous = new Date(Date.now() - 2 * 60 * 1000);
             $.ajax({
                 // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
-                url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?start_time=${previous.toISOString()}`,
+                url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=2&start_time=${previous.toISOString()}`,
                 method: 'GET',
                 success: (data) => {
                     if (data.length !== 0) {
@@ -364,7 +366,7 @@ class App {
         $('.table-of-device .table-pagination .forward').on('click', () => {
             const page = parseInt($('.table-of-device .table-pagination > p').data('page'));
             if (page !== pages) {
-                const devicePerPage = getDevicesPerPage(page + 1, pages, devices);
+                const devicePerPage = getDevicesPerPage(page + 1, devices);
                 renderTable(page + 1, pages, devicePerPage);
             }
         })

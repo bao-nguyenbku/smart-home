@@ -35,6 +35,9 @@ p {
     flex-direction: row;
   }
 }
+#root {
+  height: calc(100% - 60px);
+}
 @import 'login';
 @import 'sidebar';
 @import 'main';

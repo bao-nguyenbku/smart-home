@@ -60,7 +60,7 @@ class HomeController {
                 data: [
                     {              
                         "id": "0EZV49AXP149NG2T555BM41BEK",
-                        "value": "{\"id\":1235,\"cmd\":\"add\",\"name\":\"led\",\"paras\":\"none\"}",
+                        "value": `{\"id\":${genId()},\"cmd\":\"add\",\"name\":\"led\",\"paras\":\"none\"}`,
                         "feed_id": 1846206,
                         "feed_key": "ttda-cnpm-so2ha",
                         "created_at": "2022-03-31T16:42:52Z",
