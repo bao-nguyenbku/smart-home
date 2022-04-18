@@ -7,7 +7,7 @@
   <div class="select-room-dropdown">
     <select id="select-room-dropdown-menu">
       <% rooms.forEach(room=> { %>
-        <option <%=(room.id===currentRoomId) ? 'selected' : '' %> value="<%=room.name %>"><%= room.name %>
+        <option <%=(room.id===currentRoomId) ? 'selected' : '' %> value="<%=room.id %>"><%= room.name %>
         </option>
         <% }) %>
     </select>

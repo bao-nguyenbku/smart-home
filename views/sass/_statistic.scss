@@ -35,7 +35,9 @@
         box-shadow: $shadow;
         display: inline-flex;
         .border-badge {
-          width: 65px;
+          width: max-content;
+          padding-left: 4px;
+          padding-right: 4px;
           height: 100%;
           background: #00466D;
           border-top-left-radius: inherit;

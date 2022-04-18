@@ -204,10 +204,10 @@ class App {
     }
 
     handleSelectRoom = () => {
-        const selectRoomBtn = document.querySelector('#select-room-dropdown-menu');
+        const selectRoomBtn = $('#select-room-dropdown-menu');
         if (selectRoomBtn) {
-            selectRoomBtn.addEventListener('change', (e) => {
-                const currentRoom = e.target.value.toLowerCase().split(' ').join('-');
+            selectRoomBtn.on('change', (e) => {
+                const currentRoom = selectRoomBtn.children('option').filter(':selected').text().trim().toLowerCase().split(' ').join('-');
                 window.location.href = `/?room=${currentRoom}`;
             });
         }
@@ -229,11 +229,11 @@ class App {
                     res.forEach(data => {
                         newDevice += `  <div class="new-device-found">
                                             <span class="material-icons-outlined">lightbulb</span>
-                                            <div class="new-device-content" data-id="${data.id}">
+                                            <div class="new-device-content">
                                                 <p>Name: <input type="text" value="${data.name} (default)"></p>
                                                 <p>ID: <strong>${data.id}</strong></p>
                                             </div>
-                                            <button type="button" style="background: none; border: none; color: red;"
+                                            <button data-id="${data.id}" data-name="${data.name}" type="button" style="background: none; border: none; color: red;"
                         class="submit-add-device-button">Add</button>   
                                         </div>`
                     })
@@ -244,17 +244,18 @@ class App {
                     if (addDeviceBtn.length !== 0) {
                         addDeviceBtn.forEach(btn => {
                             btn.addEventListener('click', (e) => {
-                                console.log(e);
-                                const id = e.path[1].children[1].dataset.id;
+                                const id = btn.dataset.id;
                                 const deviceName = e.path[1].children[1].children[0].children[0].value;
-                                const currentRoom = this.getCurrentSelectRoom();
+                                const deviceType = btn.dataset.name;
+                                const roomId = this.getCurrentSelectRoom();
                                 $.ajax({
                                     url: '/device/add',
                                     method: 'POST',
                                     data: {
                                         deviceName: deviceName,
                                         deviceId: parseInt(id),
-                                        room: currentRoom
+                                        deviceType: deviceType,
+                                        roomId: parseInt(roomId)
                                     },
                                     dataType: 'json',
                                     success: (result) => {
@@ -356,16 +357,8 @@ class App {
                 const deviceItem = e.path[3];
                 const message = deviceItem.children[1].children[0].textContent + 'đã được ' + (e.target.checked ? 'mở' : 'tắt');
                 Toastify({
-                    text: message,
-                    duration: 3000,
-                    // destination: "https://github.com/apvarun/toastify-js",
-                    newWindow: true,
-                    close: true,
-                    gravity: "top", // `top` or `bottom`
-                    position: "right", // `left`, `center` or `right`
-                    stopOnFocus: true, // Prevents dismissing of toast on hover
-                    className: 'custom-toast',
-                    // onClick: function(){} // Callback after click
+                    ...this.toastOption,
+                    text: message
                 }).showToast();
                 deviceItem.classList.toggle('device-item-active');
                 if (deviceItem.dataset.item == 'light') {
@@ -388,7 +381,9 @@ class App {
                         },
                         dataType: 'json',
                         success: (res) => {
-                            console.log(res);
+                            if (res.error) {
+                                console.log(res.error);
+                            }
                         }
                     })
                 })
