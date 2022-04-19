@@ -1,6 +1,7 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device } from '../models/index.js';
 import { genId } from './generateID.js';
+import ada from '../api/adafruit.js';
 import axios from 'axios';
 class HomeController {
     show = (req, res, next) => {
@@ -50,35 +51,33 @@ class HomeController {
             .catch(err => console.log(err))
     }
     getNewDevice = async (req, res, next) => {
-        const limit = 10;
-        let end_time = new Date();
-        
+        const newDevices = await ada.getNewDevice();
         try {
-            // const result = await axios.get(`https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=${limit}&end_time=${end_time}`);
-            const result = {
-                data: [
-                    {              
-                        "id": "0EZV49AXP149NG2T555BM41BEK",
-                        "value": `{\"id\":${genId()},\"cmd\":\"add\",\"name\":\"led\",\"paras\":\"none\"}`,
-                        "feed_id": 1846206,
-                        "feed_key": "ttda-cnpm-so2ha",
-                        "created_at": "2022-03-31T16:42:52Z",
-                        "created_epoch": 1648744972,
-                        "expiration": "2022-04-30T16:42:52Z"
-                    },
-                    {
-                        "id": "0EZV498YK84Q0X8EEX5BVNM0FN",
-                        "value": "{\"id\":1,\"cmd\":\"close\",\"name\":\"led\",\"paras\":\"none\"}",
-                        "feed_id": 1846206,
-                        "feed_key": "ttda-cnpm-so2ha",
-                        "created_at": "2022-03-31T16:42:45Z",
-                        "created_epoch": 1648744965,
-                        "expiration": "2022-04-30T16:42:45Z"
-                    },
-                ]
-            }
+            // const result = {
+            //     data: [
+            //         {              
+            //             "id": "0EZV49AXP149NG2T555BM41BEK",
+            //             "value": `{\"id\":${genId()},\"cmd\":\"add\",\"name\":\"led\",\"paras\":\"none\"}`,
+            //             "feed_id": 1846206,
+            //             "feed_key": "ttda-cnpm-so2ha",
+            //             "created_at": "2022-03-31T16:42:52Z",
+            //             "created_epoch": 1648744972,
+            //             "expiration": "2022-04-30T16:42:52Z"
+            //         },
+            //         {
+            //             "id": "0EZV498YK84Q0X8EEX5BVNM0FN",
+            //             "value": "{\"id\":1,\"cmd\":\"close\",\"name\":\"led\",\"paras\":\"none\"}",
+            //             "feed_id": 1846206,
+            //             "feed_key": "ttda-cnpm-so2ha",
+            //             "created_at": "2022-03-31T16:42:45Z",
+            //             "created_epoch": 1648744965,
+            //             "expiration": "2022-04-30T16:42:45Z"
+            //         },
+            //     ]
+            // }
+            
             // const data = result.data;
-            const allNewDevice = result.data.map(async (item) => {
+            const allNewDevice = newDevices.data.map(async (item) => {
                 try {
                     const value = JSON.parse(item.value);
                     if (value.cmd == 'add') {
@@ -91,7 +90,7 @@ class HomeController {
                     }
                     else return null;
                 } catch (error) {
-                    return;
+                    return null;
                 }
             })
 
@@ -106,9 +105,6 @@ class HomeController {
                     })
                 }
             })
-            // const value = JSON.parse('{"id":1234,"cmd":"add","name":"led","paras":"none"}');
-            
-            // res.status(200).json(result.data)
         } 
         catch (error) {
             console.log(error);
@@ -135,7 +131,6 @@ class HomeController {
             })
             .catch(err => console.log(err));
     }
-
     toggleDevice = (req, res, next) => {
         const { deviceId, status } = req.body;
         // Turn off
