@@ -1,9 +1,18 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
-import { Room, Device } from '../models/index.js';
+import { Room, Device, Port } from '../models/index.js';
 import { genId } from './generateID.js';
 import ada from '../api/adafruit.js';
 import axios from 'axios';
 class HomeController {
+    addPort = (req, res, next) => {
+        for (let i = 0; i < 3; i++) {
+            const newPort = new Port({
+                port: i,
+                status: false
+            })
+            newPort.save();
+        }
+    }
     show = (req, res, next) => {
         const { room } = req.query;
         Room.find({}, 'name id')
@@ -53,30 +62,6 @@ class HomeController {
     getNewDevice = async (req, res, next) => {
         const newDevices = await ada.getNewDevice();
         try {
-            // const result = {
-            //     data: [
-            //         {              
-            //             "id": "0EZV49AXP149NG2T555BM41BEK",
-            //             "value": `{\"id\":${genId()},\"cmd\":\"add\",\"name\":\"led\",\"paras\":\"none\"}`,
-            //             "feed_id": 1846206,
-            //             "feed_key": "ttda-cnpm-so2ha",
-            //             "created_at": "2022-03-31T16:42:52Z",
-            //             "created_epoch": 1648744972,
-            //             "expiration": "2022-04-30T16:42:52Z"
-            //         },
-            //         {
-            //             "id": "0EZV498YK84Q0X8EEX5BVNM0FN",
-            //             "value": "{\"id\":1,\"cmd\":\"close\",\"name\":\"led\",\"paras\":\"none\"}",
-            //             "feed_id": 1846206,
-            //             "feed_key": "ttda-cnpm-so2ha",
-            //             "created_at": "2022-03-31T16:42:45Z",
-            //             "created_epoch": 1648744965,
-            //             "expiration": "2022-04-30T16:42:45Z"
-            //         },
-            //     ]
-            // }
-            
-            // const data = result.data;
             const allNewDevice = newDevices.data.map(async (item) => {
                 try {
                     const value = JSON.parse(item.value);

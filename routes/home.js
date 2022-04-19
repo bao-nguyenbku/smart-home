@@ -5,6 +5,7 @@ import isLoggedIn from '../controllers/isLoggedIn.js';
 const router = Router();
 
 router.get('/', isLoggedIn(), HomeController.show);
+router.get('/port', isLoggedIn(), HomeController.addPort);
 router.get('/settings', isLoggedIn(), SettingsController.show);
 router.post('/room/add', isLoggedIn(), HomeController.addNewRoom);
 router.get('/find-new-device', isLoggedIn(), HomeController.getNewDevice);
