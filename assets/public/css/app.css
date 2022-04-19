@@ -456,6 +456,8 @@ template {
 
 body {
   background: #c3d9e4;
+  width: 100%;
+  height: 100%;
 }
 
 p {
@@ -891,8 +893,86 @@ p {
   justify-content: space-between;
   align-items: center;
 }
-.main-container .main-control-container .device-list .device-item .bottom-info p:first-child {
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-device-name input {
+  border: none;
+  width: 100%;
+  text-overflow: ellipsis "...";
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-device-name input:disabled {
   font-weight: 600;
+  background: none;
+  color: black;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit {
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit .bottom-info-edit-btn {
+  background: none;
+  border: none;
+  padding: 0;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit .bottom-info-edit-btn:focus {
+  outline: none;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit .bottom-info-edit-btn:focus + ul {
+  visibility: visible;
+  transform: translateY(50px);
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit .dropdown-menu-edit {
+  position: absolute;
+  visibility: hidden;
+  transition: all 0.3s;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  box-shadow: #26394d 0px 20px 30px -10px;
+  font-size: 20px;
+  z-index: 2;
+  list-style: none;
+  width: 100px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  right: 0;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit .dropdown-menu-edit li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 4px;
+  padding: 5px;
+  width: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit .dropdown-menu-edit li:hover {
+  background-color: #d9dcde;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit .dropdown-menu-edit li:last-child {
+  color: red;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit .dropdown-menu-edit li:last-child span {
+  color: inherit;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit .dropdown-menu-edit span {
+  background: none;
+  border-radius: 0;
+  font-size: 15px;
+}
+.main-container .main-control-container .device-list .device-item .bottom-info .bottom-info-edit span {
+  background-color: #f1f6fa;
+  border-radius: 50%;
+  color: #7297ab;
 }
 .main-container .main-control-container .device-list .device-item:last-child {
   border: 2px dashed #7297ab;
@@ -931,6 +1011,15 @@ p {
   left: 13px;
 }
 .main-container .main-control-container .device-list .device-item-active .bottom-info {
+  color: white;
+}
+.main-container .main-control-container .device-list .device-item-active .bottom-info .bottom-info-device-name input {
+  border: none;
+  width: 100%;
+}
+.main-container .main-control-container .device-list .device-item-active .bottom-info .bottom-info-device-name input:disabled {
+  font-weight: 600;
+  background: none;
   color: white;
 }
 .main-container .main-control-container .temp-and-humi-container {
@@ -1075,7 +1164,6 @@ p {
 .statistic-container .table-and-rooms {
   display: grid;
   grid-template-columns: 195px 372px;
-  grid-column-gap: 16px;
   padding-top: 40px;
 }
 .statistic-container .table-and-rooms .rooms-container {
@@ -1085,12 +1173,16 @@ p {
   height: 274px;
   overflow-y: auto;
   padding-bottom: 10px;
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+  /* for Firefox */
 }
 .statistic-container .table-and-rooms .rooms-container::-webkit-scrollbar {
   display: none;
 }
 .statistic-container .table-and-rooms .rooms-container .room-item {
-  width: 192px;
+  width: 172px;
   height: 52px;
   border-radius: 10px;
   background: white;
@@ -1136,20 +1228,46 @@ p {
   border-radius: 10px;
   height: 100%;
 }
+.statistic-container .table-and-rooms .table-pagination {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  bottom: 0;
+  position: sticky;
+  right: 0;
+  background: white;
+}
+.statistic-container .table-and-rooms .table-pagination span {
+  background: rgba(114, 151, 171, 0.2);
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 10px;
+  color: #7297ab;
+  cursor: pointer;
+  font-size: 14px;
+}
 .statistic-container .table-and-rooms .table-of-device {
   background: white;
-  height: 255px;
-  overflow-y: auto;
+  height: 230px;
+  overflow-x: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  -ms-overflow-style: none;
+  /* for Internet Explorer, Edge */
+  scrollbar-width: none;
+  /* for Firefox */
 }
 .statistic-container .table-and-rooms .table-of-device::-webkit-scrollbar {
   display: none;
 }
 .statistic-container .table-and-rooms .table-of-device table {
   font-size: 10px;
-  width: 100%;
+  width: 500px;
 }
 .statistic-container .table-and-rooms .table-of-device table thead th {
   top: 0;
@@ -1174,27 +1292,6 @@ p {
 .statistic-container .table-and-rooms .table-of-device table tbody td {
   padding-top: 10px;
   padding-bottom: 10px;
-}
-.statistic-container .table-and-rooms .table-of-device .table-pagination {
-  margin-top: auto;
-  margin-bottom: 0;
-  padding-top: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  bottom: 0;
-  position: sticky;
-  background: white;
-}
-.statistic-container .table-and-rooms .table-of-device .table-pagination span {
-  background: rgba(114, 151, 171, 0.2);
-  padding: 5px;
-  border-radius: 5px;
-  margin-left: 10px;
-  color: #7297ab;
-  cursor: pointer;
-  font-size: 14px;
 }
 
 .settings-container {

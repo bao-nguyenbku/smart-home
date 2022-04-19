@@ -13,12 +13,18 @@
             </label>
         </div>
         <div class="bottom-info">
-            <p>
-                <%= device.name %>
-            </p>
-            <p>
-                <%= device.status ? 'On' : 'Off' %>
-            </p>
+            <div class="bottom-info-device-name">
+                <input type="text" value="<%= device.name %>" disabled>
+            </div>
+            <div class="bottom-info-edit">
+                <button class="bottom-info-edit-btn">
+                    <span class="material-icons-outlined">more_horiz</span>
+                </button>
+                <ul class="dropdown-menu-edit">
+                    <li data-id="<%= device.id %>" data-type="edit"><span class="material-icons-outlined">edit</span>Edit</li>
+                    <li data-id="<%= device.id %>" data-type="delete"><span class="material-icons-outlined">delete</span>Delete</li>
+                </ul>
+            </div>
         </div>
     </div>
 <% }) %>

@@ -34,7 +34,6 @@ class HomeController {
             })
             .catch(err => console.log(err));
     }
-
     addNewRoom = (req, res, next) => {
         const roomName = req.body.name;
         const newRoom = new Room({
@@ -201,7 +200,14 @@ class HomeController {
                 }).catch(err => console.log(err))
         }
     }
-
+    deleteDevice = (req, res, next) => {
+        const { id } = req.body;
+        Device.findOneAndDelete({ id: id })
+            .then(result => res.status(200).json({
+                status: 200
+            }))
+            .catch(err => console.log(err));
+    }
     
 }
 export default new HomeController;

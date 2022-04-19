@@ -27,8 +27,8 @@ const renderTable = (page, numOfPage, devices) => {
             `
     });
     $('#table-of-device tbody').html(row);
-    $('.table-of-device .table-pagination > p').text(`page ${page} of ${numOfPage}`);
-    $('.table-of-device .table-pagination > p').data('page', page);
+    $('.table-of-device-container .table-pagination > p').text(`page ${page} of ${numOfPage}`);
+    $('.table-of-device-container .table-pagination > p').data('page', page);
 }
 const getDevicesPerPage = (page, devices) => {
     const itemPerPage = 4;
@@ -89,6 +89,7 @@ class App {
         this.handleToggleDevice();
         this.updateTempAndHumi();
         this.handleOffEnergy();
+        this.handleEditDevice();
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
         }
@@ -352,19 +353,20 @@ class App {
         })
     }
     handleChangePageInStatistic = (devices) => {
-        let pages = devices.length < 4 ? 1 : parseInt(devices.length / 4) + (devices.length % 4);
+        let pages = devices.length < 4 ? 1 : parseInt(devices.length / 4) + 1;
+        console.log(pages);
         const devicePerPage = getDevicesPerPage(1, devices);
         renderTable(1, pages, devicePerPage);
 
-        $('.table-of-device .table-pagination .back').on('click', () => {
-            const page = parseInt($('.table-of-device .table-pagination > p').data('page'));
+        $('.table-of-device-container .table-pagination .back').on('click', () => {
+            const page = parseInt($('.table-of-device-container .table-pagination > p').data('page'));
             if (page !== 1) {
                 const devicePerPage = getDevicesPerPage(page - 1, devices);
                 renderTable(page - 1, pages, devicePerPage);
             }
         })
-        $('.table-of-device .table-pagination .forward').on('click', () => {
-            const page = parseInt($('.table-of-device .table-pagination > p').data('page'));
+        $('.table-of-device-container .table-pagination .forward').on('click', () => {
+            const page = parseInt($('.table-of-device-container .table-pagination > p').data('page'));
             if (page !== pages) {
                 const devicePerPage = getDevicesPerPage(page + 1, devices);
                 renderTable(page + 1, pages, devicePerPage);
@@ -375,19 +377,18 @@ class App {
     handleToggleDevice = () => {
         $$('.toggle-control input').forEach(btn => {
             btn.addEventListener('change', (e) => {
-                const deviceItem = e.path[3];
-                const message = deviceItem.children[1].children[0].textContent + 'đã được ' + (e.target.checked ? 'mở' : 'tắt');
+                const path = e.composedPath() || e.path
+                console.log(path);
+                let deviceItem;
+                if (path) {
+                    deviceItem = path[3];
+                }
+                const message = deviceItem.children[1].children[0].children[0].value + ' đã được ' + (e.target.checked ? 'mở' : 'tắt');
                 Toastify({
                     ...this.toastOption,
                     text: message
                 }).showToast();
                 deviceItem.classList.toggle('device-item-active');
-                if (deviceItem.dataset.item == 'light') {
-                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? 'On' : 'Off';
-                }
-                else if (deviceItem.dataset.item == 'fan') {
-                    deviceItem.children[1].children[1].textContent = deviceItem.children[1].children[1].textContent == 'Off' ? '1' : 'Off';
-                }
             })
         })
         $$('.device-list .device-item').forEach((item) => {
@@ -410,6 +411,32 @@ class App {
                 })
             }
         })
+    }
+
+    handleEditDevice = () => {
+            $$('.bottom-info-edit .dropdown-menu-edit li').forEach(li => {
+                li.addEventListener('click', () => {
+                    const deviceId = parseInt(li.dataset.id);
+                    const typ = li.dataset.type;
+                    if (typ === 'delete') {
+                        if (confirm('Do you want to delete this device?')) {
+                            $.ajax({
+                                url: '/device/delete',
+                                method: 'POST',
+                                data: { id: deviceId },
+                                dataType: 'json',
+                                success: (res) => {
+                                    if (res.status == 200) {
+                                        location.reload();
+                                    }
+                                }
+                            })
+                        }
+                    }
+                })
+            })
+        
+        
     }
 }
 // INITIAL APP
