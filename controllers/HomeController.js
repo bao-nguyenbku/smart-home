@@ -1,5 +1,5 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
-import { Room, Device } from '../models/index.js';
+import { Room, Device, Port } from '../models/index.js';
 import { genId } from './generateID.js';
 import axios from 'axios';
 class HomeController {
@@ -139,6 +139,12 @@ class HomeController {
                 data: result.data
             }))
             .catch(err => res.json(err))
+    }
+    getPorts = (req, res, next) => {
+        Port.find()
+            .then(result => res.status(200).json({
+                data: result
+            })).catch(err => console.log(err))
     }
 }
 export default new HomeController;

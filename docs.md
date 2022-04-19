@@ -283,3 +283,39 @@ Example response:
     ]
 }
 ```
+
+## GET ALL PORTS
+
+```
+GET http://localhost:5000/port
+```
+```json
+{
+    "data": [
+        {
+            "_id": "625ed5727fb0ca782ba58e40",
+            "port": 0,
+            "status": false,
+            "createdAt": "2022-04-19T15:29:54.096Z",
+            "updatedAt": "2022-04-19T15:29:54.096Z",
+            "__v": 0
+        },
+        {
+            "_id": "625ed5727fb0ca782ba58e42",
+            "port": 2,
+            "status": false,
+            "createdAt": "2022-04-19T15:29:54.098Z",
+            "updatedAt": "2022-04-19T15:29:54.098Z",
+            "__v": 0
+        },
+        {
+            "_id": "625ed5727fb0ca782ba58e41",
+            "port": 1,
+            "status": false,
+            "createdAt": "2022-04-19T15:29:54.097Z",
+            "updatedAt": "2022-04-19T15:29:54.097Z",
+            "__v": 0
+        }
+    ]
+}
+```
