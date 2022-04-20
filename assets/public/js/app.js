@@ -377,22 +377,6 @@ class App {
 
     }
     handleToggleDevice = () => {
-        $$('.toggle-control input').forEach(btn => {
-            btn.addEventListener('change', (e) => {
-                const path = e.composedPath() || e.path
-                console.log(path);
-                let deviceItem;
-                if (path) {
-                    deviceItem = path[3];
-                }
-                const message = deviceItem.children[1].children[0].children[0].value + ' đã được ' + (e.target.checked ? 'mở' : 'tắt');
-                Toastify({
-                    ...this.toastOption,
-                    text: message
-                }).showToast();
-                deviceItem.classList.toggle('device-item-active');
-            })
-        })
         $$('.device-list .device-item').forEach((item) => {
             if (item.dataset.item !== 'add') {
                 item.children[0].children[1].children[0].addEventListener('change', (e) => {
@@ -401,12 +385,37 @@ class App {
                         method: 'POST',
                         data: {
                             deviceId: item.dataset.id,
+                            deviceType: item.dataset.type,
                             status: e.target.checked
                         },
                         dataType: 'json',
                         success: (res) => {
-                            if (res.error) {
-                                console.log(res.error);
+                            if (res.status === 404) {
+                                console.log(res.message);
+                                item.children[0].children[1].children[0].checked = false;
+                            }
+                            else if (res.status == 200) {
+                                console.log(result.data);
+                                $$('.toggle-control input').forEach(btn => {
+                                    btn.addEventListener('change', (e) => {
+                                        const path = e.composedPath() || e.path
+                                        let deviceItem;
+                                        if (path) {
+                                            deviceItem = path[3];
+                                        }
+                                        const message = deviceItem.children[1].children[0].children[0].value + ' đã được ' + (e.target.checked ? 'mở' : 'tắt');
+                                        Toastify({
+                                            ...this.toastOption,
+                                            text: message
+                                        }).showToast();
+                                        deviceItem.classList.toggle('device-item-active');
+                                    })
+                                })
+                                
+                            }
+                            else if (res.status == 500) {
+                                console.log(res.message);
+                                item.children[0].children[1].children[0].checked = false;
                             }
                         }
                     })

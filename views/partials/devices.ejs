@@ -1,6 +1,6 @@
 <% devices.forEach(device=> { %>
     <div class="device-item <%= device.status ? 'device-item-active' : '' %>" data-item="light"
-        data-id="<%= device.id %>">
+        data-id="<%= device.id %>" data-type="<%= device.type %>">
         <div class="top-action">
             <div class="icon-background">
                 <span class="material-icons-outlined">
