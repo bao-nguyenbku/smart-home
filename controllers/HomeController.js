@@ -60,42 +60,53 @@ class HomeController {
             .catch(err => console.log(err))
     }
     getNewDevice = async (req, res, next) => {
-        const newDevices = await ada.getNewDevice();
-        try {
-            const allNewDevice = newDevices.data.map(async (item) => {
-                try {
-                    const value = JSON.parse(item.value);
-                    if (value.cmd == 'add') {
-                        const device = await Device.findOne({id: value.id})
-                            .then(result => {
-                                if (result) return null;
-                                else return value;
-                            }).catch(err => console.log(err));
-                        return device;
-                    }
-                    else return null;
-                } catch (error) {
-                    return null;
-                }
+        const emptyPorts = await Port.find({ status: false });
+        if (emptyPorts.length === 0) {
+            res.status(200).json({
+                status: 404,
+                message: 'All ports have been used'
             })
-
-            Promise.all(allNewDevice).then((result) => {
-                if (result.every((curr) => curr === null)) {
-                    res.status(200).json({status: 404, message: 'New device not found'});
-                }
-                else {
-                    res.status(200).json({
-                        status: 200,
-                        data: result.filter((item) => item !== null)
-                    })
-                }
-            })
-        } 
-        catch (error) {
-            console.log(error);
         }
-        
+        else {
+            res.status(200).json({
+                status: 200,
+                data: emptyPorts
+            });
+        }
+        // const newDevices = await ada.getNewDevice();
+        // try {
+        //     const allNewDevice = newDevices.data.map(async (item) => {
+        //         try {
+        //             const value = JSON.parse(item.value);
+        //             if (value.cmd == 'add') {
+        //                 const device = await Device.findOne({id: value.id})
+        //                     .then(result => {
+        //                         if (result) return null;
+        //                         else return value;
+        //                     }).catch(err => console.log(err));
+        //                 return device;
+        //             }
+        //             else return null;
+        //         } catch (error) {
+        //             return null;
+        //         }
+        //     })
 
+        //     Promise.all(allNewDevice).then((result) => {
+        //         if (result.every((curr) => curr === null)) {
+        //             res.status(200).json({status: 404, message: 'New device not found'});
+        //         }
+        //         else {
+        //             res.status(200).json({
+        //                 status: 200,
+        //                 data: result.filter((item) => item !== null)
+        //             })
+        //         }
+        //     })
+        // } 
+        // catch (error) {
+        //     console.log(error);
+        // }
     }
     addNewDevice = (req, res, next) => {
         const { deviceName, deviceId, deviceType, roomId } = req.body;  
@@ -109,12 +120,14 @@ class HomeController {
         })
         newDevice.save()
             .then(result => {
-                res.status(200).json({
-                    status: 200,
-                    data: result
-                })
-            })
-            .catch(err => console.log(err));
+                Port.findOneAndUpdate({ port: deviceId }, { status: true })
+                    .then(_ => {
+                        res.status(200).json({
+                            status: 200,
+                            data: result
+                        })
+                    }).catch(err => console.log(err))
+            }).catch(err => console.log(err));
     }
     toggleDevice = (req, res, next) => {
         const { deviceId, status } = req.body;

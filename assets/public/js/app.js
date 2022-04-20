@@ -235,61 +235,63 @@ class App {
                         $('#exampleModal .new-device-found-container').append(notFound);
                         return;
                     }
-                    else {
-                        let newDevice = ``;
+                    else if (res.status === 200) {
+                        let ports = `<select class="form-select" aria-label="Default select example" name="port">
+                                    <option selected disabled>Select a port to connect</option>`;
                         res.data.forEach(data => {
-                            newDevice += `<div class="new-device-found">
-                                                <span class="material-icons-outlined">lightbulb</span>
-                                                <div class="new-device-content">
-                                                    <p>Name: <input type="text" value="${data.name} (default)"></p>
-                                                    <p>ID: <strong>${data.id}</strong></p>
-                                                </div>
-                                                <button data-id="${data.id}" data-name="${data.name}" type="button" style="background: none; border: none; color: red;"
-                            class="submit-add-device-button">Add</button>   
-                                            </div>`
+                            ports += `<option value="${data.port}">Port ${data.port}</option>`
                         })
+                        ports += `</select>`
+                        let deviceType = `<select class="form-select" aria-label="Default select example" name="deviceType">
+                                            <option selected>Select a device type</option>
+                                            <option value="led">light</option>
+                                            <option value="fan">fan</option>
+                                          </select>`;
+                        let nameAndSubmit = `<div class="input-group mb-3">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Name of new device</span>
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="deviceName">
+                        </div><button type="submit" class="my-btn">Add this device</button>`;
+                        
                         const disableLoading = () => {
                             setTimeout(() => {
                                 $('#exampleModal .loading').css('display', 'none');
-                                $('#exampleModal .new-device-found').css('display', 'flex');
-                                $('#exampleModal .new-device-found-container').append(newDevice);
+                                $('#exampleModal #add-new-device-form').css('display', 'flex');
+                                $('#exampleModal .new-device-found-container #add-new-device-form').append(ports);
+                                $('#exampleModal .new-device-found-container #add-new-device-form').append(deviceType);
+                                $('#exampleModal .new-device-found-container #add-new-device-form').append(nameAndSubmit);
                                 listenToSubmit();
                             }, 1000)
                         }
                         disableLoading();
                         const listenToSubmit = () => {
-                            const addDeviceBtn = document.querySelectorAll('.submit-add-device-button');
-                            if (addDeviceBtn.length !== 0) {
-                                addDeviceBtn.forEach(btn => {
-                                    btn.addEventListener('click', (e) => {
-                                        const id = btn.dataset.id;
-                                        const deviceName = e.path[1].children[1].children[0].children[0].value;
-                                        const deviceType = btn.dataset.name;
-                                        const roomId = this.getCurrentSelectRoom();
-                                        $.ajax({
-                                            url: '/device/add',
-                                            method: 'POST',
-                                            data: {
-                                                deviceName: deviceName,
-                                                deviceId: parseInt(id),
-                                                deviceType: deviceType,
-                                                roomId: parseInt(roomId)
-                                            },
-                                            dataType: 'json',
-                                            success: (result) => {
-                                                if (result.status === 200) {
-                                                    // TODO: Fix this to add new device without reload page
-                                                    location.reload();
-                                                }
-                                            }
-                                        })
-                                    })
+                            const addNewDeviceForm = $('#add-new-device-form');
+                            addNewDeviceForm.on('submit', (e) => {
+                                e.preventDefault();
+                                const data = addNewDeviceForm.serializeArray();
+                                const roomId = parseInt(this.getCurrentSelectRoom());
+                                const deviceId = parseInt(data[0].value);
+                                const deviceName = data[2].value;
+                                const deviceType = data[1].value;
+                                $.ajax({
+                                    url: '/device/add',
+                                    method: 'POST',
+                                    data: {
+                                        deviceName: deviceName,
+                                        deviceId: deviceId,
+                                        deviceType: deviceType,
+                                        roomId: roomId
+                                    },
+                                    dataType: 'json',
+                                    success: (result) => {
+                                        if (result.status === 200) {
+                                            // TODO: Fix this to add new device without reload page
+                                            location.reload();
+                                        }
+                                    }
                                 })
-                            }
+                            })
                         }
                     }
-                
-                    
                 }
             })
         })
