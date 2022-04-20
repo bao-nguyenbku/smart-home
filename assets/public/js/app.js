@@ -393,6 +393,10 @@ class App {
                             if (res.status === 404) {
                                 console.log(res.message);
                                 item.children[0].children[1].children[0].checked = false;
+                                Toastify({
+                                    ...this.toastOption,
+                                    text: res.message
+                                }).showToast();
                             }
                             else if (res.status == 200) {
                                 console.log(result.data);
@@ -416,6 +420,10 @@ class App {
                             else if (res.status == 500) {
                                 console.log(res.message);
                                 item.children[0].children[1].children[0].checked = false;
+                                Toastify({
+                                    ...this.toastOption,
+                                    text: res.message
+                                }).showToast();
                             }
                         }
                     })
