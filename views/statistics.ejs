@@ -1,22 +1,24 @@
-<!-- 🤩🤩 START PAGE HERE 🤩🤩 -->
 <div id="main-area-render">
     <div class="statistic-container">
         <img src="./assets/images/Group 7.svg" alt="">
 
         <div class="table-and-rooms">
             <div class="rooms-container">
-                <div class="room-item">
-                    <div class="border-badge">
-                        <span>36kWh</span>
+                <% roomKWh.forEach(room => { %>
+                    <div class="room-item">
+                        <div class="border-badge">
+                            <span><%= parseInt(room.total / 1000) %> kWh</span>
+                        </div>
+                        <div class="room-name">
+                            <p><%= room.roomName %></p>
+                            <!-- <p style="color: #FF0000;"><i class="material-icons-outlined">
+                                    arrow_drop_up
+                                </i>10%</p> -->
+                        </div>
                     </div>
-                    <div class="room-name">
-                        <p>Bedroom</p>
-                        <p style="color: #FF0000;"><i class="material-icons-outlined">
-                                arrow_drop_up
-                            </i>10%</p>
-                    </div>
-                </div>
-                <div class="room-item">
+                <% }) %> 
+                
+                <!-- <div class="room-item">
                     <div class="border-badge">
                         <span>70kWh</span>
                     </div>
@@ -48,8 +50,7 @@
                                 arrow_drop_down
                             </i>10%</p>
                     </div>
-                </div>
-
+                </div> -->
             </div>
             <div class="table-of-device-container">
                 <div class="table-of-device">
@@ -94,13 +95,12 @@
                             </tr>
                         </tbody>
                     </table>
-                    <nav class="table-pagination">
-                        <p>page 1 of 1</p>
-                        <span class="material-icons-outlined">arrow_back</span>
-                        <span class="material-icons-outlined">arrow_forward</span>
-
-                    </nav>
                 </div>
+                <nav class="table-pagination">
+                    <p data-page="1">page 1 of 1</p>
+                    <span class="material-icons-outlined back">arrow_back</span>
+                    <span class="material-icons-outlined forward">arrow_forward</span>
+                </nav>
             </div>
         </div>
     </div>

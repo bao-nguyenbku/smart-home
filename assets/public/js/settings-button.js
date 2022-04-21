@@ -1,28 +1,3 @@
-// Button Off Energy and button Left Home
-$(document).ready(function(){
-    $("#energy").click(function(){
-        const active = document.querySelector('#energy.active');
-        if (active){
-            $("#energy").removeClass("active");
-        }
-        else{
-            $("#energy").addClass("active");
-        }
-    });
-});
-
-$(document).ready(function(){
-    $("#left-home").click(function(){
-        const active = document.querySelector('#left-home.active');
-        if (active){
-            $("#left-home").removeClass("active");
-        }
-        else{
-            $("#left-home").addClass("active");
-        }
-    });
-});
-
 $(document).ready(function(){
     $(".nav-tabs a").click(function(){
         $(this).tab('show');

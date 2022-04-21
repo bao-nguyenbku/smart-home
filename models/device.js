@@ -21,8 +21,25 @@ const deviceSchema = new Schema({
     roomId: {
         type: Number,
         required: true
+    },
+    capacity: {
+        type: Number,
+        default: 36,
+        required: true
+    },
+    duration: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    lastUse: {
+        type: Date,
+        required: true
     }
 }, { timestamps: true });
 
 const Device = mongoose.model('Device', deviceSchema);
+export const getAllDevice = async () => {
+    return await Device.find().catch(err => console.log(err));
+}
 export default Device;

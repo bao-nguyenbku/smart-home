@@ -4,6 +4,7 @@
     background: white;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
+    @include d-flex(column, center, normal);
     .logo{
         display: flex;
         width: 100%;
@@ -27,6 +28,7 @@
     }
     ul{
         padding: 0;
+        width: 100%;
         li{
             list-style-type: none;
             margin-bottom: 30px;
@@ -72,10 +74,11 @@
     .logout{
         height: 42px;
         width: 95px;
-        margin: 330px auto;
         line-height: 42px;
         background: $background;
         border-radius: 10px;
+        margin-top: auto;
+        margin-bottom: 30px;
         a{
             text-decoration: none;
         }

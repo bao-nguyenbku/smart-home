@@ -15,7 +15,6 @@
   .table-and-rooms {
     display: grid;
     grid-template-columns: 195px 372px;
-    grid-column-gap: 16px;
     padding-top: 40px;
     .rooms-container {
       display: grid;
@@ -24,18 +23,22 @@
       height: 274px;
       overflow-y: auto;
       padding-bottom: 10px;
+      -ms-overflow-style: none; /* for Internet Explorer, Edge */
+      scrollbar-width: none; /* for Firefox */
       &::-webkit-scrollbar {
         display: none;
       }
       .room-item {
-        width: 192px;
+        width: 172px;
         height: 52px;
         border-radius: 10px;
         background: white;
         box-shadow: $shadow;
         display: inline-flex;
         .border-badge {
-          width: 65px;
+          width: max-content;
+          padding-left: 4px;
+          padding-right: 4px;
           height: 100%;
           background: #00466D;
           border-top-left-radius: inherit;
@@ -75,16 +78,43 @@
       border-radius: 10px;
       height: 100%;
     }
+    .table-pagination {
+      margin-top: auto;
+      margin-bottom: 0;
+      padding-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 100%;
+      bottom: 0;
+      position: sticky;
+      right: 0;
+      background: white;
+      span {
+        background: rgba($color: $lightBlue, $alpha: 0.2);
+        padding: 5px;
+        border-radius: 5px;
+        margin-left: 10px;
+        color: $lightBlue;
+        cursor: pointer;
+        font-size: 14px;
+      }
+    }
     .table-of-device {
       background: white;
-      height: 255px;
-      overflow-y: auto;
+      height: 230px;
+      overflow-x: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      -ms-overflow-style: none; /* for Internet Explorer, Edge */
+      scrollbar-width: none; /* for Firefox */
       &::-webkit-scrollbar {
         display: none;
       }
       table {
         font-size: 10px;
-        width: 100%;
+        width: 500px;
         thead {
           th {
             top: 0;
@@ -114,25 +144,7 @@
           }
         }
       }
-      .table-pagination {
-        padding-top: 10px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: flex-end;
-        width: 100%;
-        bottom: 0;
-        position: sticky;
-        background: white;
-        span {
-          background: rgba($color: $lightBlue, $alpha: 0.2);
-          padding: 5px;
-          border-radius: 5px;
-          margin-left: 10px;
-          color: $lightBlue;
-          cursor: pointer;
-          font-size: 14px;
-        }
-      }
+      
     }
   }
 }
