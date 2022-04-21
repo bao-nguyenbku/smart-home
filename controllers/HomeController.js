@@ -199,6 +199,17 @@ class HomeController {
             }))
             .catch(err => console.log(err));
     }
-    
+    updateDevice = (req, res, next) => {
+        const { deviceId, deviceName } = req.body;
+        console.log(deviceId, deviceName);
+        Device.findOneAndUpdate({ id: deviceId }, { name: deviceName })
+            .then(result => {
+                res.status(200).json({
+                    status: 200,
+                    data: result,
+                    message: 'Update device successfully'
+                })
+            }).catch(err => console.log(err))
+    }
 }
 export default new HomeController;

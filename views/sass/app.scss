@@ -28,14 +28,15 @@ p {
   align-items: center;
   justify-content: center;
   background: linear-gradient(125.8deg, #4facfe 7.05%, #00f2fe 86.34%);
-  .wrapper {
-    width: 801px;
-    height: 675px;
-    background: $background;
-    border-radius: 30px;
-    display: flex;
-    flex-direction: row;
-  }
+}
+.wrapper {
+  width: 801px;
+  height: 675px;
+  background: $background;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+  position: relative;
 }
 #root {
   height: calc(100% - 60px);

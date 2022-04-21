@@ -13,7 +13,7 @@ const milisecondToHour = (time) => {
 }
 const renderTable = (page, numOfPage, devices) => {
     let row = '';
-    
+
     devices.forEach(device => {
         timeUsed = milisecondToHour(device.duration);
         row += `
@@ -251,7 +251,7 @@ class App {
                         <span class="input-group-text" id="inputGroup-sizing-default">Name of new device</span>
                         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="deviceName">
                         </div><button type="submit" class="my-btn">Add this device</button>`;
-                        
+
                         const disableLoading = () => {
                             setTimeout(() => {
                                 $('#exampleModal .loading').css('display', 'none');
@@ -295,7 +295,7 @@ class App {
                 }
             })
         })
-        
+
         // if (addDeviceBtn) {
         //     addDeviceBtn.addEventListener('click', () => {
         //         const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
@@ -327,21 +327,27 @@ class App {
             const previous = new Date(Date.now() - 2 * 60 * 1000);
             $.ajax({
                 // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
-                url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=2&start_time=${previous.toISOString()}`,
+                url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=5&start_time=${previous.toISOString()}`,
                 method: 'GET',
-                success: (data) => {
-                    if (data.length !== 0) {
-                        const lastData = JSON.parse(data[0].value);
-                        if (lastData.name === 'TempHumi') {
-                            const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
-                            $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
-                            $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
-                            this.updateTempAndHumi();
-                        }
+                success: (result) => {
+                    if (result.length !== 0) {
+                        result.forEach(data => {
+                            try {
+                                const lastData = JSON.parse(data.value);
+                                if (lastData.name === 'TempHumi') {
+                                    const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
+                                    $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
+                                    $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+                                    this.updateTempAndHumi();
+                                }
+                            } catch (error) {
+                                return;
+                            }
+                        })
                     }
                 }
             })
-        }, 5000)
+        }, 3000)
     }
     handleTableDeviceInStatistic = () => {
         // let newDevices;
@@ -380,6 +386,7 @@ class App {
         $$('.device-list .device-item').forEach((item) => {
             if (item.dataset.item !== 'add') {
                 item.children[0].children[1].children[0].addEventListener('change', (e) => {
+                    $('.wrapper > .wrapper-loading').css('display', 'flex');
                     $.ajax({
                         url: '/device/toggle',
                         method: 'POST',
@@ -397,6 +404,7 @@ class App {
                                     ...this.toastOption,
                                     text: res.message
                                 }).showToast();
+                                $('.wrapper > .wrapper-loading').css('display', 'none');
                             }
                             else if (res.status == 200) {
                                 console.log(result.data);
@@ -415,7 +423,7 @@ class App {
                                         deviceItem.classList.toggle('device-item-active');
                                     })
                                 })
-                                
+                                $('.wrapper > .wrapper-loading').css('display', 'none');
                             }
                             else if (res.status == 500) {
                                 console.log(res.message);
@@ -424,6 +432,7 @@ class App {
                                     ...this.toastOption,
                                     text: res.message
                                 }).showToast();
+                                $('.wrapper + .wrapper-loading').css('display', 'none');
                             }
                         }
                     })
@@ -433,29 +442,62 @@ class App {
     }
 
     handleEditDevice = () => {
-            $$('.bottom-info-edit .dropdown-menu-edit li').forEach(li => {
-                li.addEventListener('click', () => {
-                    const deviceId = parseInt(li.dataset.id);
-                    const typ = li.dataset.type;
-                    if (typ === 'delete') {
-                        if (confirm('Do you want to delete this device?')) {
+        $$('.bottom-info-edit .dropdown-menu-edit li').forEach(li => {
+            li.addEventListener('click', () => {
+                const deviceId = parseInt(li.dataset.id);
+                const typ = li.dataset.type;
+                if (typ === 'delete') {
+                    if (confirm('Do you want to delete this device?')) {
+                        $.ajax({
+                            url: '/device/delete',
+                            method: 'POST',
+                            data: { id: deviceId },
+                            dataType: 'json',
+                            success: (res) => {
+                                if (res.status == 200) {
+                                    location.reload();
+                                }
+                            }
+                        })
+                    }
+                }
+                else if (typ === 'edit') {
+                    console.log('Edit');
+                    const deviceNameInput = $('.bottom-info .bottom-info-device-name > input');
+                    deviceNameInput.prop('disabled', false);
+                    deviceNameInput.focus();
+                    deviceNameInput.on('focusout', (e) => {
+                        if (confirm('Save your edited?')) {
+                            const newDeviceName = e.target.value;
+                            console.log(newDeviceName, deviceNameInput.data('id'));
                             $.ajax({
-                                url: '/device/delete',
+                                url: '/device/edit',
                                 method: 'POST',
-                                data: { id: deviceId },
-                                dataType: 'json',
+                                data: { 
+                                    deviceId: deviceNameInput.data('id'),
+                                    deviceName: newDeviceName
+                                },
                                 success: (res) => {
-                                    if (res.status == 200) {
-                                        location.reload();
+                                    console.log(res);
+                                    if (res.status === 200) {
+                                        deviceNameInput.prop('disabled', true);
+                                        Toastify({
+                                            ...this.toastOption,
+                                            text: res.message
+                                        }).showToast();
                                     }
                                 }
                             })
                         }
-                    }
-                })
+                        else {
+                            deviceNameInput.prop('disabled', true);
+                        }
+                    })
+                }
             })
-        
-        
+        })
+
+
     }
 }
 // INITIAL APP
