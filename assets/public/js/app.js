@@ -39,7 +39,6 @@ const getDevicesPerPage = (page, devices) => {
     }
 
     const devicePerPage = devices.slice(idx, idx + 4);
-    console.log(devicePerPage);
     return devicePerPage;
 }
 const addRoomToDevice = (rooms, devices) => {
@@ -68,18 +67,20 @@ const validatePassword = (password) => {
 }
 // App will execute all operation in smart home pages
 class App {
-    toastOption = {
-        text: '',
-        duration: 3000,
-        // destination: "https://github.com/apvarun/toastify-js",
-        newWindow: true,
-        close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        className: 'custom-toast',
-        // onClick: function(){} // Callback after click
+    popMessage = (message) => {
+        Toastify({
+            duration: 3000,
+            // destination: "https://github.com/apvarun/toastify-js",
+            newWindow: true,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            className: 'custom-toast',
+            text: message
+        }).showToast();
     }
+    
     constructor() {
         this.handleMainControl();
         this.handleSidebarActive();
@@ -90,12 +91,22 @@ class App {
         this.updateTempAndHumi();
         this.handleOffEnergy();
         this.handleEditDevice();
+        this.handleRestartServer();
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
         }
         if (window.location.pathname.split('/').includes('statistics')) {
             this.handleTableDeviceInStatistic();
         }
+    }
+    handleRestartServer = () => {
+        $.ajax({
+            url: '/restart',
+            method: 'get',
+            success: (res) => {
+                console.log(res);
+            }
+        })
     }
     handleOffEnergy = () => {
         $('#energy').on('click', () => {
@@ -106,19 +117,12 @@ class App {
                     // Not modified
                     if (res.status === 304) {
                         const message = 'Tất cả thiết bị đang tắt';
-                        Toastify({
-                            ...this.toastOption,
-                            text: message
-                        }).showToast();
+                        this.popMessage(message);
                     }
                     else if (res.status === 200) {
                         const message = 'Đã tắt toàn bộ thiết bị';
-                        Toastify({
-                            ...this.toastOption,
-                            text: message,
-                        }).showToast();
+                        this.popMessage(message);
                     }
-                    console.log(res);
                 }
             })
         })
@@ -267,6 +271,7 @@ class App {
                             const addNewDeviceForm = $('#add-new-device-form');
                             addNewDeviceForm.on('submit', (e) => {
                                 e.preventDefault();
+                                console.log(e);
                                 const data = addNewDeviceForm.serializeArray();
                                 const roomId = parseInt(this.getCurrentSelectRoom());
                                 const deviceId = parseInt(data[0].value);
@@ -284,8 +289,13 @@ class App {
                                     dataType: 'json',
                                     success: (result) => {
                                         if (result.status === 200) {
-                                            // TODO: Fix this to add new device without reload page
                                             location.reload();
+                                        }
+                                        else if (result.status === 404) {
+                                            this.popMessage(result.message + '. Please try again');
+                                        }
+                                        else if (result.status === 500) {
+                                            this.popMessage(result.message);
                                         }
                                     }
                                 })
@@ -295,31 +305,6 @@ class App {
                 }
             })
         })
-
-        // if (addDeviceBtn) {
-        //     addDeviceBtn.addEventListener('click', () => {
-        //         const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
-        //         const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
-        //         const currentRoom = this.getCurrentSelectRoom();
-
-        //         $.ajax({
-        //             url: '/device/add',
-        //             method: 'POST',
-        //             data: {
-        //                 deviceName: deviceName,
-        //                 deviceCode: deviceCode,
-        //                 room: currentRoom
-        //             },
-        //             dataType: 'json',
-        //             success: (result) => {
-        //                 if (result.status === 200) {
-        //                     // TODO: Fix this to add new device without reload page
-        //                     location.reload();
-        //                 }
-        //             }
-        //         })
-        //     })
-        // }
     }
     updateTempAndHumi = () => {
         setTimeout(() => {
@@ -362,7 +347,6 @@ class App {
     }
     handleChangePageInStatistic = (devices) => {
         let pages = devices.length < 4 ? 1 : parseInt(devices.length / 4) + 1;
-        console.log(pages);
         const devicePerPage = getDevicesPerPage(1, devices);
         renderTable(1, pages, devicePerPage);
 
@@ -400,38 +384,33 @@ class App {
                             if (res.status === 404) {
                                 console.log(res.message);
                                 item.children[0].children[1].children[0].checked = false;
-                                Toastify({
-                                    ...this.toastOption,
-                                    text: res.message
-                                }).showToast();
+                                this.popMessage(res.message);
                                 $('.wrapper > .wrapper-loading').css('display', 'none');
                             }
                             else if (res.status == 200) {
-                                console.log(result.data);
-                                $$('.toggle-control input').forEach(btn => {
-                                    btn.addEventListener('change', (e) => {
-                                        const path = e.composedPath() || e.path
-                                        let deviceItem;
-                                        if (path) {
-                                            deviceItem = path[3];
-                                        }
-                                        const message = deviceItem.children[1].children[0].children[0].value + ' đã được ' + (e.target.checked ? 'mở' : 'tắt');
-                                        Toastify({
-                                            ...this.toastOption,
-                                            text: message
-                                        }).showToast();
-                                        deviceItem.classList.toggle('device-item-active');
-                                    })
-                                })
+                                console.log(res.data);
+                                const message = item.children[1].children[0].children[0].value + ' đã được ' + (e.target.checked ? 'mở' : 'tắt');
+                                this.popMessage(message);
+                                item.classList.toggle('device-item-active');
                                 $('.wrapper > .wrapper-loading').css('display', 'none');
+                                // $$('.toggle-control input').forEach(btn => {
+                                //     btn.addEventListener('change', (e) => {
+                                //         const path = e.composedPath() || e.path
+                                //         let deviceItem;
+                                //         if (path) {
+                                //             deviceItem = path[3];
+                                //         }
+                                //         // const message = deviceItem.children[1].children[0].children[0].value + ' đã được ' + (e.target.checked ? 'mở' : 'tắt');
+                                        
+                                        
+                                //     })
+                                // })
+                               
                             }
                             else if (res.status == 500) {
                                 console.log(res.message);
                                 item.children[0].children[1].children[0].checked = false;
-                                Toastify({
-                                    ...this.toastOption,
-                                    text: res.message
-                                }).showToast();
+                                this.popMessage(res.message);
                                 $('.wrapper + .wrapper-loading').css('display', 'none');
                             }
                         }
@@ -481,10 +460,7 @@ class App {
                                     console.log(res);
                                     if (res.status === 200) {
                                         deviceNameInput.prop('disabled', true);
-                                        Toastify({
-                                            ...this.toastOption,
-                                            text: res.message
-                                        }).showToast();
+                                        this.popMessage(res.message);
                                     }
                                 }
                             })
