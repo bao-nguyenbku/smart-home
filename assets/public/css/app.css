@@ -436,6 +436,33 @@ template {
   color: #7297ab;
 }
 
+.clock-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  color: white;
+  margin-right: calc((100% - 801px) / 4);
+  transform: translate(50%, -50%);
+}
+.clock-widget .widget-clock {
+  display: flex;
+  flex-direction: row;
+  align-items: normal;
+  justify-content: normal;
+}
+.clock-widget .widget-clock p {
+  font-size: 120px;
+  font-weight: 700;
+}
+.clock-widget .widget-day p {
+  font-size: 40px;
+  letter-spacing: 4px;
+}
+
 .custom-toast {
   font-size: 20px;
   background: #fff;
@@ -734,6 +761,24 @@ p {
   100% {
     stroke-dashoffset: 187;
     transform: rotate(450deg);
+  }
+}
+.blink-text {
+  animation: blinkText 1s ease infinite;
+}
+
+@keyframes blinkText {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
   }
 }
 .main-container {
