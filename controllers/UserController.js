@@ -17,13 +17,13 @@ class UserController {
     }
     login = (req, res, next) => {
         const { email, password } = req.body;
-        User.find({ email: email })
+        User.findOne({ email: email })
             .then(result => {
-                bcrypt.compare(password, result[0].password, (err, isTrue) => {
+                bcrypt.compare(password, result.password, (err, isTrue) => {
                     if (isTrue) {
                         const user = {
-                            name: result[0].name,
-                            email: result[0].email
+                            name: result.name,
+                            email: result.email
                         }
                         req.session.user = user;
                         res.redirect('/');

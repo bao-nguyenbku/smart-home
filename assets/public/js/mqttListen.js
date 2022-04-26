@@ -2,26 +2,85 @@
 class Adafruit {
     options = {
         username: 'kimhungtdblla24',
-        password: 'aio_tbrk84qNuBNK0gmKIzJosdwwKSKI',
         clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8)
     }
     HOST = 'io.adafruit.com/kimhungtdblla24'
     PORT = 443
-    client = mqtt.connect(`ws://${this.HOST}:${this.PORT}`, this.options)
+    client = ''
+    // client = mqtt.connect(`wss://${this.HOST}:${this.PORT}`, this.options)
     topicReq = 'kimhungtdblla24/feeds/ttda-cnpm-so2ha'
     topicRes = 'kimhungtdblla24/feeds/ttda-cnpm-ha2so'
-
+    appDevice = {
+        id: -1,
+        name: '',
+        type: '',
+        roomId: -1,
+        status: false
+    }
     adaDevice = {
         id: -1,
         cmd: '',
         name: '',
         paras: ''
     }
+    tempHumi = {
+        temp: '--',
+        humi: '--'
+    }
     eventTarget = ''
+
+    constructor() {
+        $.ajax({
+            url: '/adafruit-key',
+            method: 'get',
+            success: (res) => {
+                if (res.status === 200) {
+                    this.options.password = res.key;
+                    this.client = mqtt.connect(`wss://${this.HOST}:${this.PORT}`, this.options);
+                    this.client.on('connect', () => {
+                        console.log('Connected to adafruit');
+                        this.client.subscribe([this.topicRes], () => {
+                            console.log(`Subscribed to ${this.topicRes}`);
+                        })
+                    })
+                    this.client.on('error', (err) => {
+                        console.log(err);
+                        this.client.reconnect();
+                    })
+                    this.client.on('message', (topicRes, payload) => {
+                        const feedData = payload.toString();
+                        console.log('Received Message from:', topicRes, feedData);
+                        try {
+                            const value = JSON.parse(feedData);
+                            if (value.cmd === 'open' || value.cmd === 'close') {
+                                this.toggleDevice(value);
+                            }
+                            else if (value.cmd === 'update' && value.id === -1) {
+                                this.restartServer();
+                            }
+                            else if (value.cmd === 'add') {
+                                this.listenAddDevice(value);
+                            }
+                            else if (value.cmd === 'info' && value.name === 'TempHumi') {
+                                this.updateTempHumi(value);
+                            }
+                        } catch (error) {
+                            console.log(error);
+                            return;
+                        }
+                    })
+                }
+            }
+        })
+    
+        this.handleAddNewDevice();
+        this.handleToggleDevice();
+        this.setTempAndHumi();
+    }
     toggleDevice = (value) => {
-        if (value.id === this.adaDevice.id 
-            && value.cmd === this.adaDevice.cmd 
-            && value.name === this.adaDevice.name 
+        if (value.id === this.adaDevice.id
+            && value.cmd === this.adaDevice.cmd
+            && value.name === this.adaDevice.name
             && value.paras === 'success') {
             console.log(value);
             $.ajax({
@@ -43,29 +102,6 @@ class Adafruit {
             })
         }
         return;
-    }
-
-    constructor() {
-        this.client.on('connect', () => {
-            console.log('Connected to adafruit');
-            this.client.subscribe([this.topicRes], () => {
-                console.log(`Subscribed to ${this.topicRes}`);
-            })
-        });
-        this.client.on('message', (topicRes, payload) => {
-            const feedData = payload.toString();
-            console.log('Received Message from:', topicRes, feedData);
-            try {
-                const value = JSON.parse(feedData);
-                this.toggleDevice(value);
-            } catch (error) {
-                console.log(error);
-                return;
-            }
-        })
-        // this.listenRestartServer();
-        // this.handleAddNewDevice();
-        this.handleToggleDevice();
     }
     popMessage = (message) => {
         Toastify({
@@ -89,51 +125,73 @@ class Adafruit {
         }
     }
     getCurrentSelectRoom = () => document.querySelector('#select-room-dropdown-menu').value;
-    listenRestartServer = () => {
-        // this.client.on('message', (topicRes, payload) => {
-        //     const feedData = payload.toString();
-        //     console.log('Received Message from ListenRestartServer:', topicRes, feedData);
-        //     try {
-        //         const value = JSON.parse(feedData);
-        //         if (value.id === -1 && value.cmd === 'update') {
-        //             $.ajax({
-        //                 url: '/device/all',
-        //                 method: 'get',
-        //                 success: (res) => {
-        //                     if (res.status === 200) {
-        //                         const data = res.data;
-        //                         const restartInfo = {
-        //                             id: [],
-        //                             cmd: 'update',
-        //                             name: [],
-        //                             paras: []
-        //                         }
-        //                         for (let i = 0; i < data.length; i++) {
-        //                             restartInfo.id.push(parseInt(data[i].id));
-        //                             restartInfo.name.push(data[i].type);
-        //                             restartInfo.paras.push(data[i].status === true ? 1 : 0);
-        //                         }
-        //                         this.client.publish(this.topicReq, `${JSON.stringify(restartInfo)}`, { qos: 0, retain: true }, (err) => {
-        //                             if (err) console.log(err);
-        //                             else {
-        //                                 console.log('Sent device status to restart successfully');
-        //                                 return;
-        //                             }
-        //                         })
-        //                     }
-        //                 }
-        //             })
-        //         }
-        //         return;
-        //     }
-        //     catch (error) {
-        //         console.log(error);
-        //         return;
-        //     }
-            
-        // })
+    restartServer = () => {
+        console.log('Received message from ListenRestartServer:', topicRes, feedData);
+        $.ajax({
+            url: '/device/all',
+            method: 'get',
+            success: (res) => {
+                if (res.status === 200) {
+                    const data = res.data;
+                    const restartInfo = {
+                        id: [],
+                        cmd: 'update',
+                        name: [],
+                        paras: []
+                    }
+                    for (let i = 0; i < data.length; i++) {
+                        restartInfo.id.push(parseInt(data[i].id));
+                        restartInfo.name.push(data[i].type);
+                        restartInfo.paras.push(data[i].status === true ? 1 : 0);
+                    }
+                    this.client.publish(this.topicReq, `${JSON.stringify(restartInfo)}`, { qos: 0, retain: true }, (err) => {
+                        if (err) console.log(err);
+                        else {
+                            console.log('Sent device status to restart successfully');
+                            return;
+                        }
+                    })
+                }
+            }
+        })
     }
-
+    listenAddDevice = (value) => {
+        if (value.id === this.adaDevice.id
+            && value.cmd === 'add'
+            && value.name === this.adaDevice.name
+            && value.paras === 'success') {
+            $.ajax({
+                url: '/device/add',
+                method: 'post',
+                data: {
+                    deviceName: this.appDevice.name,
+                    deviceId: value.id,
+                    deviceType: value.name,
+                    roomId: this.appDevice.roomId
+                },
+                success: (res) => {
+                    console.log(res);
+                    this.loading(0);
+                    // $('.wrapper + .wrapper-loading').css('display', 'none');
+                    location.reload();
+                }
+            })
+        }
+    }
+    setTempAndHumi = () => {
+        $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${localStorage.getItem('temp')}<span>o</span> C`);
+        $('.temp-and-humi-container .humidity-container p:nth-child(2)').html(`${localStorage.getItem('humi')}%`);
+    }
+    updateTempHumi = (value) => {
+        if (value) {
+            this.tempHumi.temp = value.paras[0];
+            this.tempHumi.humi = value.paras[1];
+            localStorage.setItem('temp', value.paras[0]);
+            localStorage.setItem('humi', value.paras[1]);
+            console.log(value);
+            this.setTempAndHumi();
+        }
+    }
     handleAddNewDevice = () => {
         $('.find-new-device').on('click', () => {
             $('.find-new-device').css('display', 'none');
@@ -190,46 +248,25 @@ class Adafruit {
                                 const deviceId = parseInt(data[0].value);
                                 const deviceName = data[2].value;
                                 const deviceType = data[1].value;
-                                const adaDevice = {
-                                    id: deviceId,
-                                    cmd: 'add',
-                                    name: deviceType,
-                                    paras: 'none'
-                                }
-                                $('.wrapper > .wrapper-loading').css('display', 'flex');
-                                // this.client.publish(this.topicReq, `${JSON.stringify(adaDevice)}`, { qos: 0, retain: true }, (err) => {
-                                //     if (err) {
-                                //         console.log('From mqttListen, listenToSubmit: ', err);
-                                //     }
-                                //     else {
-                                //         this.client.on('message', (topicRes, payload) => {
-                                //             const feedData = payload.toString();
-                                //             try {
-                                //                 const value = JSON.parse(feedData);
-                                //                 if (value.id === deviceId && value.cmd === 'add' && value.name === deviceType && value.paras === 'success') {
-                                //                     $.ajax({
-                                //                         url: '/device/add',
-                                //                         method: 'post',
-                                //                         data: {
-                                //                             deviceName: deviceName,
-                                //                             deviceId: deviceId,
-                                //                             deviceType: deviceType,
-                                //                             roomId: roomId
-                                //                         },
-                                //                         success: (res) => {
-                                //                             console.log(res);
-                                //                             $('.wrapper + .wrapper-loading').css('display', 'none');
-                                //                             location.reload();
-                                //                         }
-                                //                     })
-                                //                 }
-                                //             } catch (error) {
-                                //                 console.log(error);
-                                //                 return;
-                                //             }
-                                //         })
-                                //     }
-                                // })
+                                this.adaDevice.id = deviceId;
+                                this.adaDevice.cmd = 'add';
+                                this.adaDevice.name = deviceType;
+                                this.adaDevice.paras = 'none';
+
+                                this.appDevice.id = deviceId;
+                                this.appDevice.name = deviceName;
+                                this.appDevice.type = deviceType;
+                                this.appDevice.roomId = roomId;
+                                this.loading();
+                                // $('.wrapper > .wrapper-loading').css('display', 'flex');
+                                this.client.publish(this.topicReq, `${JSON.stringify(this.adaDevice)}`, { qos: 0, retain: true }, (err) => {
+                                    if (err) {
+                                        console.log('From add new device: ', err);
+                                    }
+                                    else {
+                                        console.log('Success to sent add new device');
+                                    }
+                                })
                             })
                         }
                     }

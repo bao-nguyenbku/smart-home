@@ -23,12 +23,20 @@ class HomeController {
 
                 Device.find({ roomId: currentRoomId })
                     .then(devices => {
+                        // devices.map((device) => {
+                        //     if (device.type ==='led') {
+                        //         icon = 'lightbulb'
+                        //     }
+                        //     else if (device.typ === 'fan') {
+                        //         icon = ''
+                        //     }
+                        // })
                         res.render('index', {
                             rooms: rooms,
                             currentRoomId: currentRoomId,
                             devices: devices,
                             temp: '--',
-                            humi: '--'
+                            humi: '--',
                         });
                     })
                     .catch(err => console.log(err));
@@ -118,12 +126,11 @@ class HomeController {
             }).catch(err => console.log(err));
         }
     }
-    
     deleteDevice = (req, res, next) => {
         const _id = req.body.id;
         Device.findOneAndDelete({ id: _id })
             .then(_ => {
-                Port.findByIdAndUpdate({ port: _id }, { status: false })
+                Port.findOneAndUpdate({ port: _id }, { status: false })
                     .then(_ => {
                         res.status(200).json({
                             status: 200

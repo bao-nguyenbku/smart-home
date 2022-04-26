@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import HomeController from '../controllers/HomeController.js';
 import SettingsController from '../controllers/SettingsController.js';
+import AdaController from '../controllers/AdaController.js';
 import isLoggedIn from '../controllers/isLoggedIn.js';
 const router = Router();
 
 router.get('/', isLoggedIn(), HomeController.show);
+router.get('/adafruit-key', isLoggedIn(), AdaController.getIOKey);
 // router.get('/port', isLoggedIn(), HomeController.addPort);
 router.get('/settings', isLoggedIn(), SettingsController.show);
 router.post('/room/add', isLoggedIn(), HomeController.addNewRoom);

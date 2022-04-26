@@ -85,7 +85,6 @@ class App {
         this.handleSidebarActive();
         this.handleAddRoom();
         this.handleSelectRoom();
-        this.updateTempAndHumi();
         this.handleOffEnergy();
         this.handleEditDevice();
         if (window.location.pathname.split('/').includes('login')) {
@@ -95,36 +94,7 @@ class App {
             this.handleTableDeviceInStatistic();
         }
     }
-    // handleRestartServer = () => {
-    //     var options = {
-    //         username: 'kimhungtdblla24',
-    //         password: 'aio_tbrk84qNuBNK0gmKIzJosdwwKSKI',
-    //         clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8)
-    //     };
-    //     var HOST = 'io.adafruit.com/kimhungtdblla24';
-    //     var PORT = 443
-    //     var client = mqtt.connect(`ws://${HOST}:${PORT}`,options);
-    //     const topicReq = 'kimhungtdblla24/feeds/ttda-cnpm-so2ha';
-    //     const topicRes = 'kimhungtdblla24/feeds/ttda-cnpm-ha2so';
-    //     client.on('connect', function(){
-    //         console.log('Connected to adafruit');
-    //         client.subscribe([topicRes], () => {
-    //             console.log(`Subscribed to ${topicRes}`);
-    //         })
-    //     });
-        
-    //     // client.publish(topicReq, `Test new connection`, { qos: 0, retain: true }, (err) => { 
-    //     //     if (err) {
-    //     //         console.log(errr);
-    //     //     }
-    //     //     else {
-    //     //         console.log('Success');
-    //     //     }
-    //     // })
-    //     client.on('message', (topicRes, payload) => {
-    //         console.log(payload.toString());
-    //     })
-    // }
+
     handleOffEnergy = () => {
         $('#energy').on('click', () => {
             $.ajax({
@@ -293,34 +263,34 @@ class App {
             })
         })
     }
-    updateTempAndHumi = () => {
-        setTimeout(() => {
-            // get time at 2 minutes ago
-            const previous = new Date(Date.now() - 2 * 60 * 1000);
-            $.ajax({
-                // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
-                url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=5&start_time=${previous.toISOString()}`,
-                method: 'GET',
-                success: (result) => {
-                    if (result.length !== 0) {
-                        result.forEach(data => {
-                            try {
-                                const lastData = JSON.parse(data.value);
-                                if (lastData.name === 'TempHumi') {
-                                    const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
-                                    $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
-                                    $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
-                                    this.updateTempAndHumi();
-                                }
-                            } catch (error) {
-                                return;
-                            }
-                        })
-                    }
-                }
-            })
-        }, 3000)
-    }
+    // updateTempAndHumi = () => {
+    //     setTimeout(() => {
+    //         // get time at 2 minutes ago
+    //         const previous = new Date(Date.now() - 2 * 60 * 1000);
+    //         $.ajax({
+    //             // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
+    //             url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=5&start_time=${previous.toISOString()}`,
+    //             method: 'GET',
+    //             success: (result) => {
+    //                 if (result.length !== 0) {
+    //                     result.forEach(data => {
+    //                         try {
+    //                             const lastData = JSON.parse(data.value);
+    //                             if (lastData.name === 'TempHumi') {
+    //                                 const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
+    //                                 $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
+    //                                 $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+    //                                 this.updateTempAndHumi();
+    //                             }
+    //                         } catch (error) {
+    //                             return;
+    //                         }
+    //                     })
+    //                 }
+    //             }
+    //         })
+    //     }, 3000)
+    // }
     handleTableDeviceInStatistic = () => {
         // let newDevices;
         $.ajax({
