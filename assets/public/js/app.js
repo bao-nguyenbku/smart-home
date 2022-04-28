@@ -80,7 +80,7 @@ class App {
             text: message
         }).showToast();
     }
-    
+
     constructor() {
         this.handleSidebarActive();
         this.handleAddRoom();
@@ -161,6 +161,7 @@ class App {
                         const option = new Option(`${res.data.name}`, `${res.data.name}`);
                         console.log(option);
                         document.getElementById('select-room-dropdown-menu').appendChild(option);
+                        this.popMessage('Add room successfully');
                     }
                 })
             })
@@ -345,25 +346,22 @@ class App {
                     }
                 }
                 else if (typ === 'edit') {
-                    console.log('Edit');
-                    const deviceNameInput = $('.bottom-info .bottom-info-device-name > input');
-                    deviceNameInput.prop('disabled', false);
+                    const deviceNameInput = li.parentElement.parentElement.parentElement.firstElementChild.firstElementChild;
+                    deviceNameInput.disabled = false;
                     deviceNameInput.focus();
-                    deviceNameInput.on('focusout', (e) => {
+                    deviceNameInput.addEventListener('focusout', (e) => {
                         if (confirm('Save your edited?')) {
                             const newDeviceName = e.target.value;
-                            console.log(newDeviceName, deviceNameInput.data('id'));
                             $.ajax({
                                 url: '/device/edit',
                                 method: 'POST',
-                                data: { 
-                                    deviceId: deviceNameInput.data('id'),
+                                data: {
+                                    deviceId: deviceNameInput.dataset.id,
                                     deviceName: newDeviceName
                                 },
                                 success: (res) => {
-                                    console.log(res);
                                     if (res.status === 200) {
-                                        deviceNameInput.prop('disabled', true);
+                                        deviceNameInput.disabled = true;
                                         this.popMessage(res.message);
                                     }
                                 }
@@ -376,8 +374,6 @@ class App {
                 }
             })
         })
-
-
     }
 }
 // INITIAL APP

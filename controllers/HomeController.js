@@ -1,8 +1,8 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device, Port, getAllDevice } from '../models/index.js';
 import { genId } from './generateID.js';
-import ada from '../api/adafruit.js';
-import axios from 'axios';
+// import ada from '../api/adafruit.js';
+// import axios from 'axios';
 class HomeController {
     show = (req, res, next) => {
         const { room } = req.query;

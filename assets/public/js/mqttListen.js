@@ -6,7 +6,7 @@ class Adafruit {
     }
     HOST = 'io.adafruit.com/kimhungtdblla24'
     PORT = 443
-    client = ''
+    client = undefined
     // client = mqtt.connect(`wss://${this.HOST}:${this.PORT}`, this.options)
     topicReq = 'kimhungtdblla24/feeds/ttda-cnpm-so2ha'
     topicRes = 'kimhungtdblla24/feeds/ttda-cnpm-ha2so'
@@ -22,10 +22,6 @@ class Adafruit {
         cmd: '',
         name: '',
         paras: ''
-    }
-    tempHumi = {
-        temp: '--',
-        humi: '--'
     }
     eventTarget = ''
 
@@ -69,6 +65,9 @@ class Adafruit {
                             return;
                         }
                     })
+                }
+                else {
+                    throw new Error('Something went wrong while connecting to adafruit.');
                 }
             }
         })
@@ -184,10 +183,8 @@ class Adafruit {
     }
     updateTempHumi = (value) => {
         if (value) {
-            this.tempHumi.temp = value.paras[0];
-            this.tempHumi.humi = value.paras[1];
-            localStorage.setItem('temp', value.paras[0]);
-            localStorage.setItem('humi', value.paras[1]);
+            localStorage.setItem('temp', parseInt(value.paras[0]));
+            localStorage.setItem('humi', parseInt(value.paras[1]));
             console.log(value);
             this.setTempAndHumi();
         }
