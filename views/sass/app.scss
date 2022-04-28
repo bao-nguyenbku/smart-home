@@ -38,11 +38,16 @@ p {
   background-image: url(../../images/living-room.jpg);
   background-repeat: no-repeat;
   background-size: 100%;
-  -webkit-filter: blur(3px) brightness(70%);
-  -moz-filter: blur(3px) brightness(70%);
-  -o-filter: blur(3px) brightness(70%);
-  -ms-filter: blur(3px) brightness(70%);
-  filter: blur(3px) brightness(70%);
+  // -webkit-filter: brightness(70%);
+  // -moz-filter: brightness(70%);
+  // -o-filter: brightness(70%);
+  // -ms-filter: brightness(70%);
+  // filter: brightness(70%);
+  -webkit-filter: blur(1px) brightness(70%);
+  -moz-filter: blur(1px) brightness(70%);
+  -o-filter: blur(1px) brightness(70%);
+  -ms-filter: blur(1px) brightness(70%);
+  filter: blur(1px) brightness(70%);
 }
 .wrapper {
   width: 801px;

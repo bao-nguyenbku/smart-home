@@ -510,11 +510,11 @@ p {
   background-image: url(../../images/living-room.jpg);
   background-repeat: no-repeat;
   background-size: 100%;
-  -webkit-filter: blur(3px) brightness(70%);
-  -moz-filter: blur(3px) brightness(70%);
-  -o-filter: blur(3px) brightness(70%);
-  -ms-filter: blur(3px) brightness(70%);
-  filter: blur(3px) brightness(70%);
+  -webkit-filter: blur(1px) brightness(70%);
+  -moz-filter: blur(1px) brightness(70%);
+  -o-filter: blur(1px) brightness(70%);
+  -ms-filter: blur(1px) brightness(70%);
+  filter: blur(1px) brightness(70%);
 }
 
 .wrapper {
@@ -614,7 +614,9 @@ p {
 .sidebar-container {
   width: 161px;
   height: 100%;
-  background: white;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(4px);
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   display: flex;
@@ -785,8 +787,8 @@ p {
   width: 640px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
-  padding: 30px;
   background-color: #f1f6fa;
+  padding: 30px;
 }
 .main-container .main-feed {
   width: 100%;
