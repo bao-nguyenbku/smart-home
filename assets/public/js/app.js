@@ -368,7 +368,7 @@ class App {
                             })
                         }
                         else {
-                            deviceNameInput.prop('disabled', true);
+                            deviceNameInput.disabled = true;
                         }
                     })
                 }
