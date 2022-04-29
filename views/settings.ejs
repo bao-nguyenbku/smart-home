@@ -52,7 +52,7 @@
 
         <form class="form_edit">
           <label for="username">Username</label><br>
-          <input type="text" id="username" name="username" value= <%= user.name %>><br>
+          <input type="text" id="username" name="username" value="<%= user.name %>" ><br>
 
           <label for="phone">Phone</label><br>
           <input type="text" id="phone" name="phone" value= <%= user.phone %>><br>
@@ -71,18 +71,18 @@
         <div class="myhome">
           <img src="./assets/images/living3.jpg" alt="livingroom">
         </div>
-        <form class="form_edit form_myhome">
-          <label for="nameHouse"> House's name </label><br>
-          <input type="text" id="nameHouse" name="nameHouse" readonly value= <%= user.name + "'s_House" %>><br>
+        <form id="form_edit_my_home" class="form_edit form_myhome">
+          <label for="nameHouse"> House name </label><br>
+          <input type="text" id="nameHouse" name="nameHouse" readonly value= "<%= user.name + '\'s House' %>" ><br>
 
           <label for="address"> Address </label><br>
-          <input type="text" id="address" name="address" value= <%= user.address %>><br>
+          <input type="text" id="address" name="address" value="<%= user.address %>" ><br>
 
           <input type="hidden" id="email2" name="email2" value= <%= user.email %>>
 
           <input type="submit" class="cancel" value="Cancel">
-          <!-- <input type="submit" class="save" id="changeMyHome" value="Save"> -->
-          <button type="button" class="save" id="changeMyHome">Save</button>
+          <input type="submit" class="save" id="changeMyHome" value="Save">
+          <!-- <button type="button" class="save" id="changeMyHome">Save</button> -->
         </form>
       </div>
 
