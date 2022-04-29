@@ -1,0 +1,22 @@
+.clock-widget {
+  @include d-flex(column, center, center);
+  position: absolute;
+  right: 0;
+  top: 50%;
+  color: white;
+  margin-right: calc((100% - 801px) / 4);
+  transform: translate(50%, -50%);
+  .widget-clock {
+    @include d-flex(row, normal, normal);
+    p {
+      font-size: 6rem;
+      font-weight: 700;
+    }
+  }
+  .widget-day {
+    p {
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+    }
+  }
+}

@@ -1,3 +1,4 @@
+@import 'variable';
 .custom-toast {
     br {
         display: none;
@@ -6,4 +7,5 @@
     background: #fff;
     border-radius: 10px;
     color: black;
+    box-shadow: $shadow;
 }
