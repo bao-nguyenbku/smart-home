@@ -70,9 +70,9 @@
         <div class="myhome">
           <img src="./assets/images/living3.jpg" alt="livingroom">
         </div>
-        <form class="form_edit form_myhome">
+        <form class="form_edit form_myhome" id="form-edit-my-home">
           <label for="name"> Name </label><br>
-          <input type="text" id="name" name="name" value="Jenny's House"><br>
+          <input type="text" id="name" name="name" value="<%= session.user ? session.user.name + '\'s House': '' %>"><br>
 
           <label for="address"> Address </label><br>
           <input type="text" id="address" name="address" value="36, Wall Street, 5 District, Ho Chi Minh"><br>

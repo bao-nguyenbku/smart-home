@@ -468,6 +468,7 @@ template {
   background: #fff;
   border-radius: 10px;
   color: black;
+  box-shadow: 0 1px 2px #cccccc;
 }
 .custom-toast br {
   display: none;
