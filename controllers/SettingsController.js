@@ -61,12 +61,11 @@ class SettingsController {
         // return res.redirect('/')
     }
     changeMyHome = (req, res, next) => {
-        // const {nameHouse, address, email} = req.body;
-        // const nameHouse = req.bosy.nameHouse;
         const address = req.body.address;
-        const email2 = req.body.email2;
+        const email = req.body.email;
+        // const email = req.session.user.email;
         console.log(address, email);
-        User.findOneAndUpdate( {email: email2}, {address: address} )
+        User.findOneAndUpdate( {email: email}, {address: address} )
             .then(result => {
                 res.status(200).json({
                     status: 200,
@@ -74,7 +73,7 @@ class SettingsController {
                     message: 'Update your home successfully'
                 })
             }).catch(err => console.log(err))
-        return res.redirect('/')
+        // return res.redirect('/')
     }
 }
 

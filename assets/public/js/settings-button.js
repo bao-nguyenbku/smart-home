@@ -27,16 +27,25 @@ $(document).ready(function(){
     });
 });
 
-// $('#form-edit-my-home').on('submit', (e) => {
-//     e.preventDefault();
-//     const data = $('#form-edit-my-home').serializeArray();
-//     const name = data[0].value;
-//     const address = data[1].value;
-//     console.log(name, address);
-//     $.ajax({
 
-//         success: (res) => {
-
-//         }
-//     })
-// })
+$('#form_edit_my_home').on('submit', (e) => {
+    e.preventDefault();
+    const data = $('#form_edit_my_home').serializeArray();
+    const address = data[1].value;
+    const email = data[2].value;
+    $.ajax({
+        url: 'settings/changeMyHome',
+        method: 'POST',
+        data: {address: address, email: email},
+        success: (res) => {
+            // document.getElementById('address').value = address;
+            if (res.status === 200){
+                Toastify({
+                    ...this.toastOption,
+                    text: res.message
+                }).showToast();
+            };
+            // popMessage('Cập nhật thành công');
+        }
+    })
+})
