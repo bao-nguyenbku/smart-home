@@ -39,7 +39,6 @@ const getDevicesPerPage = (page, devices) => {
     }
 
     const devicePerPage = devices.slice(idx, idx + 4);
-    console.log(devicePerPage);
     return devicePerPage;
 }
 const addRoomToDevice = (rooms, devices) => {
@@ -68,26 +67,24 @@ const validatePassword = (password) => {
 }
 // App will execute all operation in smart home pages
 class App {
-    toastOption = {
-        text: '',
-        duration: 3000,
-        // destination: "https://github.com/apvarun/toastify-js",
-        newWindow: true,
-        close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        className: 'custom-toast',
-        // onClick: function(){} // Callback after click
+    popMessage = (message) => {
+        Toastify({
+            duration: 3000,
+            // destination: "https://github.com/apvarun/toastify-js",
+            newWindow: true,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            className: 'custom-toast',
+            text: message
+        }).showToast();
     }
+
     constructor() {
-        this.handleMainControl();
         this.handleSidebarActive();
         this.handleAddRoom();
-        this.handleAddNewDevice();
         this.handleSelectRoom();
-        this.handleToggleDevice();
-        this.updateTempAndHumi();
         this.handleOffEnergy();
         this.handleEditDevice();
         this.updateProfile();
@@ -156,19 +153,12 @@ class App {
                     // Not modified
                     if (res.status === 304) {
                         const message = 'Tất cả thiết bị đang tắt';
-                        Toastify({
-                            ...this.toastOption,
-                            text: message
-                        }).showToast();
+                        this.popMessage(message);
                     }
                     else if (res.status === 200) {
                         const message = 'Đã tắt toàn bộ thiết bị';
-                        Toastify({
-                            ...this.toastOption,
-                            text: message,
-                        }).showToast();
+                        this.popMessage(message);
                     }
-                    console.log(res);
                 }
             })
         })
@@ -191,37 +181,7 @@ class App {
             console.log(email, password);
         }
     }
-    handleMainControl = () => {
-        const handleSlider = () => {
-            const slider = document.querySelector('div.slider');
-            if (slider) {
-                slider.addEventListener('mousedown', mouseDown, false);
-                window.addEventListener('mouseup', mouseUp, false);
-            }
-        }
 
-        const mouseUp = () => {
-            window.removeEventListener('mousemove', divMove, true);
-        }
-
-        const mouseDown = (e) => {
-            window.addEventListener('mousemove', divMove, true);
-        }
-
-        const divMove = (e) => {
-            let currentRatio = ((e.clientX - document.querySelector('div.range-background').offsetLeft) / document.querySelector('div.range-background').offsetWidth) * 100;
-            currentRatio = parseInt(currentRatio);
-            if (currentRatio > 100) {
-                currentRatio = 100;
-            }
-            else if (currentRatio < 0) {
-                currentRatio = 0;
-            }
-            document.querySelector('div.slider').dataset.after = currentRatio + '%';
-            document.querySelector('div.slider').style.width = currentRatio + '%';
-        }
-        handleSlider();
-    }
     handleSidebarActive = () => {
         const sidebarItem = $$('.sidebar-items li');
         sidebarItem.forEach((li, index) => {
@@ -250,6 +210,7 @@ class App {
                         const option = new Option(`${res.data.name}`, `${res.data.name}`);
                         console.log(option);
                         document.getElementById('select-room-dropdown-menu').appendChild(option);
+                        this.popMessage('Add room successfully');
                     }
                 })
             })
@@ -317,6 +278,7 @@ class App {
                             const addNewDeviceForm = $('#add-new-device-form');
                             addNewDeviceForm.on('submit', (e) => {
                                 e.preventDefault();
+                                console.log(e);
                                 const data = addNewDeviceForm.serializeArray();
                                 const roomId = parseInt(this.getCurrentSelectRoom());
                                 const deviceId = parseInt(data[0].value);
@@ -334,8 +296,13 @@ class App {
                                     dataType: 'json',
                                     success: (result) => {
                                         if (result.status === 200) {
-                                            // TODO: Fix this to add new device without reload page
                                             location.reload();
+                                        }
+                                        else if (result.status === 404) {
+                                            this.popMessage(result.message + '. Please try again');
+                                        }
+                                        else if (result.status === 500) {
+                                            this.popMessage(result.message);
                                         }
                                     }
                                 })
@@ -345,60 +312,35 @@ class App {
                 }
             })
         })
-
-        // if (addDeviceBtn) {
-        //     addDeviceBtn.addEventListener('click', () => {
-        //         const deviceName = document.getElementById('formGroupExampleInput-device-name').value;
-        //         const deviceCode = document.getElementById('formGroupExampleInput-device-code').value;
-        //         const currentRoom = this.getCurrentSelectRoom();
-
-        //         $.ajax({
-        //             url: '/device/add',
-        //             method: 'POST',
-        //             data: {
-        //                 deviceName: deviceName,
-        //                 deviceCode: deviceCode,
-        //                 room: currentRoom
-        //             },
-        //             dataType: 'json',
-        //             success: (result) => {
-        //                 if (result.status === 200) {
-        //                     // TODO: Fix this to add new device without reload page
-        //                     location.reload();
-        //                 }
-        //             }
-        //         })
-        //     })
-        // }
     }
-    updateTempAndHumi = () => {
-        setTimeout(() => {
-            // get time at 2 minutes ago
-            const previous = new Date(Date.now() - 2 * 60 * 1000);
-            $.ajax({
-                // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
-                url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=5&start_time=${previous.toISOString()}`,
-                method: 'GET',
-                success: (result) => {
-                    if (result.length !== 0) {
-                        result.forEach(data => {
-                            try {
-                                const lastData = JSON.parse(data.value);
-                                if (lastData.name === 'TempHumi') {
-                                    const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
-                                    $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
-                                    $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
-                                    this.updateTempAndHumi();
-                                }
-                            } catch (error) {
-                                return;
-                            }
-                        })
-                    }
-                }
-            })
-        }, 3000)
-    }
+    // updateTempAndHumi = () => {
+    //     setTimeout(() => {
+    //         // get time at 2 minutes ago
+    //         const previous = new Date(Date.now() - 2 * 60 * 1000);
+    //         $.ajax({
+    //             // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
+    //             url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=5&start_time=${previous.toISOString()}`,
+    //             method: 'GET',
+    //             success: (result) => {
+    //                 if (result.length !== 0) {
+    //                     result.forEach(data => {
+    //                         try {
+    //                             const lastData = JSON.parse(data.value);
+    //                             if (lastData.name === 'TempHumi') {
+    //                                 const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
+    //                                 $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
+    //                                 $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+    //                                 this.updateTempAndHumi();
+    //                             }
+    //                         } catch (error) {
+    //                             return;
+    //                         }
+    //                     })
+    //                 }
+    //             }
+    //         })
+    //     }, 3000)
+    // }
     handleTableDeviceInStatistic = () => {
         // let newDevices;
         $.ajax({
@@ -412,7 +354,6 @@ class App {
     }
     handleChangePageInStatistic = (devices) => {
         let pages = devices.length < 4 ? 1 : parseInt(devices.length / 4) + 1;
-        console.log(pages);
         const devicePerPage = getDevicesPerPage(1, devices);
         renderTable(1, pages, devicePerPage);
 
@@ -431,64 +372,6 @@ class App {
             }
         })
 
-    }
-    handleToggleDevice = () => {
-        $$('.device-list .device-item').forEach((item) => {
-            if (item.dataset.item !== 'add') {
-                item.children[0].children[1].children[0].addEventListener('change', (e) => {
-                    $('.wrapper > .wrapper-loading').css('display', 'flex');
-                    $.ajax({
-                        url: '/device/toggle',
-                        method: 'POST',
-                        data: {
-                            deviceId: item.dataset.id,
-                            deviceType: item.dataset.type,
-                            status: e.target.checked
-                        },
-                        dataType: 'json',
-                        success: (res) => {
-                            if (res.status === 404) {
-                                console.log(res.message);
-                                item.children[0].children[1].children[0].checked = false;
-                                Toastify({
-                                    ...this.toastOption,
-                                    text: res.message
-                                }).showToast();
-                                $('.wrapper > .wrapper-loading').css('display', 'none');
-                            }
-                            else if (res.status == 200) {
-                                console.log(result.data);
-                                $$('.toggle-control input').forEach(btn => {
-                                    btn.addEventListener('change', (e) => {
-                                        const path = e.composedPath() || e.path
-                                        let deviceItem;
-                                        if (path) {
-                                            deviceItem = path[3];
-                                        }
-                                        const message = deviceItem.children[1].children[0].children[0].value + ' đã được ' + (e.target.checked ? 'mở' : 'tắt');
-                                        Toastify({
-                                            ...this.toastOption,
-                                            text: message
-                                        }).showToast();
-                                        deviceItem.classList.toggle('device-item-active');
-                                    })
-                                })
-                                $('.wrapper > .wrapper-loading').css('display', 'none');
-                            }
-                            else if (res.status == 500) {
-                                console.log(res.message);
-                                item.children[0].children[1].children[0].checked = false;
-                                Toastify({
-                                    ...this.toastOption,
-                                    text: res.message
-                                }).showToast();
-                                $('.wrapper + .wrapper-loading').css('display', 'none');
-                            }
-                        }
-                    })
-                })
-            }
-        })
     }
 
     handleEditDevice = () => {
@@ -512,42 +395,34 @@ class App {
                     }
                 }
                 else if (typ === 'edit') {
-                    console.log('Edit');
-                    const deviceNameInput = $('.bottom-info .bottom-info-device-name > input');
-                    deviceNameInput.prop('disabled', false);
+                    const deviceNameInput = li.parentElement.parentElement.parentElement.firstElementChild.firstElementChild;
+                    deviceNameInput.disabled = false;
                     deviceNameInput.focus();
-                    deviceNameInput.on('focusout', (e) => {
+                    deviceNameInput.addEventListener('focusout', (e) => {
                         if (confirm('Save your edited?')) {
                             const newDeviceName = e.target.value;
-                            console.log(newDeviceName, deviceNameInput.data('id'));
                             $.ajax({
                                 url: '/device/edit',
                                 method: 'POST',
-                                data: { 
-                                    deviceId: deviceNameInput.data('id'),
+                                data: {
+                                    deviceId: deviceNameInput.dataset.id,
                                     deviceName: newDeviceName
                                 },
                                 success: (res) => {
-                                    console.log(res);
                                     if (res.status === 200) {
-                                        deviceNameInput.prop('disabled', true);
-                                        Toastify({
-                                            ...this.toastOption,
-                                            text: res.message
-                                        }).showToast();
+                                        deviceNameInput.disabled = true;
+                                        this.popMessage(res.message);
                                     }
                                 }
                             })
                         }
                         else {
-                            deviceNameInput.prop('disabled', true);
+                            deviceNameInput.disabled = true;
                         }
                     })
                 }
             })
         })
-
-
     }
 }
 // INITIAL APP

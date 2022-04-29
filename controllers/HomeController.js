@@ -1,8 +1,8 @@
-import client, { topicRes, topicReq } from '../mqtt/index.js';
-import { Room, Device, Port } from '../models/index.js';
+// import client, { topicRes, topicReq } from '../mqtt/index.js';
+import { Room, Device, Port, getAllDevice } from '../models/index.js';
 import { genId } from './generateID.js';
-import ada from '../api/adafruit.js';
-import axios from 'axios';
+// import ada from '../api/adafruit.js';
+// import axios from 'axios';
 class HomeController {
     show = (req, res, next) => {
         const { room } = req.query;
@@ -23,14 +23,22 @@ class HomeController {
 
                 Device.find({ roomId: currentRoomId })
                     .then(devices => {
+                        // devices.map((device) => {
+                        //     if (device.type ==='led') {
+                        //         icon = 'lightbulb'
+                        //     }
+                        //     else if (device.typ === 'fan') {
+                        //         icon = ''
+                        //     }
+                        // })
                         res.render('index', {
                             rooms: rooms,
                             currentRoomId: currentRoomId,
                             devices: devices,
                             temp: '--',
-                            humi: '--'
+                            humi: '--',
                         });
-                    })  
+                    })
                     .catch(err => console.log(err));
             })
             .catch(err => console.log(err));
@@ -66,7 +74,7 @@ class HomeController {
         }
     }
     addNewDevice = (req, res, next) => {
-        const { deviceName, deviceId, deviceType, roomId } = req.body;  
+        const { deviceName, deviceId, deviceType, roomId } = req.body;
         const newDevice = new Device({
             id: deviceId,
             name: deviceName,
@@ -88,116 +96,47 @@ class HomeController {
     }
     toggleDevice = async (req, res, next) => {
         const { deviceId, deviceType, status } = req.body;
-        const device = {
-            id: deviceId,
-            cmd: status == 'true' ? 'open' : 'close',
-            name: deviceType,
-            paras: 'none'
-        }
         // Turn off
-        // if (status == 'false') {
-        //     client.publish(topicReq, `${JSON.stringify(device)}`, { qos: 0, retain: true }, async (error) => {
-        //         if (error) {
-        //             res.json({ error: error })
-        //         }
-        //         else {
-        //             const feedData = await ada.getFeedData();
-        //             feedData.data.forEach(feed => {
-        //                 try {
-        //                     value = JSON.parse(feed.value);
-        //                     if (value.id == deviceId && value.cmd == device.cmd && value.name == deviceType) {
-        //                         if (value.paras === 'success') {
-        //                             Device.findOne({ id: deviceId })
-        //                                 .then(result => {
-        //                                     const currentTime = new Date();
-        //                                     const usedTime = currentTime - result.lastUse;
-        //                                     const lastDuration = result.duration;
-        //                                     Device.findOneAndUpdate({ id: deviceId }, { 
-        //                                         status: status, 
-        //                                         duration: usedTime + lastDuration,
-        //                                     }).then(result2 => {
-        //                                         res.json({
-        //                                             status: 200,
-        //                                             error: '',
-        //                                             data: result2
-        //                                         })
-        //                                     }).catch(err => console.log(err))
-        //                                 }).catch(err => console.log(err))
-        //                         }
-        //                     }
-        //                 } catch (error) { 
-        //                     return;
-        //                 }
-        //             });
-        //         }
-        //     })
-        // }
+        if (status == 'false') {
+            Device.findOne({ id: deviceId })
+                .then(result => {
+                    const currentTime = new Date();
+                    const usedTime = currentTime - result.lastUse;
+                    const lastDuration = result.duration;
+                    Device.findOneAndUpdate({ id: deviceId }, {
+                        status: false,
+                        duration: usedTime + lastDuration,
+                    }).then(result2 => {
+                        res.status(200).json({
+                            status: 200,
+                            data: result2
+                        })
+                    }).catch(err => console.log(err))
+                }).catch(err => console.log(err))
+        }
         if (status == 'true') {
-            client.publish(topicReq, `${JSON.stringify(device)}`, { qos: 0, retain: true }, async (error) => {
-                if (error) {
-                    res.json({ error: error })
-                }
-                else {
-                    let end_time = new Date();
-                    this.listenFeedRespone(device, end_time, (err, result) => {
-                        // No response from adafruit
-                        if (err === 'failed') {
-                            res.status(200).json({
-                                status: 404,
-                                message: 'Server is busy now'
-                            })
-                        }
-                        else if (!err) {
-                            res.status(200).json({
-                                status: 200,
-                                data: result
-                            })
-                        }
-                        else if (err) {
-                            res.status(200).json({
-                                status: 500,
-                                message: 'Database issue'
-                            })
-                        }
-                    });
-                }
-            })
-            
+            Device.findOneAndUpdate({ id: deviceId }, {
+                status: true,
+                lastUse: new Date()
+            }).then(result => {
+                res.status(200).json({
+                    status: 200,
+                    data: result
+                })
+            }).catch(err => console.log(err));
         }
-    }
-    listenFeedRespone = async (device, _end_time, callback) => {
-        let end_time = _end_time;
-        const currentTime = new Date();
-        while (new Date() - currentTime < 3000) {
-            console.log('Time');
-            const feedData = await ada.getFeedData(10, end_time);
-            feedData.data.forEach(feed => {
-                try {
-                    value = JSON.parse(feed.value);
-                    if (value.id == device.id && value.cmd == device.cmd && value.name == device.name) {
-                        if (value.paras === 'success') {
-                            Device.findOneAndUpdate({ id: device.id }, { status: device.cmd == 'open', lastUse: new Date() })
-                                .then(result2 => {
-                                    callback(null, result2);
-                                    return;
-                                }).catch(err => callback(err, null));
-                        }
-                    }
-                } catch (error) { 
-                    return;
-                }
-            });
-            end_time = feedData.data[feedData.data.length - 1].created_at;
-        }
-        callback('failed', null);
     }
     deleteDevice = (req, res, next) => {
-        const { id } = req.body;
-        Device.findOneAndDelete({ id: id })
-            .then(result => res.status(200).json({
-                status: 200
-            }))
-            .catch(err => console.log(err));
+        const _id = req.body.id;
+        Device.findOneAndDelete({ id: _id })
+            .then(_ => {
+                Port.findOneAndUpdate({ port: _id }, { status: false })
+                    .then(_ => {
+                        res.status(200).json({
+                            status: 200
+                        })
+                    })
+            }).catch(err => console.log(err));
     }
     updateDevice = (req, res, next) => {
         const { deviceId, deviceName } = req.body;
@@ -210,6 +149,13 @@ class HomeController {
                     message: 'Update device successfully'
                 })
             }).catch(err => console.log(err))
+    }
+    getAllDevice = (req, res, next) => {
+        Device.find()
+            .then(result => res.status(200).json({
+                status: 200,
+                data: result
+            })).catch(err => console.log(err))
     }
 }
 export default new HomeController;

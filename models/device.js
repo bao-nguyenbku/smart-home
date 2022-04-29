@@ -39,4 +39,7 @@ const deviceSchema = new Schema({
 }, { timestamps: true });
 
 const Device = mongoose.model('Device', deviceSchema);
+export const getAllDevice = async () => {
+    return await Device.find().catch(err => console.log(err));
+}
 export default Device;

@@ -23,27 +23,28 @@ class SettingsController {
                         status: 304
                     })
                 }
-
-                for (let i = 0; i < result.length; i++){      
-                    const currentTime = new Date();
-                    const usedTime = currentTime - result[i].lastUse;
-                    const lastDuration = result[i].duration;
-                    const deviceId = result[i].id;
-                    Device.findOneAndUpdate({ id: deviceId }, { 
-                        duration: usedTime + lastDuration,
-                        status: false
-                    }).then(result2 => {
-                        const device = {
-                            id: deviceId,
-                            // cmd: status ? 'open' : 'close',
-                            name: result.type,
-                            paras: 'none'
-                        }
-                    }).catch(err => res.json(err))
+                else {
+                    for (let i = 0; i < result.length; i++){      
+                        const currentTime = new Date();
+                        const usedTime = currentTime - result[i].lastUse;
+                        const lastDuration = result[i].duration;
+                        const deviceId = result[i].id;
+                        Device.findOneAndUpdate({ id: deviceId }, { 
+                            duration: usedTime + lastDuration,
+                            status: false
+                        }).then(result2 => {
+                            const device = {
+                                id: deviceId,
+                                // cmd: status ? 'open' : 'close',
+                                name: result.type,
+                                paras: 'none'
+                            }
+                        }).catch(err => res.json(err))
+                    }
+                    res.status(200).json({
+                        status: 200
+                    })
                 }
-                res.status(200).json({
-                    status: 200
-                })
             }).catch(err => res.json(err))
     }
     updateProfile = (req, res, next) => {

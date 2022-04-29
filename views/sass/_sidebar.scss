@@ -1,7 +1,9 @@
 .sidebar-container {
     width: 161px;
     height: 100%;
-    background: white;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(4px);
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
     @include d-flex(column, center, normal);

@@ -436,6 +436,33 @@ template {
   color: #7297ab;
 }
 
+.clock-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  color: white;
+  margin-right: calc((100% - 801px) / 4);
+  transform: translate(50%, -50%);
+}
+.clock-widget .widget-clock {
+  display: flex;
+  flex-direction: row;
+  align-items: normal;
+  justify-content: normal;
+}
+.clock-widget .widget-clock p {
+  font-size: 120px;
+  font-weight: 700;
+}
+.clock-widget .widget-day p {
+  font-size: 40px;
+  letter-spacing: 4px;
+}
+
 .custom-toast {
   font-size: 20px;
   background: #fff;
@@ -472,13 +499,27 @@ p {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(125.8deg, #4facfe 7.05%, #00f2fe 86.34%);
+}
+
+.background-root {
+  position: fixed;
+  left: 0;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../images/living-room.jpg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  -webkit-filter: blur(1px) brightness(70%);
+  -moz-filter: blur(1px) brightness(70%);
+  -o-filter: blur(1px) brightness(70%);
+  -ms-filter: blur(1px) brightness(70%);
+  filter: blur(1px) brightness(70%);
 }
 
 .wrapper {
   width: 801px;
   height: 675px;
-  background: #f1f6fa;
   border-radius: 30px;
   display: flex;
   flex-direction: row;
@@ -573,7 +614,9 @@ p {
 .sidebar-container {
   width: 161px;
   height: 100%;
-  background: white;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(4px);
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   display: flex;
@@ -722,10 +765,29 @@ p {
     transform: rotate(450deg);
   }
 }
+.blink-text {
+  animation: blinkText 1s ease infinite;
+}
+
+@keyframes blinkText {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .main-container {
   width: 640px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
+  background-color: #f1f6fa;
   padding: 30px;
 }
 .main-container .main-feed {
@@ -1267,6 +1329,13 @@ p {
 .statistic-container .table-and-rooms .table-of-device table tbody td {
   padding-top: 10px;
   padding-bottom: 10px;
+}
+
+.chart-container {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 200px;
 }
 
 .settings-container {

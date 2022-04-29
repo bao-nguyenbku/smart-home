@@ -53,3 +53,21 @@ $duration: 1.4s;
     transform: rotate(450deg);
   }
 }
+
+.blink-text {
+  animation: blinkText 1s ease infinite;
+}
+@keyframes blinkText {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
