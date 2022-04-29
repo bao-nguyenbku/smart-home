@@ -1599,6 +1599,7 @@ p {
   color: #7297ab;
 }
 .settings-edit .form_edit .save {
+  display: inline;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -1612,6 +1613,10 @@ p {
   line-height: 16px;
   text-align: center;
   color: #FFFFFF;
+  border: 1px solid #E3EDF2;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+  padding: 4px;
 }
 .settings-edit .form_change_password {
   padding-top: 40px;

@@ -87,6 +87,8 @@ class App {
         this.handleSelectRoom();
         this.handleOffEnergy();
         this.handleEditDevice();
+        this.updateProfile();
+        this.changeMyHome();
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
         }
@@ -94,7 +96,54 @@ class App {
             this.handleTableDeviceInStatistic();
         }
     }
-
+    changeMyHome = () => {
+        const changeMyHome = document.querySelector('#changeMyHome');
+        if (changeMyHome) {
+            changeMyHome.addEventListener('click', () => {
+                const nameHouse = document.getElementById('nameHouse').value;
+                const address = document.getElementById('address').value;
+                const email2 = document.getElementById('email2').value;
+                $.ajax({
+                    url: 'settings/changeMyHome',
+                    method: 'POST',
+                    data: {nameHouse: nameHouse, address: address, email: email2},
+                    success: (res) => {
+                        console.log(res);
+                        if (res.status === 200){
+                            Toastify({
+                                ...this.toastOption,
+                                text: res.message
+                            }).showToast();
+                        };
+                    }
+                })
+            })
+        }
+    }
+    updateProfile = () => {
+        const updateProfile = document.querySelector('#save');
+        if (updateProfile) {
+            updateProfile.addEventListener('click', () => {
+                const name = document.getElementById('username').value;
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+                $.ajax({
+                    url: '/settings/updateProfile',
+                    method: 'POST',
+                    data: { name: name, phone: phone, email: email},
+                    success: (res) => {
+                        console.log(res);
+                        if (res.status === 200) {
+                            Toastify({
+                                ...this.toastOption,
+                                text: res.message
+                            }).showToast();
+                        };
+                    }
+                })
+            })
+        }
+    }
     handleOffEnergy = () => {
         $('#energy').on('click', () => {
             $.ajax({

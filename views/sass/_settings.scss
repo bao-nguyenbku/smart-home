@@ -246,6 +246,7 @@
             color: $lightBlue;
         }
         .save{
+            display: inline;
             position: absolute;
             bottom: 0;
             right: 0;
@@ -259,6 +260,10 @@
             line-height: 16px;
             text-align: center;
             color: #FFFFFF;
+            border: 1px solid #E3EDF2;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+            padding: 4px;
         }
     }
     .form_change_password{
