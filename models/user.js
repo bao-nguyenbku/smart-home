@@ -20,8 +20,12 @@ const userSchema = new Schema({
     },
     phone: {
         type: String,
-        // required: true
+        required: true
     },
+    address: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

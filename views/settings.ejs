@@ -52,16 +52,17 @@
 
         <form class="form_edit">
           <label for="username">Username</label><br>
-          <input type="text" id="username" name="username" value= <%= session.user ? session.user.name : '' %>><br>
+          <input type="text" id="username" name="username" value= <%= user.name %>><br>
 
           <label for="phone">Phone</label><br>
-          <input type="text" id="phone" name="phone" value= <%= session.user ? session.user.phone : '' %>><br>
+          <input type="text" id="phone" name="phone" value= <%= user.phone %>><br>
 
           <label for="email">Email</label><br>
-          <input type="text" id="email" name="email" readonly value= <%= session.user ? session.user.email : ''%> ><br>
+          <input type="text" id="email" name="email" readonly value= <%= user.email %>><br>
 
           <input type="submit" class="cancel" value="Cancel">
-          <input type="submit" class="save" value="Save">
+          <!-- <input type="submit" class="save" value="Save"> -->
+          <button type="button" class="save" id="save">Save</button>
         </form>
       </div>
 
@@ -71,14 +72,17 @@
           <img src="./assets/images/living3.jpg" alt="livingroom">
         </div>
         <form class="form_edit form_myhome">
-          <label for="name"> Name </label><br>
-          <input type="text" id="name" name="name" value="Jenny's House"><br>
+          <label for="nameHouse"> House's name </label><br>
+          <input type="text" id="nameHouse" name="nameHouse" readonly value= <%= user.name + "'s_House" %>><br>
 
           <label for="address"> Address </label><br>
-          <input type="text" id="address" name="address" value="36, Wall Street, 5 District, Ho Chi Minh"><br>
+          <input type="text" id="address" name="address" value= <%= user.address %>><br>
+
+          <input type="hidden" id="email2" name="email2" value= <%= user.email %>>
 
           <input type="submit" class="cancel" value="Cancel">
-          <input type="submit" class="save" value="Save">
+          <!-- <input type="submit" class="save" id="changeMyHome" value="Save"> -->
+          <button type="button" class="save" id="changeMyHome">Save</button>
         </form>
       </div>
 
