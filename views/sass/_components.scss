@@ -114,25 +114,4 @@ $toggle-control-size: $toggle-height - ($toggle-gutter * 2);
     color: $lightBlue;
   }
 }
-.clock-widget {
-  @include d-flex(column, center, center);
-  position: absolute;
-  right: 0;
-  top: 50%;
-  color: white;
-  margin-right: calc((100% - 801px) / 4);
-  transform: translate(50%, -50%);
-  .widget-clock{
-    @include d-flex(row, normal, normal);
-    p {
-      font-size: 120px;
-      font-weight: 700;
-    }
-  }
-  .widget-day  {
-    p {
-      font-size: 40px;
-      letter-spacing: 4px;
-    }
-  }
-}
+@import 'widget';
