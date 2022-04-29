@@ -455,11 +455,11 @@ template {
   justify-content: normal;
 }
 .clock-widget .widget-clock p {
-  font-size: 120px;
+  font-size: 6rem;
   font-weight: 700;
 }
 .clock-widget .widget-day p {
-  font-size: 40px;
+  font-size: 1.2rem;
   letter-spacing: 4px;
 }
 
@@ -468,6 +468,7 @@ template {
   background: #fff;
   border-radius: 10px;
   color: black;
+  box-shadow: 0 1px 2px #cccccc;
 }
 .custom-toast br {
   display: none;
@@ -479,6 +480,10 @@ template {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
 }
 
 body {
@@ -509,7 +514,10 @@ p {
   height: 100%;
   background-image: url(../../images/living-room.jpg);
   background-repeat: no-repeat;
-  background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   -webkit-filter: blur(1px) brightness(70%);
   -moz-filter: blur(1px) brightness(70%);
   -o-filter: blur(1px) brightness(70%);
@@ -783,6 +791,25 @@ p {
     opacity: 1;
   }
 }
+/* TYPE WRITER TEXT */
+/* The typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
+}
 .main-container {
   width: 640px;
   border-top-right-radius: 30px;
@@ -872,13 +899,21 @@ p {
   justify-content: normal;
 }
 .main-container .main-feed .feed p:first-child {
-  font-size: 26px;
+  overflow: hidden;
+  /* Ensures the content is not revealed until the animation */
+  font-size: 22px;
+  border-right: 0.15em solid orange;
+  /* The typwriter cursor */
+  white-space: nowrap;
+  /* Keeps the content on a single line */
+  letter-spacing: 0.15em;
+  /* Adjust as needed */
+  animation: typing 3.5s steps(30, end) infinite alternate, blink-caret 0.5s step-end infinite;
 }
 .main-container .main-feed .feed p:nth-child(2) {
   font-size: 14px;
   margin-top: 5px;
   color: #7297ab;
-  animation: 2s infinite slideup;
 }
 .main-container .add-new-device-and-choose-room {
   width: 100%;
