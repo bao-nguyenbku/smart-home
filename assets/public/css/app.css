@@ -436,11 +436,39 @@ template {
   color: #7297ab;
 }
 
+.clock-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  color: white;
+  margin-right: calc((100% - 801px) / 4);
+  transform: translate(50%, -50%);
+}
+.clock-widget .widget-clock {
+  display: flex;
+  flex-direction: row;
+  align-items: normal;
+  justify-content: normal;
+}
+.clock-widget .widget-clock p {
+  font-size: 6rem;
+  font-weight: 700;
+}
+.clock-widget .widget-day p {
+  font-size: 1.2rem;
+  letter-spacing: 4px;
+}
+
 .custom-toast {
   font-size: 20px;
   background: #fff;
   border-radius: 10px;
   color: black;
+  box-shadow: 0 1px 2px #cccccc;
 }
 .custom-toast br {
   display: none;
@@ -452,6 +480,10 @@ template {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
 }
 
 body {
@@ -482,12 +514,15 @@ p {
   height: 100%;
   background-image: url(../../images/living-room.jpg);
   background-repeat: no-repeat;
-  background-size: 100%;
-  -webkit-filter: blur(3px) brightness(70%);
-  -moz-filter: blur(3px) brightness(70%);
-  -o-filter: blur(3px) brightness(70%);
-  -ms-filter: blur(3px) brightness(70%);
-  filter: blur(3px) brightness(70%);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  -webkit-filter: blur(1px) brightness(70%);
+  -moz-filter: blur(1px) brightness(70%);
+  -o-filter: blur(1px) brightness(70%);
+  -ms-filter: blur(1px) brightness(70%);
+  filter: blur(1px) brightness(70%);
 }
 
 .wrapper {
@@ -587,7 +622,9 @@ p {
 .sidebar-container {
   width: 161px;
   height: 100%;
-  background: white;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(4px);
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   display: flex;
@@ -736,12 +773,49 @@ p {
     transform: rotate(450deg);
   }
 }
+.blink-text {
+  animation: blinkText 1s ease infinite;
+}
+
+@keyframes blinkText {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+/* TYPE WRITER TEXT */
+/* The typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: orange;
+  }
+}
 .main-container {
   width: 640px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
-  padding: 30px;
   background-color: #f1f6fa;
+  padding: 30px;
 }
 .main-container .main-feed {
   width: 100%;
@@ -825,13 +899,21 @@ p {
   justify-content: normal;
 }
 .main-container .main-feed .feed p:first-child {
-  font-size: 26px;
+  overflow: hidden;
+  /* Ensures the content is not revealed until the animation */
+  font-size: 22px;
+  border-right: 0.15em solid orange;
+  /* The typwriter cursor */
+  white-space: nowrap;
+  /* Keeps the content on a single line */
+  letter-spacing: 0.15em;
+  /* Adjust as needed */
+  animation: typing 3.5s steps(30, end) infinite alternate, blink-caret 0.5s step-end infinite;
 }
 .main-container .main-feed .feed p:nth-child(2) {
   font-size: 14px;
   margin-top: 5px;
   color: #7297ab;
-  animation: 2s infinite slideup;
 }
 .main-container .add-new-device-and-choose-room {
   width: 100%;
@@ -1284,6 +1366,13 @@ p {
   padding-bottom: 10px;
 }
 
+.chart-container {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 200px;
+}
+
 .settings-container {
   margin-top: 20px;
   height: 100px;
@@ -1510,6 +1599,7 @@ p {
   color: #7297ab;
 }
 .settings-edit .form_edit .save {
+  display: inline;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -1523,6 +1613,10 @@ p {
   line-height: 16px;
   text-align: center;
   color: #FFFFFF;
+  border: 1px solid #E3EDF2;
+  box-sizing: border-box;
+  margin-bottom: 25px;
+  padding: 4px;
 }
 .settings-edit .form_change_password {
   padding-top: 40px;

@@ -80,18 +80,14 @@ class App {
             text: message
         }).showToast();
     }
-    
+
     constructor() {
-        this.handleMainControl();
         this.handleSidebarActive();
         this.handleAddRoom();
-        this.handleAddNewDevice();
         this.handleSelectRoom();
-        this.handleToggleDevice();
-        this.updateTempAndHumi();
         this.handleOffEnergy();
         this.handleEditDevice();
-        this.handleRestartServer();
+        this.updateProfile();
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
         }
@@ -99,14 +95,29 @@ class App {
             this.handleTableDeviceInStatistic();
         }
     }
-    handleRestartServer = () => {
-        $.ajax({
-            url: '/restart',
-            method: 'get',
-            success: (res) => {
-                console.log(res);
-            }
-        })
+    updateProfile = () => {
+        const updateProfile = document.querySelector('#save');
+        if (updateProfile) {
+            updateProfile.addEventListener('click', () => {
+                const name = document.getElementById('username').value;
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+                $.ajax({
+                    url: '/settings/updateProfile',
+                    method: 'POST',
+                    data: { name: name, phone: phone, email: email},
+                    success: (res) => {
+                        console.log(res);
+                        if (res.status === 200) {
+                            Toastify({
+                                ...this.toastOption,
+                                text: res.message
+                            }).showToast();
+                        };
+                    }
+                })
+            })
+        }
     }
     handleOffEnergy = () => {
         $('#energy').on('click', () => {
@@ -145,37 +156,7 @@ class App {
             console.log(email, password);
         }
     }
-    handleMainControl = () => {
-        const handleSlider = () => {
-            const slider = document.querySelector('div.slider');
-            if (slider) {
-                slider.addEventListener('mousedown', mouseDown, false);
-                window.addEventListener('mouseup', mouseUp, false);
-            }
-        }
 
-        const mouseUp = () => {
-            window.removeEventListener('mousemove', divMove, true);
-        }
-
-        const mouseDown = (e) => {
-            window.addEventListener('mousemove', divMove, true);
-        }
-
-        const divMove = (e) => {
-            let currentRatio = ((e.clientX - document.querySelector('div.range-background').offsetLeft) / document.querySelector('div.range-background').offsetWidth) * 100;
-            currentRatio = parseInt(currentRatio);
-            if (currentRatio > 100) {
-                currentRatio = 100;
-            }
-            else if (currentRatio < 0) {
-                currentRatio = 0;
-            }
-            document.querySelector('div.slider').dataset.after = currentRatio + '%';
-            document.querySelector('div.slider').style.width = currentRatio + '%';
-        }
-        handleSlider();
-    }
     handleSidebarActive = () => {
         const sidebarItem = $$('.sidebar-items li');
         sidebarItem.forEach((li, index) => {
@@ -204,6 +185,7 @@ class App {
                         const option = new Option(`${res.data.name}`, `${res.data.name}`);
                         console.log(option);
                         document.getElementById('select-room-dropdown-menu').appendChild(option);
+                        this.popMessage('Add room successfully');
                     }
                 })
             })
@@ -306,34 +288,34 @@ class App {
             })
         })
     }
-    updateTempAndHumi = () => {
-        setTimeout(() => {
-            // get time at 2 minutes ago
-            const previous = new Date(Date.now() - 2 * 60 * 1000);
-            $.ajax({
-                // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
-                url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=5&start_time=${previous.toISOString()}`,
-                method: 'GET',
-                success: (result) => {
-                    if (result.length !== 0) {
-                        result.forEach(data => {
-                            try {
-                                const lastData = JSON.parse(data.value);
-                                if (lastData.name === 'TempHumi') {
-                                    const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
-                                    $('.temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
-                                    $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
-                                    this.updateTempAndHumi();
-                                }
-                            } catch (error) {
-                                return;
-                            }
-                        })
-                    }
-                }
-            })
-        }, 3000)
-    }
+    // updateTempAndHumi = () => {
+    //     setTimeout(() => {
+    //         // get time at 2 minutes ago
+    //         const previous = new Date(Date.now() - 2 * 60 * 1000);
+    //         $.ajax({
+    //             // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
+    //             url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=5&start_time=${previous.toISOString()}`,
+    //             method: 'GET',
+    //             success: (result) => {
+    //                 if (result.length !== 0) {
+    //                     result.forEach(data => {
+    //                         try {
+    //                             const lastData = JSON.parse(data.value);
+    //                             if (lastData.name === 'TempHumi') {
+    //                                 const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
+    //                                 $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
+    //                                 $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
+    //                                 this.updateTempAndHumi();
+    //                             }
+    //                         } catch (error) {
+    //                             return;
+    //                         }
+    //                     })
+    //                 }
+    //             }
+    //         })
+    //     }, 3000)
+    // }
     handleTableDeviceInStatistic = () => {
         // let newDevices;
         $.ajax({
@@ -366,59 +348,6 @@ class App {
         })
 
     }
-    handleToggleDevice = () => {
-        $$('.device-list .device-item').forEach((item) => {
-            if (item.dataset.item !== 'add') {
-                item.children[0].children[1].children[0].addEventListener('change', (e) => {
-                    $('.wrapper > .wrapper-loading').css('display', 'flex');
-                    $.ajax({
-                        url: '/device/toggle',
-                        method: 'POST',
-                        data: {
-                            deviceId: item.dataset.id,
-                            deviceType: item.dataset.type,
-                            status: e.target.checked
-                        },
-                        dataType: 'json',
-                        success: (res) => {
-                            if (res.status === 404) {
-                                console.log(res.message);
-                                item.children[0].children[1].children[0].checked = false;
-                                this.popMessage(res.message);
-                                $('.wrapper > .wrapper-loading').css('display', 'none');
-                            }
-                            else if (res.status == 200) {
-                                console.log(res.data);
-                                const message = item.children[1].children[0].children[0].value + ' đã được ' + (e.target.checked ? 'mở' : 'tắt');
-                                this.popMessage(message);
-                                item.classList.toggle('device-item-active');
-                                $('.wrapper > .wrapper-loading').css('display', 'none');
-                                // $$('.toggle-control input').forEach(btn => {
-                                //     btn.addEventListener('change', (e) => {
-                                //         const path = e.composedPath() || e.path
-                                //         let deviceItem;
-                                //         if (path) {
-                                //             deviceItem = path[3];
-                                //         }
-                                //         // const message = deviceItem.children[1].children[0].children[0].value + ' đã được ' + (e.target.checked ? 'mở' : 'tắt');
-                                        
-                                        
-                                //     })
-                                // })
-                               
-                            }
-                            else if (res.status == 500) {
-                                console.log(res.message);
-                                item.children[0].children[1].children[0].checked = false;
-                                this.popMessage(res.message);
-                                $('.wrapper + .wrapper-loading').css('display', 'none');
-                            }
-                        }
-                    })
-                })
-            }
-        })
-    }
 
     handleEditDevice = () => {
         $$('.bottom-info-edit .dropdown-menu-edit li').forEach(li => {
@@ -441,39 +370,34 @@ class App {
                     }
                 }
                 else if (typ === 'edit') {
-                    console.log('Edit');
-                    const deviceNameInput = $('.bottom-info .bottom-info-device-name > input');
-                    deviceNameInput.prop('disabled', false);
+                    const deviceNameInput = li.parentElement.parentElement.parentElement.firstElementChild.firstElementChild;
+                    deviceNameInput.disabled = false;
                     deviceNameInput.focus();
-                    deviceNameInput.on('focusout', (e) => {
+                    deviceNameInput.addEventListener('focusout', (e) => {
                         if (confirm('Save your edited?')) {
                             const newDeviceName = e.target.value;
-                            console.log(newDeviceName, deviceNameInput.data('id'));
                             $.ajax({
                                 url: '/device/edit',
                                 method: 'POST',
-                                data: { 
-                                    deviceId: deviceNameInput.data('id'),
+                                data: {
+                                    deviceId: deviceNameInput.dataset.id,
                                     deviceName: newDeviceName
                                 },
                                 success: (res) => {
-                                    console.log(res);
                                     if (res.status === 200) {
-                                        deviceNameInput.prop('disabled', true);
+                                        deviceNameInput.disabled = true;
                                         this.popMessage(res.message);
                                     }
                                 }
                             })
                         }
                         else {
-                            deviceNameInput.prop('disabled', true);
+                            deviceNameInput.disabled = true;
                         }
                     })
                 }
             })
         })
-
-
     }
 }
 // INITIAL APP

@@ -3,9 +3,12 @@
         data-id="<%= device.id %>" data-type="<%= device.type %>">
         <div class="top-action">
             <div class="icon-background">
-                <span class="material-icons-outlined">
-                    <%= device.type == 'led' ? 'light' : '' %>bulb
-                </span>
+                <% if (device.type === 'led') { %> 
+                    <span class="material-icons-outlined">lightbulb</span>
+                <% } %> 
+                <% if (device.type === 'fan') { %> 
+                    <span class="fa-solid fa-fan"></span>
+                <% } %> 
             </div>
             <label class="toggle-control">
                 <input type="checkbox" <%=device.status ? 'checked' : '' %>>

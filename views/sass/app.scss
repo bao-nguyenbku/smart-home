@@ -10,6 +10,9 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
+html {
+  font-size: 100%;
+}
 body {
   background: #c3d9e4;
   width: 100%;
@@ -37,12 +40,20 @@ p {
   height: 100%;
   background-image: url(../../images/living-room.jpg);
   background-repeat: no-repeat;
-  background-size: 100%;
-  -webkit-filter: blur(3px) brightness(70%);
-  -moz-filter: blur(3px) brightness(70%);
-  -o-filter: blur(3px) brightness(70%);
-  -ms-filter: blur(3px) brightness(70%);
-  filter: blur(3px) brightness(70%);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  // -webkit-filter: brightness(70%);
+  // -moz-filter: brightness(70%);
+  // -o-filter: brightness(70%);
+  // -ms-filter: brightness(70%);
+  // filter: brightness(70%);
+  -webkit-filter: blur(1px) brightness(70%);
+  -moz-filter: blur(1px) brightness(70%);
+  -o-filter: blur(1px) brightness(70%);
+  -ms-filter: blur(1px) brightness(70%);
+  filter: blur(1px) brightness(70%);
 }
 .wrapper {
   width: 801px;

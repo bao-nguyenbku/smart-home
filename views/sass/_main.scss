@@ -5,8 +5,11 @@
   width: calc(801px - 161px);
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
-  padding: 30px;
   background-color: $background;
+  // background-color: rgba(255, 255, 255, 0.4);
+  //   backdrop-filter: blur(10px);
+  //   -webkit-backdrop-filter: blur(4px);
+  padding: 30px;
   .main-feed {
     width: 100%;
     height: 60px;
@@ -80,13 +83,20 @@
       @include d-flex(column, flex-end, normal);
       p {
         &:first-child {
-          font-size: 26px;
+          overflow: hidden; /* Ensures the content is not revealed until the animation */
+          font-size: 22px;
+          border-right: .15em solid orange; /* The typwriter cursor */
+          white-space: nowrap; /* Keeps the content on a single line */
+          // margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+          letter-spacing: .15em; /* Adjust as needed */
+          animation: typing 3.5s steps(30, end) infinite alternate,
+                     blink-caret .5s step-end infinite;
+          
         }
         &:nth-child(2) {
           font-size: 14px;
           margin-top: 5px;
           color: $lightBlue;
-          animation: 2s infinite slideup;
         }
       }
     }
