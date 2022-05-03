@@ -19,17 +19,17 @@ class HomeController {
             })
             .catch(err => res.json(err))
     }
-    deleteRoom = (req, res, next) => {
-        const { id } = req.body;
-        Room.findOneAndDelete({ id: id })
-            .then(result => {
-                res.status(200).json({
-                    status: 200,
-                    data: result
-                })
-            })
-            .catch(err => res.json(err))
-
+    deleteDevice = (req, res, next) => {
+        const _id = req.body.id;
+        Device.findOneAndDelete({ id: _id })
+            .then(_ => {
+                Port.findOneAndUpdate({ port: _id }, { status: false })
+                    .then(_ => {
+                        res.status(200).json({
+                            status: 200
+                        })
+                    })
+            }).catch(err => console.log(err));
     }
     addNewDevice = (req, res, next) => {
         const { name, id, type, roomId } = req.body;
