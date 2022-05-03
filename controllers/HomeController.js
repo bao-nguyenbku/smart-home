@@ -146,5 +146,27 @@ class HomeController {
                 data: result
             })).catch(err => console.log(err))
     }
+
+    deleteDevice = (req, res, next) => {
+        const _id = req.body.id;
+        Device.findOneAndDelete({ id: _id })
+            .then(_ => {
+                if (_) {
+                    Port.findOneAndUpdate({ port: _id }, { status: false })
+                        .then(_ => {
+                            res.status(200).json({
+                                status: 200,
+                                message: 'Delete device successfully'
+                            })
+                        }).catch(err => console.log(err));
+                }
+                else {
+                    res.status(200).json({
+                        status: 304,
+                        message: 'Device didn\'t exist in database'
+                    })
+                }
+            }).catch(err => console.log(err));
+    }
 }
 export default new HomeController;
