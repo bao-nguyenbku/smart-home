@@ -1,22 +1,18 @@
 import { Router } from 'express';
 import HomeController from '../controllers/HomeController.js';
-import SettingsController from '../controllers/SettingsController.js';
-import isLoggedIn from '../controllers/isLoggedIn.js';
+
 const router = Router();
 
-router.get('/room/all', isLoggedIn(), HomeController.getAllRoom);
-router.post('/room/add', isLoggedIn(), HomeController.addNewRoom);
-router.post('/room/delete', isLoggedIn(), HomeController.deleteRoom);
-router.post('/room/device/all', isLoggedIn(), HomeController.getDeviceByRoomId);
+router.get('/room/all', HomeController.getAllRoom);
+router.post('/room/add', HomeController.addNewRoom);
+router.post('/room/device/all', HomeController.getDeviceByRoomId);
 
 
 
-router.get('/device/all', isLoggedIn(), HomeController.getAllDevice);
-router.get('/adafruit/hardware/all', isLoggedIn(), HomeController.getDataFeed);
-router.get('/port', isLoggedIn(), HomeController.getPorts);
-router.post('/device/add', isLoggedIn(), HomeController.addNewDevice);
-router.post('/device/toggle', isLoggedIn(), HomeController.toggleDevice);
-
-router.get('/settings', isLoggedIn(), SettingsController.show);
+router.get('/device/all', HomeController.getAllDevice);
+router.get('/adafruit/hardware/all', HomeController.getDataFeed);
+router.get('/port', HomeController.getPorts);
+router.post('/device/add', HomeController.addNewDevice);
+router.post('/device/toggle', HomeController.toggleDevice);
 
 export default router;

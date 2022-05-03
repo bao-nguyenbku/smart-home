@@ -67,11 +67,11 @@ class HomeController {
     toggleDevice = (req, res, next) => {
         const { id, status } = req.body;
         // Turn off
-        if (!status) {
+        if (status === false) {
             Device.findOne({ id: id })
                 .then(result => {
-                    if (!result.status) {
-                        res.status(304).json({
+                    if (result.status) {
+                        res.status(200).json({
                             status: 304,
                             message: 'This device is currently off'
                         })
@@ -96,7 +96,7 @@ class HomeController {
             Device.findOne({ id: id })
                 .then(result => {
                     if (result.status) {
-                        res.status(304).json({
+                        res.status(200).json({
                             status: 304,
                             message: 'This device is currently on'
                         })
