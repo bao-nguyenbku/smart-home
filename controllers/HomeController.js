@@ -186,7 +186,6 @@ class HomeController {
                 data: result
             })).catch(err => console.log(err))
     }
-
     deleteDevice = (req, res, next) => {
         const _id = req.body.id;
         Device.findOneAndDelete({ id: _id })
@@ -209,7 +208,30 @@ class HomeController {
             }).catch(err => console.log(err));
     }
     editDeviceName = (req, res, next) => {
-        const { id, name } = req.body
+        const { id, name } = req.body;
+        Device.findOneAndUpdate({id: id}, { name: name })
+            .then(result => {
+                if (result) {
+                    res.status(200).json({
+                        status: 200,
+                        message: 'Update device successfully'
+                    })
+                }
+                else {
+                    res.status(200).json({
+                        status: 304,
+                        message: 'This device didn\'t exist'
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(200).json({
+                    status: 500,
+                    message: 'Server error'
+                })
+            }) 
+
     }
 }
 export default new HomeController;

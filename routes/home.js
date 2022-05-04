@@ -8,11 +8,10 @@ router.post('/room/add', HomeController.addNewRoom);
 router.post('/room/device/all', HomeController.getDeviceByRoomId);
 
 
-
 router.get('/device/all', HomeController.getAllDevice);
-router.get('/port', HomeController.getPorts);
 router.post('/device/add', HomeController.addNewDevice);
-router.post('/device/toggle', HomeController.toggleDevice);
+router.post('/device/edit', HomeController.editDeviceName);
 router.post('/device/delete', HomeController.deleteDevice);
 
+router.get('/port', HomeController.getPorts);
 export default router;

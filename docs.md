@@ -189,6 +189,16 @@ POST http://localhost:5000/device/add
 
 ## EDIT DEVICE NAME
 
+```json
+POST http://localhost:5000/device/edit
+{
+    "id": 2,
+    "name": "Name after change"
+}
+```
+```json
+
+```
 
 Example response:
 ```json
