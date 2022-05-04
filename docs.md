@@ -56,7 +56,7 @@ Header: Content-Type: application/json
 ```json
 POST http://localhost:5000/room/add
 {
-    "name": "DFSFSDame"
+    "name": "Room name"
 }
 ```
 Example response:
@@ -69,29 +69,6 @@ Example response:
         "_id": "62578cae7dcdc13e3c157d6c",
         "createdAt": "2022-04-14T02:53:34.123Z",
         "updatedAt": "2022-04-14T02:53:34.123Z",
-        "__v": 0
-    }
-}
-```
-
-## DELETE A ROOM
-``` json
-POST http://localhost:5000/room/delete
-{
-    "id": 202241410318
-}
-```
-
-Example response:
-``` json
-{
-    "status": 200,
-    "data": {
-        "_id": "62578ef6b1f290052bc5d01b",
-        "id": 202241410318,
-        "name": "New room",
-        "createdAt": "2022-04-14T03:03:18.849Z",
-        "updatedAt": "2022-04-14T03:03:18.849Z",
         "__v": 0
     }
 }
@@ -135,6 +112,21 @@ Example response:
             "__v": 0
         }
     ]
+}
+```
+## DELETE DEVICE BY ID
+
+```json
+POST http://localhost:5000/device/delete
+{
+    "id": 2
+}
+```
+Example response:
+``` json
+{
+    "status": 200,
+    "message": "Delete device successfully"
 }
 ```
 
@@ -195,6 +187,9 @@ POST http://localhost:5000/device/add
 }
 ```
 
+## EDIT DEVICE NAME
+
+
 Example response:
 ```json
 {
@@ -243,44 +238,6 @@ Example response:
         "updatedAt": "2022-04-14T03:58:33.313Z",
         "__v": 0
     }
-}
-```
-## GET FEED DATA FROM ADAFRUIT (Hardware)
-```
-GET http://localhost:5000/adafruit/hardware/all
-```
-Example response:
-```json
-{
-    "data": [
-        {
-            "id": "0EZVMZ3Y98V0G6561HNSD8CNCT",
-            "value": "{\"id\":-1,\"cmd\":\"info\",\"name\":\"TempHumi\",\"paras\":\"{31.00,75.00}\"}",
-            "feed_id": 1846209,
-            "feed_key": "ttda-cnpm-ha2so",
-            "created_at": "2022-04-01T08:15:43Z",
-            "created_epoch": 1648800943,
-            "expiration": "2022-05-01T08:15:43Z"
-        },
-        {
-            "id": "0EZVMX3S0RCJF948627TTSMH8J",
-            "value": "{\"id\":-1,\"cmd\":\"info\",\"name\":\"TempHumi\",\"paras\":\"{32.00,71.00}\"}",
-            "feed_id": 1846209,
-            "feed_key": "ttda-cnpm-ha2so",
-            "created_at": "2022-04-01T08:12:12Z",
-            "created_epoch": 1648800732,
-            "expiration": "2022-05-01T08:12:12Z"
-        },
-        {
-            "id": "0EZVMW9NXEXQJDWY3VB5G2TA91",
-            "value": "{\"id\":-1,\"cmd\":\"info\",\"name\":\"TempHumi\",\"paras\":\"{32.00,71.00}\"}",
-            "feed_id": 1846209,
-            "feed_key": "ttda-cnpm-ha2so",
-            "created_at": "2022-04-01T08:10:47Z",
-            "created_epoch": 1648800647,
-            "expiration": "2022-05-01T08:10:47Z"
-        },
-    ]
 }
 ```
 

@@ -10,7 +10,6 @@ router.post('/room/device/all', HomeController.getDeviceByRoomId);
 
 
 router.get('/device/all', HomeController.getAllDevice);
-router.get('/adafruit/hardware/all', HomeController.getDataFeed);
 router.get('/port', HomeController.getPorts);
 router.post('/device/add', HomeController.addNewDevice);
 router.post('/device/toggle', HomeController.toggleDevice);

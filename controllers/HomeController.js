@@ -19,41 +19,58 @@ class HomeController {
             })
             .catch(err => res.json(err))
     }
-    deleteDevice = (req, res, next) => {
-        const _id = req.body.id;
-        Device.findOneAndDelete({ id: _id })
-            .then(_ => {
-                Port.findOneAndUpdate({ port: _id }, { status: false })
-                    .then(_ => {
-                        res.status(200).json({
-                            status: 200
-                        })
-                    })
-            }).catch(err => console.log(err));
-    }
     addNewDevice = (req, res, next) => {
         const { name, id, type, roomId } = req.body;
         // Find a room in database which match 'room'
         Room.findOne({id: roomId})
             .then(result => {
-                const newDevice = new Device({
-                    id: id,
-                    name: name,
-                    status: false,
-                    type: type,
-                    roomId: roomId,
-                    lastUse: new Date()
-                });
-                newDevice.save()
-                    .then(result => {
-                        res.status(200).json({
-                            status: 200,
-                            data: result
+                if (result) {
+                    const newDevice = new Device({
+                        id: id,
+                        name: name,
+                        status: false,
+                        type: type,
+                        roomId: roomId,
+                        lastUse: new Date()
+                    });
+                    newDevice.save()
+                        .then(result => {
+                            Port.findOneAndUpdate({port: id}, {status: true})
+                                .then(port => {
+                                    res.status(200).json({
+                                        status: 200,
+                                        data: result
+                                    })
+                                }).catch(err => {
+                                    console.log(err);
+                                    res.status(200).json({
+                                        status: 500,
+                                        message: 'Server error'
+                                    })
+                                })
                         })
+                        .catch(err => {
+                            console.log(err);
+                            res.status(200).json({
+                                status: 500,
+                                message: 'Server error'
+                            })
+                        });
+                }
+                else {
+                    res.status(200).json({
+                        status: 304,
+                        message: 'This room didn\'t exist'
                     })
-                    .catch(err => console.log(err));
+                }
             })
-            .catch(err => res.json(err))
+            .catch(err => {
+                console.log(err);
+                res.status(200).json({
+                    status: 500,
+                    message: 'Server error'
+                })
+            })
     }
     getAllDevice = (req, res, next) => {
         Device.find()
@@ -70,6 +87,12 @@ class HomeController {
         if (status === false) {
             Device.findOne({ id: id })
                 .then(result => {
+                    if(result == null) {
+                        res.status(200).json({
+                            status: 304,
+                            message: 'This device didn\'t exist'
+                        })
+                    }
                     if (result.status) {
                         res.status(200).json({
                             status: 304,
@@ -88,9 +111,21 @@ class HomeController {
                                 status: 200,    
                                 data: result2
                             });
-                        }).catch(err => res.json(err))
+                        }).catch(err => {
+                            console.log(err);
+                            res.status(200).json({
+                                status: 500,
+                                message: 'Server error'
+                            })
+                        })
                     }
-                }).catch(err => res.json(err))
+                }).catch(err => {
+                    console.log(err);
+                    res.status(200).json({
+                        status: 500,
+                        message: 'Server error'
+                    })
+                })
         }
         else {
             Device.findOne({ id: id })
@@ -109,9 +144,21 @@ class HomeController {
                                     data: result
                                 });
                             })
-                            .catch(err => res.json(err))
+                            .catch(err => {
+                                console.log(err);
+                                res.status(200).json({
+                                    status: 500,
+                                    message: 'Server error'
+                                })
+                            })
                     }
-                }).catch(err => req.json(err))
+                }).catch(err => {
+                    console.log(err);
+                    res.status(200).json({
+                        status: 500,
+                        message: 'Server error'
+                    })
+                })
         }
     }
     getAllRoom = (req, res, next) => {
@@ -132,13 +179,6 @@ class HomeController {
             })
             .catch(err => res.json(err))
         console.log(id);
-    }
-    getDataFeed = (req, res, next) => {
-        axios.get('https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data')
-            .then(result => res.status(200).json({
-                data: result.data
-            }))
-            .catch(err => res.json(err))
     }
     getPorts = (req, res, next) => {
         Port.find()
@@ -167,6 +207,9 @@ class HomeController {
                     })
                 }
             }).catch(err => console.log(err));
+    }
+    editDeviceName = (req, res, next) => {
+        const { id, name } = req.body
     }
 }
 export default new HomeController;
