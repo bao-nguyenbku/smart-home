@@ -87,17 +87,19 @@ class HomeController {
         if (status === false) {
             Device.findOne({ id: id })
                 .then(result => {
-                    if(result == null) {
+                    if(result === null) {
                         res.status(200).json({
                             status: 304,
                             message: 'This device didn\'t exist'
                         })
+                        res.end();
                     }
-                    if (result.status) {
+                    else if (result.status) {
                         res.status(200).json({
                             status: 304,
                             message: 'This device is currently off'
                         })
+                        res.end()
                     }
                     else {
                         const currentTime = new Date();
@@ -111,12 +113,14 @@ class HomeController {
                                 status: 200,    
                                 data: result2
                             });
+                            res.end();
                         }).catch(err => {
                             console.log(err);
                             res.status(200).json({
                                 status: 500,
                                 message: 'Server error'
                             })
+                            res.end();
                         })
                     }
                 }).catch(err => {
