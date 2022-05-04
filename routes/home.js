@@ -12,6 +12,7 @@ router.get('/device/all', HomeController.getAllDevice);
 router.post('/device/add', HomeController.addNewDevice);
 router.post('/device/edit', HomeController.editDeviceName);
 router.post('/device/delete', HomeController.deleteDevice);
+router.post('/device/toggle', HomeController.toggleDevice);
 
 router.get('/port', HomeController.getPorts);
 export default router;
