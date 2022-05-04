@@ -214,7 +214,8 @@ class HomeController {
                 if (result) {
                     res.status(200).json({
                         status: 200,
-                        message: 'Update device successfully'
+                        message: 'Update device successfully',
+                        data: result
                     })
                 }
                 else {

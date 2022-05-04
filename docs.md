@@ -196,31 +196,30 @@ POST http://localhost:5000/device/edit
     "name": "Name after change"
 }
 ```
-```json
-
-```
-
 Example response:
 ```json
 {
     "status": 200,
+    "message": "Update device successfully",
     "data": {
-        "id": 452,
-        "name": "new device",
+        "_id": "6267f3059c9f8fa63b6f02a5",
+        "id": 1,
+        "name": "Quạt Pana",
         "status": false,
-        "type": "led",
-        "roomId": 322348042434,
+        "type": "fan",
+        "roomId": 202232910475,
         "capacity": 36,
-        "duration": 0,
-        "lastUse": "2022-04-14T03:13:49.124Z",
-        "_id": "6257916de032034d3f10dffe",
-        "createdAt": "2022-04-14T03:13:49.162Z",
-        "updatedAt": "2022-04-14T03:13:49.162Z",
+        "duration": 1041118,
+        "lastUse": "2022-04-27T15:52:10.822Z",
+        "createdAt": "2022-04-26T13:26:29.615Z",
+        "updatedAt": "2022-05-04T02:20:32.355Z",
         "__v": 0
     }
 }
 ```
+
 ## UPDATE STATUS OF DEVICE
+
 ``` json
 POST http://localhost:5000/device/toggle
 {
