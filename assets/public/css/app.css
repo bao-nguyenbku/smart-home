@@ -622,7 +622,7 @@ p {
 .sidebar-container {
   width: 161px;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(4px);
   border-top-left-radius: 30px;
@@ -650,7 +650,7 @@ p {
   font-weight: 900;
   font-size: 18px;
   line-height: 24px;
-  color: #7297AB;
+  color: #283c47;
   margin-left: 7px;
 }
 .sidebar-container ul {
@@ -660,7 +660,7 @@ p {
 .sidebar-container ul li {
   list-style-type: none;
   margin-bottom: 30px;
-  height: 33px;
+  height: 40px;
   padding: 0;
 }
 .sidebar-container ul li .sidebar-item {
@@ -682,14 +682,17 @@ p {
   font-style: normal;
 }
 .sidebar-container ul li span {
-  color: #7297ab;
+  color: #283c47;
   font-weight: 700;
   font-size: inherit;
   margin-left: 5px;
 }
 .sidebar-container ul li.li-active {
-  background: #FFE7DC;
+  background: #ffffff;
   border-right: 4px solid #fe834d;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-left: 4px;
 }
 .sidebar-container ul li.li-active i, .sidebar-container ul li.li-active span {
   color: #fe834d;
@@ -1030,7 +1033,7 @@ p {
   background-color: white;
   border-radius: 10px;
   color: black;
-  box-shadow: #26394d 0px 20px 30px -10px;
+  box-shadow: 0 1px 2px #cccccc;
   font-size: 20px;
   z-index: 2;
   list-style: none;

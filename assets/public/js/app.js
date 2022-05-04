@@ -288,34 +288,7 @@ class App {
             })
         })
     }
-    // updateTempAndHumi = () => {
-    //     setTimeout(() => {
-    //         // get time at 2 minutes ago
-    //         const previous = new Date(Date.now() - 2 * 60 * 1000);
-    //         $.ajax({
-    //             // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
-    //             url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=5&start_time=${previous.toISOString()}`,
-    //             method: 'GET',
-    //             success: (result) => {
-    //                 if (result.length !== 0) {
-    //                     result.forEach(data => {
-    //                         try {
-    //                             const lastData = JSON.parse(data.value);
-    //                             if (lastData.name === 'TempHumi') {
-    //                                 const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
-    //                                 $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
-    //                                 $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
-    //                                 this.updateTempAndHumi();
-    //                             }
-    //                         } catch (error) {
-    //                             return;
-    //                         }
-    //                     })
-    //                 }
-    //             }
-    //         })
-    //     }, 3000)
-    // }
+
     handleTableDeviceInStatistic = () => {
         // let newDevices;
         $.ajax({
@@ -348,10 +321,12 @@ class App {
         })
 
     }
-
+    editDevice = (deviceNameInput, e) => {
+        
+    }
     handleEditDevice = () => {
-        $$('.bottom-info-edit .dropdown-menu-edit li').forEach(li => {
-            li.addEventListener('click', () => {
+        $('.bottom-info-edit .dropdown-menu-edit li').each((index, li) => {
+            li.onclick = (e) => {
                 const deviceId = parseInt(li.dataset.id);
                 const typ = li.dataset.type;
                 if (typ === 'delete') {
@@ -373,7 +348,7 @@ class App {
                     const deviceNameInput = li.parentElement.parentElement.parentElement.firstElementChild.firstElementChild;
                     deviceNameInput.disabled = false;
                     deviceNameInput.focus();
-                    deviceNameInput.addEventListener('focusout', (e) => {
+                    $('.bottom-info').find(deviceNameInput).one('focusout', (e) => {
                         if (confirm('Save your edited?')) {
                             const newDeviceName = e.target.value;
                             $.ajax({
@@ -394,10 +369,12 @@ class App {
                         else {
                             deviceNameInput.disabled = true;
                         }
-                    })
+                    });
+                    // deviceNameInput.addEventListener('focusout', this.editDevice(deviceNameInput, e), true)
                 }
-            })
-        })
+                $('.bottom-info-edit .dropdown-menu-edit li').off(e);
+            }
+        });
     }
 }
 // INITIAL APP
