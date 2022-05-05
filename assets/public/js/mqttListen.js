@@ -88,7 +88,7 @@ class Adafruit {
                 data: {
                     deviceId: this.adaDevice.id,
                     deviceType: this.adaDevice.name,
-                    status: this.adaDevice.cmd === value.cmd
+                    status: value.cmd === 'open' ? true : false
                 },
                 success: (res) => {
                     console.log(res);

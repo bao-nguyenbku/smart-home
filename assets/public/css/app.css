@@ -536,6 +536,11 @@ p {
 
 #root {
   height: calc(100% - 60px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#root::-webkit-scrollbar {
+  display: none;
 }
 
 .login-wrapper {
@@ -1237,27 +1242,27 @@ p {
   padding-top: 35px;
 }
 .statistic-container .table-and-rooms {
-  display: grid;
-  grid-template-columns: 195px 372px;
+  display: flex;
+  flex-direction: column;
   padding-top: 40px;
 }
 .statistic-container .table-and-rooms .rooms-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-row-gap: 22px;
-  height: 274px;
+  width: 100%;
   overflow-y: auto;
   padding-bottom: 10px;
   -ms-overflow-style: none;
   /* for Internet Explorer, Edge */
   scrollbar-width: none;
   /* for Firefox */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
 }
 .statistic-container .table-and-rooms .rooms-container::-webkit-scrollbar {
   display: none;
 }
 .statistic-container .table-and-rooms .rooms-container .room-item {
-  width: 172px;
   height: 52px;
   border-radius: 10px;
   background: white;
@@ -1266,10 +1271,10 @@ p {
 }
 .statistic-container .table-and-rooms .rooms-container .room-item .border-badge {
   width: max-content;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
   height: 100%;
-  background: #00466D;
+  background: rgba(114, 151, 171, 0.2);
   border-top-left-radius: inherit;
   border-bottom-left-radius: inherit;
   display: flex;
@@ -1277,7 +1282,7 @@ p {
   justify-content: center;
 }
 .statistic-container .table-and-rooms .rooms-container .room-item .border-badge span {
-  color: white;
+  color: #283c47;
   font-size: 18px;
 }
 .statistic-container .table-and-rooms .rooms-container .room-item .room-name {
@@ -1299,9 +1304,11 @@ p {
 }
 .statistic-container .table-and-rooms .table-of-device-container {
   padding: 10px;
+  margin-top: 20px;
   background: white;
   border-radius: 10px;
   height: 100%;
+  width: 100%;
 }
 .statistic-container .table-and-rooms .table-pagination {
   margin-top: auto;
@@ -1311,9 +1318,6 @@ p {
   align-items: center;
   justify-content: flex-end;
   width: 100%;
-  bottom: 0;
-  position: sticky;
-  right: 0;
   background: white;
 }
 .statistic-container .table-and-rooms .table-pagination span {
@@ -1342,7 +1346,7 @@ p {
 }
 .statistic-container .table-and-rooms .table-of-device table {
   font-size: 10px;
-  width: 500px;
+  width: 100%;
 }
 .statistic-container .table-and-rooms .table-of-device table thead th {
   top: 0;
@@ -1355,6 +1359,8 @@ p {
 }
 .statistic-container .table-and-rooms .table-of-device table thead tr th {
   padding: 0;
+  padding-left: 8px;
+  padding-right: 8px;
   margin: 0;
   font-size: inherit;
   text-align: center;
@@ -1374,6 +1380,47 @@ p {
   margin: auto;
   width: 100%;
   height: 200px;
+}
+
+.totalkWh-container {
+  width: 100%;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.totalkWh-container .total-cost, .totalkWh-container .total-kWh {
+  width: 50%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 5px 10px 5px 10px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.totalkWh-container .total-cost span, .totalkWh-container .total-kWh span {
+  color: #797979;
+}
+.totalkWh-container .total-cost p, .totalkWh-container .total-kWh p {
+  font-size: 20px;
+  font-weight: 600;
+  color: #283c47;
+}
+.totalkWh-container .total-cost {
+  background-color: rgba(86, 236, 78, 0.2);
+}
+.totalkWh-container .total-cost p {
+  color: #15ad0c;
+}
+.totalkWh-container .total-kWh {
+  background-color: rgba(236, 170, 78, 0.2);
+}
+.totalkWh-container .total-kWh p {
+  color: #d28a04;
 }
 
 .settings-container {

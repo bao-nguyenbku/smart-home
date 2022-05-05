@@ -1,60 +1,75 @@
 if (location.href.includes('/statistics')) {
   const ctx = document.getElementById('elec-chart').getContext('2d');
-  const options = {
-      maintainAspectRatio: false,
-      plugins: {
-          datalabels: {
-              align: 'top',
-              font: {
-                  size: 17,
-                  weight: 600
-              }
-          },
-          
+  var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+  gradient.addColorStop(0, 'rgba(114, 151, 171, 0.5)');
+  gradient.addColorStop(0.5, 'rgba(114, 151, 171, 0.2)');
+  gradient.addColorStop(1, 'rgba(114, 151, 171, 0)');
+  let options = {
+    maintainAspectRatio: false,
+    responsive: true,
+    datasetStrokeWidth : 3,
+    pointDotStrokeWidth : 4,
+    plugins: {
+      datalabels: {
+        align: 'end',
+        anchor: 'end',
+        font: {
+          size: 14,
+          weight: 600
+        }
       },
-      scales: {
-        y: {
-          stacked: true,
-          grid: {
-            display: true,
-            color: "rgba(255,99,132,0.2)"
-          }
-        },
-        x: {
-          grid: {
-            display: false
-          }
+      legend: {
+        align: 'end',
+        labels: {
+          padding: 10
         }
       }
-    };
+    },
+    scales: {
+      y: {
+        stacked: false,
+        display: true,
+        color: "rgba(255,99,132,0.2)",
+      }
+    }
+  };
   Chart.register(ChartDataLabels);
-  const myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-          labels: [1,5,10,15,20,25,30],
+  $.ajax({
+    url: '/statistics/data',
+    method: 'get',
+    success: (res) => {
+      if (res.status === 200) {
+        let data = new Array(7).fill(0);
+        res.data.forEach(ele => {
+          data = data.map((d_e, index) => {
+            let number = d_e + (ele.data[index] / 3600000 * 0.036);
+            return number;
+          })
+        })
+        let chartData = {
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           datasets: [{
-              label: 'Total kWh',
-              data: [123, 100, 124, 140, 160, 170, 150],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)'
-              ],
-              borderWidth: 1
+            label: 'kWh',
+            backgroundColor: gradient,
+            pointBackgroundColor: 'rgb(254, 131, 77)',
+            borderWidth: 2,
+            borderColor: '#283c47',
+            pointStrokeColor: "#ff6c23",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "#ff6c23",
+            tension: 0.4,
+            fill: true,
+            data: data.map(el => el.toFixed(2)),
           }]
-      },
-      options: options,
-      plugins: [ChartDataLabels]
-  });
+        };
+        const myChart = new Chart(ctx, {
+          type: 'line',
+          data: chartData,
+          options: options,
+          plugins: [ChartDataLabels]
+        });
+      }
+    }
+  })
+  
 }
