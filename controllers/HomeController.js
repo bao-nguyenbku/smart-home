@@ -123,7 +123,7 @@ class HomeController {
                                 })
                             }
                         } catch (error) {
-                            res.status(500).json({
+                            res.status(200).json({
                                 status: 500,
                                 message: error
                             })

@@ -31,6 +31,8 @@ const getMonthText = (month) => {
 
 const getDayText = (day) => {
     switch (day) {
+        case 0:
+            return 'Sun';
         case 1:
             return 'Mon';
         case 2:
@@ -43,8 +45,6 @@ const getDayText = (day) => {
             return 'Fri';
         case 6:
             return 'Sat';
-        case 7:
-            return 'Sun';
         default:
             throw new Error('Invalid day of week');
     }

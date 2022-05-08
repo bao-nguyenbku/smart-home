@@ -10,20 +10,6 @@ class Adafruit {
     // client = mqtt.connect(`wss://${this.HOST}:${this.PORT}`, this.options)
     topicReq = 'kimhungtdblla24/feeds/ttda-cnpm-so2ha'
     topicRes = 'kimhungtdblla24/feeds/ttda-cnpm-ha2so'
-    appDevice = {
-        id: -1,
-        name: '',
-        type: '',
-        roomId: -1,
-        status: false
-    }
-    adaDevice = {
-        id: -1,
-        cmd: '',
-        name: '',
-        paras: ''
-    }
-    eventTarget = ''
 
     constructor() {
         $.ajax({
@@ -57,6 +43,9 @@ class Adafruit {
                             else if (value.cmd === 'add') {
                                 this.listenAddDevice(value);
                             }
+                            else if (value.cmd === 'del') {
+                                this.listenDeleteDevice(value);
+                            }
                             else if (value.cmd === 'info' && value.name === 'TempHumi') {
                                 this.updateTempHumi(value);
                             }
@@ -75,6 +64,89 @@ class Adafruit {
         this.handleAddNewDevice();
         this.handleToggleDevice();
         this.setTempAndHumi();
+        this.deleteDevice();
+    }
+    appDevice = {
+        id: -1,
+        name: '',
+        type: '',
+        roomId: -1,
+        status: false
+    }
+    adaDevice = {
+        id: -1,
+        cmd: '',
+        name: '',
+        paras: ''
+    }
+    eventTarget = ''
+    listenDeleteDevice = (value) => {
+        if (value.id === this.adaDevice.id && value.cmd === 'del' && value.paras === 'success') {
+            $.ajax({
+                url: '/device/delete',
+                method: 'POST',
+                data: { id: this.adaDevice.id },
+                dataType: 'json',
+                success: (res) => {
+                    if (res.status == 200) {
+                        location.reload();
+                    }
+                }
+            })
+        }
+    }
+    deleteDevice = () => {
+        $('.bottom-info-edit .dropdown-menu-edit li').each((index, li) => {
+            li.onclick = (e) => {
+                const deviceId = parseInt(li.dataset.id);
+                const deviceType = li.dataset.dtype;
+                const typ = li.dataset.type;
+                if (typ === 'edit') {
+                    const deviceNameInput = li.parentElement.parentElement.parentElement.firstElementChild.firstElementChild;
+                    deviceNameInput.disabled = false;
+                    deviceNameInput.focus();
+                    $('.bottom-info').find(deviceNameInput).one('focusout', (e) => {
+                        if (confirm('Save your edited?')) {
+                            const newDeviceName = e.target.value;
+                            $.ajax({
+                                url: '/device/edit',
+                                method: 'POST',
+                                data: {
+                                    deviceId: deviceNameInput.dataset.id,
+                                    deviceName: newDeviceName
+                                },
+                                success: (res) => {
+                                    if (res.status === 200) {
+                                        deviceNameInput.disabled = true;
+                                        this.popMessage(res.message);
+                                    }
+                                }
+                            })
+                        }
+                        else {
+                            deviceNameInput.disabled = true;
+                        }
+                    });
+                }
+                else if (typ === 'delete') {
+                    if (confirm('Do you want to delete this device?')) {
+                        this.adaDevice.id = deviceId;
+                        this.adaDevice.cmd = 'del';
+                        this.adaDevice.name = deviceType;
+                        this.adaDevice.paras = 'none';
+                        this.client.publish(this.topicReq, `${JSON.stringify(this.adaDevice)}`, { qos: 0, retain: true }, (err) => {
+                            if (err) {
+                                console.log('From delete new device: ', err);
+                            }
+                            else {
+                                console.log('Success to sent delete device');
+                            }
+                        })
+                    }
+                }
+                $('.bottom-info-edit .dropdown-menu-edit li').off(e);
+            }
+        });
     }
     toggleDevice = (value) => {
         if (value.id === this.adaDevice.id
@@ -125,7 +197,7 @@ class Adafruit {
     }
     getCurrentSelectRoom = () => document.querySelector('#select-room-dropdown-menu').value;
     restartServer = () => {
-        console.log('Received message from ListenRestartServer:', topicRes, feedData);
+        console.log('Received message from ListenRestartServer:', this.topicRes, feedData);
         $.ajax({
             url: '/device/all',
             method: 'get',

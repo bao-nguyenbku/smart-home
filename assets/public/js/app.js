@@ -86,7 +86,7 @@ class App {
         this.handleAddRoom();
         this.handleSelectRoom();
         this.handleOffEnergy();
-        this.handleEditDevice();
+        // this.handleEditDevice();
         this.updateProfile();
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
@@ -321,30 +321,12 @@ class App {
         })
 
     }
-    editDevice = (deviceNameInput, e) => {
-        
-    }
     handleEditDevice = () => {
         $('.bottom-info-edit .dropdown-menu-edit li').each((index, li) => {
             li.onclick = (e) => {
                 const deviceId = parseInt(li.dataset.id);
                 const typ = li.dataset.type;
-                if (typ === 'delete') {
-                    if (confirm('Do you want to delete this device?')) {
-                        $.ajax({
-                            url: '/device/delete',
-                            method: 'POST',
-                            data: { id: deviceId },
-                            dataType: 'json',
-                            success: (res) => {
-                                if (res.status == 200) {
-                                    location.reload();
-                                }
-                            }
-                        })
-                    }
-                }
-                else if (typ === 'edit') {
+                if (typ === 'edit') {
                     const deviceNameInput = li.parentElement.parentElement.parentElement.firstElementChild.firstElementChild;
                     deviceNameInput.disabled = false;
                     deviceNameInput.focus();
@@ -370,7 +352,6 @@ class App {
                             deviceNameInput.disabled = true;
                         }
                     });
-                    // deviceNameInput.addEventListener('focusout', this.editDevice(deviceNameInput, e), true)
                 }
                 $('.bottom-info-edit .dropdown-menu-edit li').off(e);
             }
