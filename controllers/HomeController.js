@@ -94,7 +94,7 @@ class HomeController {
                         })
                         res.end();
                     }
-                    else if (result.status) {
+                    else if (result.status === false) {
                         res.status(200).json({
                             status: 304,
                             message: 'This device is currently off'
