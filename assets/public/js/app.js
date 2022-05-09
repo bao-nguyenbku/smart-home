@@ -13,7 +13,6 @@ const milisecondToHour = (time) => {
 }
 const renderTable = (page, numOfPage, devices) => {
     let row = '';
-
     devices.forEach(device => {
         timeUsed = milisecondToHour(device.duration);
         row += `
@@ -85,8 +84,6 @@ class App {
         this.handleSidebarActive();
         this.handleAddRoom();
         this.handleSelectRoom();
-        this.handleOffEnergy();
-        // this.handleEditDevice();
         this.updateProfile();
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
@@ -119,25 +116,6 @@ class App {
             })
         }
     }
-    handleOffEnergy = () => {
-        $('#energy').on('click', () => {
-            $.ajax({
-                url: '/settings/offEnergy',
-                method: 'GET',
-                success: (res) => {
-                    // Not modified
-                    if (res.status === 304) {
-                        const message = 'Tất cả thiết bị đang tắt';
-                        this.popMessage(message);
-                    }
-                    else if (res.status === 200) {
-                        const message = 'Đã tắt toàn bộ thiết bị';
-                        this.popMessage(message);
-                    }
-                }
-            })
-        })
-    }
     handleLogin = () => {
         document.querySelector('#login-form').onsubmit = (e) => {
             e.preventDefault();
@@ -156,7 +134,6 @@ class App {
             console.log(email, password);
         }
     }
-
     handleSidebarActive = () => {
         const sidebarItem = $$('.sidebar-items li');
         sidebarItem.forEach((li, index) => {

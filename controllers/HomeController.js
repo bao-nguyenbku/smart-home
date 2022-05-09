@@ -178,5 +178,15 @@ class HomeController {
                 data: result
             })).catch(err => console.log(err))
     }
+    getAllActiveDevice = (req, res, next) => {
+        Device.find({status: true})
+            .then(result => {
+                res.status(200).json({
+                    status: 200,
+                    data: result
+                })
+            })
+            .catch(err => console.log(err));
+    }
 }
 export default new HomeController;

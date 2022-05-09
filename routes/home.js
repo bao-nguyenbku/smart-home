@@ -16,6 +16,7 @@ router.get('/find-new-device', isLoggedIn(), HomeController.getNewDevice);
 
 router.post('/device/add', isLoggedIn(), HomeController.addNewDevice);
 router.get('/device/all', isLoggedIn(), HomeController.getAllDevice);
+router.get('/device/active', isLoggedIn(), HomeController.getAllActiveDevice);
 router.post('/device/edit', isLoggedIn(), HomeController.updateDevice);
 router.post('/device/delete', isLoggedIn(), HomeController.deleteDevice);
 router.post('/device/toggle', isLoggedIn(), HomeController.toggleDevice);

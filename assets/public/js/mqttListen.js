@@ -34,6 +34,9 @@ class Adafruit {
                         console.log('Received Message from:', topicRes, feedData);
                         try {
                             const value = JSON.parse(feedData);
+                            if (value.cmd === 'close' && this.event.currentTarget.id === 'energy') {
+                                
+                            }
                             if (value.cmd === 'open' || value.cmd === 'close') {
                                 this.toggleDevice(value);
                             }
@@ -65,6 +68,7 @@ class Adafruit {
         this.handleToggleDevice();
         this.setTempAndHumi();
         this.deleteDevice();
+        this.handleOffEnergy();
     }
     appDevice = {
         id: -1,
@@ -79,7 +83,36 @@ class Adafruit {
         name: '',
         paras: ''
     }
-    eventTarget = ''
+    event = ''
+    handleOffEnergy = () => {
+        $('#energy').on('click', (e) => {
+            console.log('Clicked');
+            this.event = e;
+            $.ajax({
+                url: '/device/active',
+                method: 'GET',
+                success: (res) => {
+                    // Not modified
+                    if (res.status === 200) {
+                        res.data.forEach(item => {
+                            const adaDevice = {
+                                id: item.id,
+                                cmd: 'close',
+                                name: item.type,
+                                paras: 'none'
+                            }
+                            this.adaDevice = adaDevice;
+                            console.log(this.adaDevice);
+                            this.client.publish(this.topicReq, `${JSON.stringify(adaDevice)}`, { qos: 0, retain: true }, (err) => {
+                                if (err) throw new Error(err);
+                                console.log('Sent turn off device request successfully!');
+                            })
+                        })
+                    }
+                }
+            })
+        })
+    }
     listenDeleteDevice = (value) => {
         if (value.id === this.adaDevice.id && value.cmd === 'del' && value.paras === 'success') {
             $.ajax({
@@ -164,10 +197,9 @@ class Adafruit {
                 },
                 success: (res) => {
                     console.log(res);
-                    this.eventTarget;
-                    const message = this.eventTarget.children[1].children[0].children[0].value + ' đã được ' + (value.cmd === 'open' ? 'mở' : 'tắt');
+                    const message = this.event.children[1].children[0].children[0].value + ' đã được ' + (value.cmd === 'open' ? 'mở' : 'tắt');
                     this.popMessage(message);
-                    this.eventTarget.classList.toggle('device-item-active');
+                    this.event.classList.toggle('device-item-active');
                     this.loading(0);
                 }
             })
@@ -355,7 +387,7 @@ class Adafruit {
                     this.adaDevice.cmd = status === true ? 'open' : 'close';
                     this.adaDevice.name = deviceType;
                     this.adaDevice.paras = 'none';
-                    this.eventTarget = item;
+                    this.event = item;
                     this.client.publish(this.topicReq, `${JSON.stringify(this.adaDevice)}`, { qos: 0, retain: true }, (err) => {
                         if (err) console.log(err);
                         else console.log('Success from toggle device publish');
