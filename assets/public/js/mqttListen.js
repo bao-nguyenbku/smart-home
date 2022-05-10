@@ -35,9 +35,9 @@ class Adafruit {
                         try {
                             const value = JSON.parse(feedData);
                             if (value.cmd === 'close' && this.event.currentTarget.id === 'energy') {
-                                
+                                this.turnOffEnergy(value);
                             }
-                            if (value.cmd === 'open' || value.cmd === 'close') {
+                            else if (value.cmd === 'open' || value.cmd === 'close') {
                                 this.toggleDevice(value);
                             }
                             else if (value.cmd === 'update' && value.id === -1) {
@@ -84,6 +84,26 @@ class Adafruit {
         paras: ''
     }
     event = ''
+    countDevice = 0
+    turnOffEnergy = (value) => {
+        if (value.paras === 'success') {
+            $.ajax({
+                url: '/device/toggle',
+                method: 'post',
+                data: {
+                    deviceId: value.id,
+                    deviceType: value.name,
+                    status: false
+                },
+                success: (res) => {
+                    console.log(res);
+                    this.countDevice++;
+                    this.popMessage(`Đã tắt ${this.countDevice} thiết bị`);
+                }
+            })
+        }
+        return;
+    }
     handleOffEnergy = () => {
         $('#energy').on('click', (e) => {
             console.log('Clicked');
@@ -101,8 +121,7 @@ class Adafruit {
                                 name: item.type,
                                 paras: 'none'
                             }
-                            this.adaDevice = adaDevice;
-                            console.log(this.adaDevice);
+                            console.log(adaDevice);
                             this.client.publish(this.topicReq, `${JSON.stringify(adaDevice)}`, { qos: 0, retain: true }, (err) => {
                                 if (err) throw new Error(err);
                                 console.log('Sent turn off device request successfully!');
@@ -282,8 +301,8 @@ class Adafruit {
         }
     }
     setTempAndHumi = () => {
-        $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${localStorage.getItem('temp')}<span>o</span> C`);
-        $('.temp-and-humi-container .humidity-container p:nth-child(2)').html(`${localStorage.getItem('humi')}%`);
+        $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${localStorage.getItem('temp') ? localStorage.getItem('temp') : '--'}<span>o</span> C`);
+        $('.temp-and-humi-container .humidity-container p:nth-child(2)').html(`${localStorage.getItem('humi') ? localStorage.getItem('humi') : '--'}%`);
     }
     updateTempHumi = (value) => {
         if (value) {

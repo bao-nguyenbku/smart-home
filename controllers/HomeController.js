@@ -81,6 +81,7 @@ class HomeController {
             status: false,
             type: deviceType,
             roomId: roomId,
+            capacity: deviceType === 'fan' ? 65 : 36,
             lastUse: new Date()
         })
         newDevice.save()

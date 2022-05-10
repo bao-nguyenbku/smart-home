@@ -10,7 +10,7 @@
                 <% roomKWh.forEach(room => { %>
                     <div class="room-item">
                         <div class="border-badge">
-                            <span><%= parseInt(room.total / 1000) %> kWh</span>
+                            <span><%= (room.total / 1000).toFixed(2) %> kWh</span>
                         </div>
                         <div class="room-name">
                             <p><%= room.roomName %></p>
