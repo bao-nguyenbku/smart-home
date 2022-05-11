@@ -21,6 +21,5 @@ router.post('/device/edit', isLoggedIn(), HomeController.updateDevice);
 router.post('/device/delete', isLoggedIn(), HomeController.deleteDevice);
 router.post('/device/toggle', isLoggedIn(), HomeController.toggleDevice);
 
-// router.get('/restart', isLoggedIn(), HomeController.restartServer);
 
 export default router;
