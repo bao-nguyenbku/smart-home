@@ -34,7 +34,8 @@ class Adafruit {
                         console.log('Received Message from:', topicRes, feedData);
                         try {
                             const value = JSON.parse(feedData);
-                            if (value.cmd === 'close' && this.event.currentTarget.id === 'energy') {
+                            
+                            if (value.cmd === 'close' && this.event.hasOwnProperty('currentTarget') && this.event.currentTarget.id === 'energy') {
                                 this.turnOffEnergy(value);
                             }
                             else if (value.cmd === 'open' || value.cmd === 'close') {
