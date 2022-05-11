@@ -248,7 +248,7 @@ class Adafruit {
     }
     getCurrentSelectRoom = () => document.querySelector('#select-room-dropdown-menu').value;
     restartServer = () => {
-        console.log('Received message from ListenRestartServer:', this.topicRes, feedData);
+        console.log('Received message from ListenRestartServer:', this.topicRes);
         $.ajax({
             url: '/device/all',
             method: 'get',
