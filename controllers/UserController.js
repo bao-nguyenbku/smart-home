@@ -23,7 +23,8 @@ class UserController {
                     if (isTrue) {
                         const user = {
                             name: result.name,
-                            email: result.email
+                            email: result.email,
+                            address: result.address
                         }
                         req.session.user = user;
                         res.redirect('/');

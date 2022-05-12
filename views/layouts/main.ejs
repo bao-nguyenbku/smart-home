@@ -71,7 +71,7 @@
               <p class="account-name"><%= session.user ? session.user.name : '' %></p>
               <div class="account-address">
                 <span class="material-icons-outlined">location_on</span>
-                <p>3, Wald street, 9 District, Ho Chi Minh city, Vietnam</p>
+                <p id="main_address"> <%= session.user ? session.user.address : '' %> </p>
               </div>
             </div>
           </div>
