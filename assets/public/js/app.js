@@ -13,7 +13,6 @@ const milisecondToHour = (time) => {
 }
 const renderTable = (page, numOfPage, devices) => {
     let row = '';
-
     devices.forEach(device => {
         timeUsed = milisecondToHour(device.duration);
         row += `
@@ -85,8 +84,6 @@ class App {
         this.handleSidebarActive();
         this.handleAddRoom();
         this.handleSelectRoom();
-        this.handleOffEnergy();
-        this.handleEditDevice();
         this.updateProfile();
         if (window.location.pathname.split('/').includes('login')) {
             this.handleLogin();
@@ -119,25 +116,6 @@ class App {
             })
         }
     }
-    handleOffEnergy = () => {
-        $('#energy').on('click', () => {
-            $.ajax({
-                url: '/settings/offEnergy',
-                method: 'GET',
-                success: (res) => {
-                    // Not modified
-                    if (res.status === 304) {
-                        const message = 'Tất cả thiết bị đang tắt';
-                        this.popMessage(message);
-                    }
-                    else if (res.status === 200) {
-                        const message = 'Đã tắt toàn bộ thiết bị';
-                        this.popMessage(message);
-                    }
-                }
-            })
-        })
-    }
     handleLogin = () => {
         document.querySelector('#login-form').onsubmit = (e) => {
             e.preventDefault();
@@ -156,7 +134,6 @@ class App {
             console.log(email, password);
         }
     }
-
     handleSidebarActive = () => {
         const sidebarItem = $$('.sidebar-items li');
         sidebarItem.forEach((li, index) => {
@@ -288,34 +265,7 @@ class App {
             })
         })
     }
-    // updateTempAndHumi = () => {
-    //     setTimeout(() => {
-    //         // get time at 2 minutes ago
-    //         const previous = new Date(Date.now() - 2 * 60 * 1000);
-    //         $.ajax({
-    //             // url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data`,
-    //             url: `https://io.adafruit.com/api/v2/kimhungtdblla24/feeds/ttda-cnpm-ha2so/data?limit=5&start_time=${previous.toISOString()}`,
-    //             method: 'GET',
-    //             success: (result) => {
-    //                 if (result.length !== 0) {
-    //                     result.forEach(data => {
-    //                         try {
-    //                             const lastData = JSON.parse(data.value);
-    //                             if (lastData.name === 'TempHumi') {
-    //                                 const paras = lastData.paras.slice(1, lastData.paras.length - 1).split(',');
-    //                                 $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${parseInt(paras[0])}<span>o</span> C`);
-    //                                 $('.humidity-container p:nth-child(2)').html(`${parseInt(paras[1])}%`);
-    //                                 this.updateTempAndHumi();
-    //                             }
-    //                         } catch (error) {
-    //                             return;
-    //                         }
-    //                     })
-    //                 }
-    //             }
-    //         })
-    //     }, 3000)
-    // }
+
     handleTableDeviceInStatistic = () => {
         // let newDevices;
         $.ajax({
@@ -348,32 +298,16 @@ class App {
         })
 
     }
-
     handleEditDevice = () => {
-        $$('.bottom-info-edit .dropdown-menu-edit li').forEach(li => {
-            li.addEventListener('click', () => {
+        $('.bottom-info-edit .dropdown-menu-edit li').each((index, li) => {
+            li.onclick = (e) => {
                 const deviceId = parseInt(li.dataset.id);
                 const typ = li.dataset.type;
-                if (typ === 'delete') {
-                    if (confirm('Do you want to delete this device?')) {
-                        $.ajax({
-                            url: '/device/delete',
-                            method: 'POST',
-                            data: { id: deviceId },
-                            dataType: 'json',
-                            success: (res) => {
-                                if (res.status == 200) {
-                                    location.reload();
-                                }
-                            }
-                        })
-                    }
-                }
-                else if (typ === 'edit') {
+                if (typ === 'edit') {
                     const deviceNameInput = li.parentElement.parentElement.parentElement.firstElementChild.firstElementChild;
                     deviceNameInput.disabled = false;
                     deviceNameInput.focus();
-                    deviceNameInput.addEventListener('focusout', (e) => {
+                    $('.bottom-info').find(deviceNameInput).one('focusout', (e) => {
                         if (confirm('Save your edited?')) {
                             const newDeviceName = e.target.value;
                             $.ajax({
@@ -394,10 +328,11 @@ class App {
                         else {
                             deviceNameInput.disabled = true;
                         }
-                    })
+                    });
                 }
-            })
-        })
+                $('.bottom-info-edit .dropdown-menu-edit li').off(e);
+            }
+        });
     }
 }
 // INITIAL APP

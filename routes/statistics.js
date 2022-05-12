@@ -5,5 +5,6 @@ const router = Router();
 
 router.get('/', isLoggedIn(), StatisticsController.show);
 router.get('/devices', isLoggedIn(), StatisticsController.getAllDevice);
+router.get('/data', isLoggedIn(), StatisticsController.getTotalkWhPerDay);
 
 export default router;

@@ -1,6 +1,6 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
-import { Room, Device, Port, getAllDevice } from '../models/index.js';
-import { genId } from './generateID.js';
+import { Room, Device, Port, Stat } from '../models/index.js';
+import { genId, updateStat } from './Utils.js';
 // import ada from '../api/adafruit.js';
 // import axios from 'axios';
 class HomeController {
@@ -81,23 +81,31 @@ class HomeController {
             status: false,
             type: deviceType,
             roomId: roomId,
+            capacity: deviceType === 'fan' ? 65 : 36,
             lastUse: new Date()
         })
         newDevice.save()
             .then(result => {
                 Port.findOneAndUpdate({ port: deviceId }, { status: true })
                     .then(_ => {
-                        res.status(200).json({
-                            status: 200,
-                            data: result
+                        const deviceStat = new Stat({
+                            deviceId: deviceId,
                         })
+                        deviceStat.save()
+                            .then(_ => {
+                                res.status(200).json({
+                                    status: 200,
+                                    data: result
+                                })
+                            })
+                            .catch(err => console.log(err))
                     }).catch(err => console.log(err))
             }).catch(err => console.log(err));
     }
-    toggleDevice = async (req, res, next) => {
+    toggleDevice = (req, res, next) => {
         const { deviceId, deviceType, status } = req.body;
         // Turn off
-        if (status == 'false') {
+        if (status === 'false') {
             Device.findOne({ id: deviceId })
                 .then(result => {
                     const currentTime = new Date();
@@ -106,15 +114,25 @@ class HomeController {
                     Device.findOneAndUpdate({ id: deviceId }, {
                         status: false,
                         duration: usedTime + lastDuration,
-                    }).then(result2 => {
-                        res.status(200).json({
-                            status: 200,
-                            data: result2
-                        })
+                    }).then(async (result2) => {
+                        try {
+                            const result3 = await updateStat(deviceId, usedTime, result.lastUse);
+                            if (result3) {
+                                res.status(200).json({
+                                    status: 200,
+                                    data: result2
+                                })
+                            }
+                        } catch (error) {
+                            res.status(200).json({
+                                status: 500,
+                                message: error
+                            })
+                        }
                     }).catch(err => console.log(err))
                 }).catch(err => console.log(err))
         }
-        if (status == 'true') {
+        else if (status === 'true') {
             Device.findOneAndUpdate({ id: deviceId }, {
                 status: true,
                 lastUse: new Date()
@@ -132,11 +150,15 @@ class HomeController {
             .then(_ => {
                 Port.findOneAndUpdate({ port: _id }, { status: false })
                     .then(_ => {
-                        res.status(200).json({
-                            status: 200
-                        })
-                    })
-            }).catch(err => console.log(err));
+                        Stat.findOneAndDelete({ deviceId: _id })
+                            .then(deletedResult => {
+                                res.status(200).json({
+                                    status: 200
+                                })
+                            })
+                            .catch(err => console.log(err))
+                    }).catch(err => console.log(err))
+            }).catch(err => console.log(err))
     }
     updateDevice = (req, res, next) => {
         const { deviceId, deviceName } = req.body;
@@ -156,6 +178,16 @@ class HomeController {
                 status: 200,
                 data: result
             })).catch(err => console.log(err))
+    }
+    getAllActiveDevice = (req, res, next) => {
+        Device.find({status: true})
+            .then(result => {
+                res.status(200).json({
+                    status: 200,
+                    data: result
+                })
+            })
+            .catch(err => console.log(err));
     }
 }
 export default new HomeController;

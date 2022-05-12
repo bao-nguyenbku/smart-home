@@ -1,5 +1,5 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
-import { Room, Device } from '../models/index.js';
+import { Room, Device, Stat } from '../models/index.js';
 // import { genId } from './generateID.js';
 class StatisticsController {
     show = async (req, res, next) => {
@@ -37,6 +37,15 @@ class StatisticsController {
                         res.json({ devices: devices, rooms: rooms });
                     })
                 
+            })
+    }
+    getTotalkWhPerDay = (req, res, next) => {
+        Stat.find({})
+            .then(result => {
+                res.status(200).json({
+                    status: 200,
+                    data: result
+                })
             })
     }
 }

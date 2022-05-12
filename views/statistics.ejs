@@ -1,5 +1,6 @@
 <div id="main-area-render">
     <div class="statistic-container">
+        <%- include('./totalkWh.ejs'); %> 
         <div class="chart-container">
             <canvas id="elec-chart"></canvas>
         </div>
@@ -9,50 +10,13 @@
                 <% roomKWh.forEach(room => { %>
                     <div class="room-item">
                         <div class="border-badge">
-                            <span><%= parseInt(room.total / 1000) %> kWh</span>
+                            <span><%= (room.total / 1000).toFixed(2) %> kWh</span>
                         </div>
                         <div class="room-name">
                             <p><%= room.roomName %></p>
-                            <!-- <p style="color: #FF0000;"><i class="material-icons-outlined">
-                                    arrow_drop_up
-                                </i>10%</p> -->
                         </div>
                     </div>
                 <% }) %> 
-                
-                <!-- <div class="room-item">
-                    <div class="border-badge">
-                        <span>70kWh</span>
-                    </div>
-                    <div class="room-name">
-                        <p>Living room</p>
-                        <p style="color: #FF0000;"><i class="material-icons-outlined">
-                                arrow_drop_up
-                            </i>11%</p>
-                    </div>
-                </div>
-                <div class="room-item">
-                    <div class="border-badge">
-                        <span>23kWh</span>
-                    </div>
-                    <div class="room-name">
-                        <p>Kitchen</p>
-                        <p style="color: #06BA23;"><i class="material-icons-outlined">
-                                arrow_drop_down
-                            </i>8%</p>
-                    </div>
-                </div>
-                <div class="room-item">
-                    <div class="border-badge">
-                        <span>19kWh</span>
-                    </div>
-                    <div class="room-name">
-                        <p>Garage</p>
-                        <p style="color: #06BA23;"><i class="material-icons-outlined">
-                                arrow_drop_down
-                            </i>10%</p>
-                    </div>
-                </div> -->
             </div>
             <div class="table-of-device-container">
                 <div class="table-of-device">

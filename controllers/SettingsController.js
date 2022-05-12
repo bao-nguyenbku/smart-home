@@ -32,14 +32,7 @@ class SettingsController {
                         Device.findOneAndUpdate({ id: deviceId }, { 
                             duration: usedTime + lastDuration,
                             status: false
-                        }).then(result2 => {
-                            const device = {
-                                id: deviceId,
-                                // cmd: status ? 'open' : 'close',
-                                name: result.type,
-                                paras: 'none'
-                            }
-                        }).catch(err => res.json(err))
+                        }).exec();
                     }
                     res.status(200).json({
                         status: 200
