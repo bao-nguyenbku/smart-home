@@ -1,6 +1,3 @@
-// import client, { topicRes, topicReq } from '../mqtt/index.js';
-// import { Room, Device } from '../models/index.js';
-// import { genId } from './generateID.js';
 class AdaController {
     getIOKey = (req, res, next) => {
         const key = process.env.IO_KEY;

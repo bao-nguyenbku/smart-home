@@ -10,20 +10,6 @@ class Adafruit {
     // client = mqtt.connect(`wss://${this.HOST}:${this.PORT}`, this.options)
     topicReq = 'kimhungtdblla24/feeds/ttda-cnpm-so2ha'
     topicRes = 'kimhungtdblla24/feeds/ttda-cnpm-ha2so'
-    appDevice = {
-        id: -1,
-        name: '',
-        type: '',
-        roomId: -1,
-        status: false
-    }
-    adaDevice = {
-        id: -1,
-        cmd: '',
-        name: '',
-        paras: ''
-    }
-    eventTarget = ''
 
     constructor() {
         $.ajax({
@@ -48,7 +34,11 @@ class Adafruit {
                         console.log('Received Message from:', topicRes, feedData);
                         try {
                             const value = JSON.parse(feedData);
-                            if (value.cmd === 'open' || value.cmd === 'close') {
+                            
+                            if (value.cmd === 'close' && this.event.hasOwnProperty('currentTarget') && this.event.currentTarget.id === 'energy') {
+                                this.turnOffEnergy(value);
+                            }
+                            else if (value.cmd === 'open' || value.cmd === 'close') {
                                 this.toggleDevice(value);
                             }
                             else if (value.cmd === 'update' && value.id === -1) {
@@ -56,6 +46,9 @@ class Adafruit {
                             }
                             else if (value.cmd === 'add') {
                                 this.listenAddDevice(value);
+                            }
+                            else if (value.cmd === 'del') {
+                                this.listenDeleteDevice(value);
                             }
                             else if (value.cmd === 'info' && value.name === 'TempHumi') {
                                 this.updateTempHumi(value);
@@ -75,6 +68,138 @@ class Adafruit {
         this.handleAddNewDevice();
         this.handleToggleDevice();
         this.setTempAndHumi();
+        this.deleteDevice();
+        this.handleOffEnergy();
+    }
+    appDevice = {
+        id: -1,
+        name: '',
+        type: '',
+        roomId: -1,
+        status: false
+    }
+    adaDevice = {
+        id: -1,
+        cmd: '',
+        name: '',
+        paras: ''
+    }
+    event = ''
+    countDevice = 0
+    turnOffEnergy = (value) => {
+        if (value.paras === 'success') {
+            $.ajax({
+                url: '/device/toggle',
+                method: 'post',
+                data: {
+                    deviceId: value.id,
+                    deviceType: value.name,
+                    status: false
+                },
+                success: (res) => {
+                    console.log(res);
+                    this.countDevice++;
+                    this.popMessage(`Đã tắt ${this.countDevice} thiết bị`);
+                }
+            })
+        }
+        return;
+    }
+    handleOffEnergy = () => {
+        $('#energy').on('click', (e) => {
+            console.log('Clicked');
+            this.event = e;
+            $.ajax({
+                url: '/device/active',
+                method: 'GET',
+                success: (res) => {
+                    // Not modified
+                    if (res.status === 200) {
+                        res.data.forEach(item => {
+                            const adaDevice = {
+                                id: item.id,
+                                cmd: 'close',
+                                name: item.type,
+                                paras: 'none'
+                            }
+                            console.log(adaDevice);
+                            this.client.publish(this.topicReq, `${JSON.stringify(adaDevice)}`, { qos: 0, retain: true }, (err) => {
+                                if (err) throw new Error(err);
+                                console.log('Sent turn off device request successfully!');
+                            })
+                        })
+                    }
+                }
+            })
+        })
+    }
+    listenDeleteDevice = (value) => {
+        if (value.id === this.adaDevice.id && value.cmd === 'del' && value.paras === 'success') {
+            $.ajax({
+                url: '/device/delete',
+                method: 'POST',
+                data: { id: this.adaDevice.id },
+                dataType: 'json',
+                success: (res) => {
+                    if (res.status == 200) {
+                        location.reload();
+                    }
+                }
+            })
+        }
+    }
+    deleteDevice = () => {
+        $('.bottom-info-edit .dropdown-menu-edit li').each((index, li) => {
+            li.onclick = (e) => {
+                const deviceId = parseInt(li.dataset.id);
+                const deviceType = li.dataset.dtype;
+                const typ = li.dataset.type;
+                if (typ === 'edit') {
+                    const deviceNameInput = li.parentElement.parentElement.parentElement.firstElementChild.firstElementChild;
+                    deviceNameInput.disabled = false;
+                    deviceNameInput.focus();
+                    $('.bottom-info').find(deviceNameInput).one('focusout', (e) => {
+                        if (confirm('Save your edited?')) {
+                            const newDeviceName = e.target.value;
+                            $.ajax({
+                                url: '/device/edit',
+                                method: 'POST',
+                                data: {
+                                    deviceId: deviceNameInput.dataset.id,
+                                    deviceName: newDeviceName
+                                },
+                                success: (res) => {
+                                    if (res.status === 200) {
+                                        deviceNameInput.disabled = true;
+                                        this.popMessage(res.message);
+                                    }
+                                }
+                            })
+                        }
+                        else {
+                            deviceNameInput.disabled = true;
+                        }
+                    });
+                }
+                else if (typ === 'delete') {
+                    if (confirm('Do you want to delete this device?')) {
+                        this.adaDevice.id = deviceId;
+                        this.adaDevice.cmd = 'del';
+                        this.adaDevice.name = deviceType;
+                        this.adaDevice.paras = 'none';
+                        this.client.publish(this.topicReq, `${JSON.stringify(this.adaDevice)}`, { qos: 0, retain: true }, (err) => {
+                            if (err) {
+                                console.log('From delete new device: ', err);
+                            }
+                            else {
+                                console.log('Success to sent delete device');
+                            }
+                        })
+                    }
+                }
+                $('.bottom-info-edit .dropdown-menu-edit li').off(e);
+            }
+        });
     }
     toggleDevice = (value) => {
         if (value.id === this.adaDevice.id
@@ -88,14 +213,13 @@ class Adafruit {
                 data: {
                     deviceId: this.adaDevice.id,
                     deviceType: this.adaDevice.name,
-                    status: this.adaDevice.cmd === value.cmd
+                    status: value.cmd === 'open' ? true : false
                 },
                 success: (res) => {
                     console.log(res);
-                    this.eventTarget;
-                    const message = this.eventTarget.children[1].children[0].children[0].value + ' đã được ' + (value.cmd === 'open' ? 'mở' : 'tắt');
+                    const message = this.event.children[1].children[0].children[0].value + ' đã được ' + (value.cmd === 'open' ? 'mở' : 'tắt');
                     this.popMessage(message);
-                    this.eventTarget.classList.toggle('device-item-active');
+                    this.event.classList.toggle('device-item-active');
                     this.loading(0);
                 }
             })
@@ -125,7 +249,7 @@ class Adafruit {
     }
     getCurrentSelectRoom = () => document.querySelector('#select-room-dropdown-menu').value;
     restartServer = () => {
-        console.log('Received message from ListenRestartServer:', topicRes, feedData);
+        console.log('Received message from ListenRestartServer:', this.topicRes);
         $.ajax({
             url: '/device/all',
             method: 'get',
@@ -178,8 +302,8 @@ class Adafruit {
         }
     }
     setTempAndHumi = () => {
-        $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${localStorage.getItem('temp')}<span>o</span> C`);
-        $('.temp-and-humi-container .humidity-container p:nth-child(2)').html(`${localStorage.getItem('humi')}%`);
+        $('.temp-and-humi-container .temp-container p:nth-child(2)').html(`${localStorage.getItem('temp') ? localStorage.getItem('temp') : '--'}<span>o</span> C`);
+        $('.temp-and-humi-container .humidity-container p:nth-child(2)').html(`${localStorage.getItem('humi') ? localStorage.getItem('humi') : '--'}%`);
     }
     updateTempHumi = (value) => {
         if (value) {
@@ -283,7 +407,7 @@ class Adafruit {
                     this.adaDevice.cmd = status === true ? 'open' : 'close';
                     this.adaDevice.name = deviceType;
                     this.adaDevice.paras = 'none';
-                    this.eventTarget = item;
+                    this.event = item;
                     this.client.publish(this.topicReq, `${JSON.stringify(this.adaDevice)}`, { qos: 0, retain: true }, (err) => {
                         if (err) console.log(err);
                         else console.log('Success from toggle device publish');

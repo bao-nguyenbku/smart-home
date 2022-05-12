@@ -1,0 +1,10 @@
+<div class="totalkWh-container">
+    <div class="total-cost">
+        <span>Current cost</span>
+        <p><%= roomKWh.reduce((prev, curr) => prev + curr.total, 0) / 1000 * 2000 %>đ</p>
+    </div>
+    <div class="total-kWh">
+        <span>Current electricity</span>
+        <p><%= roomKWh.reduce((prev, curr) => prev + curr.total, 0) / 1000 %> kWh</p>
+    </div>
+</div>

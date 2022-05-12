@@ -1,6 +1,6 @@
 // import client, { topicRes, topicReq } from '../mqtt/index.js';
 import { Room, Device, User } from '../models/index.js';
-import { genId } from './generateID.js';
+import { genId } from './Utils.js';
 import bcrypt from 'bcrypt';
 import env from 'dotenv';
 env.config();
